@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Admin Login · Career Path Quiz{% endblock %}
+{% block body %}
+<main>
+  <section class="view gate">
+    <p class="eyebrow">TATTI · Admin</p>
+    <h1>Admin Login</h1>
+    <form method="post" action="/admin/login" class="form">
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <p class="err" role="alert">{{ error }}</p>
+      <button class="go" type="submit">Login</button>
+    </form>
+    <p class="fine"><a href="/">← Student quiz</a></p>
+  </section>
+</main>
+{% endblock %}

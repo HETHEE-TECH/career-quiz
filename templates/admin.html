@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Student Responses · Career Path Quiz{% endblock %}
+{% block wrapclass %}admin{% endblock %}
+{% block body %}
+<main>
+<section class="view">
+  <div class="adm-head">
+    <div class="adm-title">
+      <img class="inst-logo" src="/static/img/logo.jpg" alt="TATTI logo" width="64" height="64">
+      <div>
+      <p class="eyebrow">TATTI · Admin</p>
+      <h1>Student Responses</h1>
+      <p class="count">{{ total }} {{ "student has" if total == 1 else "students have" }} finished the quiz{% if rows|length != total %} · showing {{ rows|length }}{% endif %}</p>
+      </div>
+    </div>
+    <div class="adm-actions">
+      <a class="btn-sm btn-primary" href="/admin/export.csv?{{ qs }}">Export CSV</a>
+      <a class="btn-sm" href="/">Student quiz →</a>
+      <form method="post" action="/admin/logout">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <button class="btn-sm" type="submit">Log out</button>
+      </form>
+    </div>
+  </div>
+
+  {% if panels %}
+  <div class="panels">
+    {% for p in panels %}
+    <div class="panel">
+      <h3>{{ p.title }}</h3>
+      <div class="dist">
+        {% for it in p["items"] %}
+        <div class="drow" style="--c: var({{ it.color }})">
+          <span class="lab">{{ it.label }}</span>
+          <span class="track"><span class="fill" style="width: {{ it.w }}%"></span></span>
+          <span class="n">{{ it.n }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <form class="ctrl" method="get" action="/admin">
+    <input type="search" name="q" value="{{ q }}" placeholder="Name அல்லது Phone-ல தேடு" aria-label="Search responses">
+    <select name="interest" aria-label="Filter by interest">
+      <option value="">All interests</option>
+      {% for key, label in interests %}<option value="{{ key }}" {{ "selected" if interest == key }}>{{ label }}</option>{% endfor %}
+    </select>
+    <select name="sort" aria-label="Sort">
+      <option value="new" {{ "selected" if sort == "new" }}>Newest first</option>
+      <option value="old" {{ "selected" if sort == "old" }}>Oldest first</option>
+      <option value="name" {{ "selected" if sort == "name" }}>Name A–Z</option>
+    </select>
+    <button class="btn-sm" type="submit">Apply</button>
+  </form>
+
+  {% if total == 0 %}
+  <div class="empty">
+    <h2>இன்னும் யாரும் Quiz முடிக்கல</h2>
+    <p>Students Quiz Link-ஐத் திறந்து 10 கேள்விகளையும் முடிச்சதும் அவங்க பதில்கள் இங்க வரும். Page-ஐ Refresh பண்ணிப் பாருங்க.</p>
+  </div>
+  {% elif not rows %}
+  <div class="empty"><p>இந்த Filter-க்கு யாரும் இல்ல.</p></div>
+  {% else %}
+  <div class="recs">
+    <div class="rechead">
+      <span>Name</span><span>Doing now</span><span>Interest</span><span>Learning</span><span>Study plan</span><span>Picks by</span><span>Submitted</span>
+    </div>
+    {% for r in rows %}
+    <details class="rec">
+      <summary class="recsum">
+        <span class="strong" data-l="Name">{{ r.name }}</span>
+        <span class="muted" data-l="Doing now">{{ r.doing }}</span>
+        <span data-l="Interest"><i class="dot" style="--c: var({{ r.top_color }})"></i>{{ r.top_label }}</span>
+        <span data-l="Learning">{{ r.learn }}</span>
+        <span data-l="Study plan">{{ r.plan }}</span>
+        <span data-l="Picks by">{{ r.factor }}</span>
+        <span class="muted" data-l="Submitted">{{ r.when }}</span>
+      </summary>
+      <div class="recbody">
+        <div class="dhead">
+          <p class="muted">Phone: {{ r.phone or "not given" }} · Where they are now: {{ r.ready }}</p>
+          <details class="del">
+            <summary class="btn-sm btn-danger">Delete</summary>
+            <form method="post" action="/admin/delete/{{ r.id }}">
+              <input type="hidden" name="csrf" value="{{ csrf }}">
+              <span class="muted">இந்த Response-ஐ நிரந்தரமா நீக்கணுமா?</span>
+              <button class="btn-sm btn-danger" type="submit">Yes, delete</button>
+            </form>
+          </details>
+        </div>
+        <ul class="qa">
+          {% for item in r.qa %}
+          <li><b>Q{{ loop.index }}. {{ item.q }}</b>{{ item.a }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </details>
+    {% endfor %}
+  </div>
+  {% endif %}
+</section>
+</main>
+{% endblock %}
