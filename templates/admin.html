@@ -23,6 +23,10 @@
     </div>
   </div>
 
+  {% if deleted is not none %}<div class="flash ok">{{ deleted }} response{{ "" if deleted == 1 else "s" }} நீக்கப்பட்டது.</div>{% endif %}
+  {% if error == "none" %}<div class="flash bad">முதல்ல நீக்க வேண்டிய Response-களை டிக் பண்ணுங்க.</div>{% endif %}
+  {% if error == "confirm" %}<div class="flash bad">எதுவும் நீக்கப்படல. Confirm பெட்டியில DELETE என்று சரியா தட்டுங்க.</div>{% endif %}
+
   {% if panels %}
   <div class="panels">
     {% for p in panels %}
@@ -64,11 +68,20 @@
   {% elif not rows %}
   <div class="empty"><p>இந்த Filter-க்கு யாரும் இல்ல.</p></div>
   {% else %}
+  <form id="bulkform" method="post" action="/admin/delete-many" data-bulk>
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+  </form>
+  <div class="bulkbar">
+    <label class="pickall"><input type="checkbox" id="selall"> எல்லாத்தையும் தேர்ந்தெடு (இப்போ காட்டப்படுபவை)</label>
+    <button class="btn-sm btn-danger" type="submit" form="bulkform" id="delsel" disabled>Delete selected (<span id="selcount">0</span>)</button>
+  </div>
   <div class="recs">
     <div class="rechead">
       <span>Name</span><span>Doing now</span><span>Interest</span><span>Learning</span><span>Study plan</span><span>Picks by</span><span>Submitted</span>
     </div>
     {% for r in rows %}
+    <div class="recrow">
+    <label class="pick" title="Select"><input type="checkbox" name="ids" value="{{ r.id }}" form="bulkform" class="rowpick" aria-label="Select {{ r.name }}"></label>
     <details class="rec">
       <summary class="recsum">
         <span class="strong" data-l="Name">{{ r.name }}</span>
@@ -98,9 +111,24 @@
         </ul>
       </div>
     </details>
+    </div>
     {% endfor %}
   </div>
+  {% endif %}
+
+  {% if total > 0 %}
+  <details class="delall">
+    <summary class="btn-sm btn-danger">எல்லா Responses-ஐயும் நீக்கு</summary>
+    <form method="post" action="/admin/delete-all">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <p>இது {{ total }} Response-களையும் <b>நிரந்தரமா</b> அழிக்கும். திரும்பப் பெற முடியாது. முதல்ல Export CSV பண்ணி வச்சுக்கோங்க.</p>
+      <label>உறுதிப்படுத்த <b>DELETE</b> என்று தட்டுங்க
+        <input type="text" name="confirm" autocomplete="off" required pattern="DELETE"></label>
+      <button class="btn-sm btn-danger" type="submit">Delete everything</button>
+    </form>
+  </details>
   {% endif %}
 </section>
 </main>
 {% endblock %}
+{% block scripts %}<script src="/static/admin.js?v=1"></script>{% endblock %}

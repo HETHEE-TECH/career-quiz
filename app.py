@@ -415,7 +415,7 @@ def logout(request: Request, csrf: str = Form("")):
 
 
 @app.get("/admin")
-def admin(request: Request, q: str = "", interest: str = "", sort: str = "new"):
+def admin(request: Request, q: str = "", interest: str = "", sort: str = "new", deleted: str = "", error: str = ""):
     if not is_admin(request):
         return RedirectResponse("/admin/login", status_code=303)
     all_rows, rows = load_rows(q, interest, sort)
@@ -432,6 +432,8 @@ def admin(request: Request, q: str = "", interest: str = "", sort: str = "new"):
             "sort": sort,
             "qs": qs,
             "csrf": request.session["csrf"],
+            "deleted": int(deleted) if deleted.isdigit() else None,
+            "error": error,
             "interests": [(c, CL[c]["short"]) for c in ORDER],
         },
     )
@@ -470,5 +472,32 @@ def delete_response(request: Request, rid: int, csrf: str = Form("")):
         return RedirectResponse("/admin/login", status_code=303)
     check_csrf(request, csrf)
     with conn() as con:
-        con.execute("DELETE FROM responses WHERE id = ?", (rid,))
-    return RedirectResponse("/admin", status_code=303)
+        n = con.execute("DELETE FROM responses WHERE id = ?", (rid,)).rowcount
+    return RedirectResponse(f"/admin?deleted={n}", status_code=303)
+
+
+@app.post("/admin/delete-many")
+def delete_many(request: Request, ids: list[int] = Form([]), csrf: str = Form("")):
+    if not is_admin(request):
+        return RedirectResponse("/admin/login", status_code=303)
+    check_csrf(request, csrf)
+    ids = list(dict.fromkeys(i for i in ids if i > 0))[:5000]
+    if not ids:
+        return RedirectResponse("/admin?error=none", status_code=303)
+    with conn() as con:
+        n = con.execute(
+            f"DELETE FROM responses WHERE id IN ({','.join('?' * len(ids))})", ids
+        ).rowcount
+    return RedirectResponse(f"/admin?deleted={n}", status_code=303)
+
+
+@app.post("/admin/delete-all")
+def delete_all(request: Request, confirm: str = Form(""), csrf: str = Form("")):
+    if not is_admin(request):
+        return RedirectResponse("/admin/login", status_code=303)
+    check_csrf(request, csrf)
+    if confirm.strip() != "DELETE":
+        return RedirectResponse("/admin?error=confirm", status_code=303)
+    with conn() as con:
+        n = con.execute("DELETE FROM responses").rowcount
+    return RedirectResponse(f"/admin?deleted={n}", status_code=303)
