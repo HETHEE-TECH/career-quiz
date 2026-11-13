@@ -26,7 +26,7 @@ from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.responses import JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from starlette.middleware.sessions import SessionMiddleware
 
 BASE = Path(__file__).parent
@@ -59,7 +59,16 @@ CL = DATA["cl"]
 GROUPS = DATA["groups"]  # the old 12th-group question; kept so older rows stay readable
 DOING = DATA["doing"]
 DOING_KEYS = [d["key"] for d in DOING]
-LET = "ABCD"
+LET = "ABCDE"
+# Three question sets. "school" is the original 12th-class quiz; the other two come from the
+# college-student and certificate-course questionnaires. Which one a student gets depends on
+# the "doing now" choice (DATA["set_of"]); everybody else gets the 12th-class quiz.
+SETS = {"school": Q, **{k: v["q"] for k, v in DATA["sets"].items()}}
+SET_NAMES = {"school": "12th quiz", **{k: v["name"] for k, v in DATA["sets"].items()}}
+
+
+def set_for(doing: str) -> str:
+    return DATA["set_of"].get(doing, "school")
 
 
 def compute(ans):
@@ -106,6 +115,7 @@ def init_db():
                 phone TEXT NOT NULL DEFAULT '',
                 grp TEXT NOT NULL DEFAULT '',
                 doing TEXT NOT NULL DEFAULT '',
+                qset TEXT NOT NULL DEFAULT 'school',
                 answers TEXT NOT NULL,
                 top TEXT NOT NULL,
                 created_at TEXT NOT NULL
@@ -120,6 +130,8 @@ def migrate_db():
         cols = {r["name"] for r in con.execute("PRAGMA table_info(responses)")}
         if "doing" not in cols:
             con.execute("ALTER TABLE responses ADD COLUMN doing TEXT NOT NULL DEFAULT ''")
+        if "qset" not in cols:
+            con.execute("ALTER TABLE responses ADD COLUMN qset TEXT NOT NULL DEFAULT 'school'")
 
 
 init_db()
@@ -267,12 +279,19 @@ class Submission(BaseModel):
     @field_validator("answers")
     @classmethod
     def clean_answers(cls, v):
-        if len(v) != len(Q):
+        if len(v) != 10 or any(a is None for a in v):
             raise ValueError("wrong number of answers")
-        for i, a in enumerate(v):
-            if a is None or not 0 <= a < len(Q[i]["o"]):
-                raise ValueError("answer out of range")
         return v
+
+    @model_validator(mode="after")
+    def check_against_set(self):
+        qs = SETS[set_for(self.doing)]
+        if len(self.answers) != len(qs):
+            raise ValueError("wrong number of answers")
+        for i, a in enumerate(self.answers):
+            if not 0 <= a < len(qs[i]["o"]):
+                raise ValueError("answer out of range")
+        return self
 
 
 @app.post("/api/submit")
@@ -281,11 +300,13 @@ def submit(request: Request, body: Submission):
     if submit_limiter.blocked(ip):
         return JSONResponse({"ok": False, "error": "rate_limited"}, status_code=429)
     submit_limiter.add(ip)
-    top = compute(body.answers)["ranked"][0]  # computed here, never trusted from the browser
+    qset = set_for(body.doing)
+    # only the 12th quiz has interest scoring; computed here, never trusted from the browser
+    top = compute(body.answers)["ranked"][0] if qset == "school" else "-"
     with conn() as con:
         con.execute(
-            "INSERT INTO responses (name, phone, grp, doing, answers, top, created_at) VALUES (?,?,?,?,?,?,?)",
-            (body.name, body.phone, body.group, body.doing, json.dumps(body.answers), top,
+            "INSERT INTO responses (name, phone, grp, doing, qset, answers, top, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (body.name, body.phone, body.group, body.doing, qset, json.dumps(body.answers), top,
              datetime.now(timezone.utc).isoformat()),
         )
     return {"ok": True}
@@ -294,7 +315,9 @@ def submit(request: Request, body: Submission):
 # ---------------------------------------------------------------- admin
 def prepare(row) -> dict:
     ans = json.loads(row["answers"])
-    res = compute(ans)
+    qset = row["qset"] if row["qset"] in SETS else "school"
+    school = qset == "school"
+    res = compute(ans) if school else {"score": {}, "max": 0, "ranked": [None]}
     top = res["ranked"][0]
 
     def pick(labels, i):
@@ -302,7 +325,7 @@ def prepare(row) -> dict:
         return labels[a] if a is not None and 0 <= a < len(labels) else "—"
 
     qa = []
-    for i, q in enumerate(Q):
+    for i, q in enumerate(SETS[qset]):
         a = ans[i] if i < len(ans) else None
         text = f"{LET[a]}. {q['o'][a]}" if a is not None and 0 <= a < len(q["o"]) else "—"
         qa.append({"q": q["t"], "a": text})
@@ -316,14 +339,16 @@ def prepare(row) -> dict:
         "when": fmt_time(row["created_at"]),
         "created_at": row["created_at"],
         "ans": ans,
+        "qset": qset,
+        "qset_name": SET_NAMES[qset],
         "top": top,
-        "top_label": CL[top]["short"],
-        "top_color": CL[top]["color"],
-        "pct": {c: round(res["score"][c] / res["max"] * 100) if res["max"] else 0 for c in ORDER},
-        "learn": pick(DATA["s_learn"], 6),
-        "plan": pick(DATA["s_plan"], 9),
-        "factor": pick(DATA["s_factor"], 8),
-        "ready": pick(DATA["s_ready"], 0),
+        "top_label": CL[top]["short"] if school else "—",
+        "top_color": CL[top]["color"] if school else "--muted",
+        "pct": {c: round(res["score"][c] / res["max"] * 100) if res["max"] else 0 for c in ORDER} if school else {},
+        "learn": pick(DATA["s_learn"], 6) if school else "—",
+        "plan": pick(DATA["s_plan"], 9) if school else "—",
+        "factor": pick(DATA["s_factor"], 8) if school else "—",
+        "ready": pick(DATA["s_ready"], 0) if school else "—",
         "qa": qa,
     }
 
@@ -365,16 +390,27 @@ def panel(title, labels, values, colors=None):
 
 def build_panels(rows):
     doing_labels = [d["en"] for d in DOING] + ["Not given"]
-    return [
-        panel("Interest", [CL[c]["short"] for c in ORDER], [ORDER.index(r["top"]) for r in rows],
-              [CL[c]["color"] for c in ORDER]),
-        panel("Learning style", DATA["s_learn"], [r["ans"][6] for r in rows]),
-        panel("Study plan", DATA["s_plan"], [r["ans"][9] for r in rows]),
-        panel("Picks a course by", DATA["s_factor"], [r["ans"][8] for r in rows]),
-        panel("Where they are now", DATA["s_ready"], [r["ans"][0] for r in rows]),
-        panel("Doing now", doing_labels,
-              [DOING_KEYS.index(r["doing_key"]) if r["doing_key"] in DOING_KEYS else len(DOING_KEYS) for r in rows]),
-    ]
+    school = [r for r in rows if r["qset"] == "school"]
+    out = []
+    if school:
+        out += [
+            panel("Interest (12th quiz)", [CL[c]["short"] for c in ORDER], [ORDER.index(r["top"]) for r in school],
+                  [CL[c]["color"] for c in ORDER]),
+            panel("Learning style", DATA["s_learn"], [r["ans"][6] for r in school]),
+            panel("Study plan", DATA["s_plan"], [r["ans"][9] for r in school]),
+            panel("Picks a course by", DATA["s_factor"], [r["ans"][8] for r in school]),
+            panel("Where they are now", DATA["s_ready"], [r["ans"][0] for r in school]),
+        ]
+    for key, qi, title in (("college", 0, "College: main goal"), ("college", 9, "College: first support"),
+                           ("course", 0, "Course: first move"), ("course", 9, "Course: first support")):
+        sub = [r for r in rows if r["qset"] == key]
+        if sub:
+            labels = [o[:38] + ("…" if len(o) > 38 else "") for o in SETS[key][qi]["o"]]
+            out.append(panel(title, labels, [r["ans"][qi] for r in sub]))
+    out.append(panel("Doing now", doing_labels,
+                     [DOING_KEYS.index(r["doing_key"]) if r["doing_key"] in DOING_KEYS else len(DOING_KEYS) for r in rows]))
+    out.append(panel("Quiz taken", list(SET_NAMES.values()), [list(SET_NAMES).index(r["qset"]) for r in rows]))
+    return out
 
 
 @app.get("/admin/login")
@@ -447,14 +483,14 @@ def export_csv(request: Request, q: str = "", interest: str = "", sort: str = "n
     out = io.StringIO()
     w = csv.writer(out)
     w.writerow(
-        ["Name", "Phone", "Doing now", "Top interest", "Technology %", "Creativity %", "Business %",
+        ["Name", "Phone", "Doing now", "Quiz", "Top interest", "Technology %", "Creativity %", "Business %",
          "Science & People %", "Learning style", "Study plan", "Picks course by", "Where they are now",
-         "Submitted (IST)"] + [f"Q{i + 1}" for i in range(len(Q))]
+         "Submitted (IST)"] + [f"Q{i + 1}" for i in range(10)]
     )
     for r in rows:
         w.writerow(
-            [csv_safe(r["name"]), r["phone"], r["doing"], r["top_label"],
-             r["pct"]["tech"], r["pct"]["creative"], r["pct"]["business"], r["pct"]["people"],
+            [csv_safe(r["name"]), r["phone"], r["doing"], r["qset_name"], r["top_label"],
+             r["pct"].get("tech", ""), r["pct"].get("creative", ""), r["pct"].get("business", ""), r["pct"].get("people", ""),
              r["learn"], r["plan"], r["factor"], r["ready"], r["when"]]
             + [LET[a] if a is not None else "" for a in r["ans"]]
         )

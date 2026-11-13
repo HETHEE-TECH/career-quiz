@@ -1,365 +1,614 @@
 {
-  "colors": [
-    "--purple",
-    "--pink",
-    "--teal",
-    "--orange",
-    "--blue",
-    "--purple",
-    "--pink",
-    "--teal",
-    "--orange",
-    "--blue"
-  ],
-  "cl": {
-    "tech": {
-      "name": "Technology & Problem Solving",
-      "short": "Technology",
-      "color": "--blue"
-    },
-    "creative": {
-      "name": "Creativity & Design",
-      "short": "Creativity",
-      "color": "--pink"
-    },
-    "business": {
-      "name": "Business & Management",
-      "short": "Business",
-      "color": "--orange"
-    },
-    "people": {
-      "name": "Science & People",
-      "short": "Science & People",
-      "color": "--teal"
-    }
+ "colors": [
+  "--purple",
+  "--pink",
+  "--teal",
+  "--orange",
+  "--blue",
+  "--purple",
+  "--pink",
+  "--teal",
+  "--orange",
+  "--blue"
+ ],
+ "cl": {
+  "tech": {
+   "name": "Technology & Problem Solving",
+   "short": "Technology",
+   "color": "--blue"
   },
-  "order": [
+  "creative": {
+   "name": "Creativity & Design",
+   "short": "Creativity",
+   "color": "--pink"
+  },
+  "business": {
+   "name": "Business & Management",
+   "short": "Business",
+   "color": "--orange"
+  },
+  "people": {
+   "name": "Science & People",
+   "short": "Science & People",
+   "color": "--teal"
+  }
+ },
+ "order": [
+  "tech",
+  "creative",
+  "business",
+  "people"
+ ],
+ "q": [
+  {
+   "t": "12th முடிஞ்சதும்… உங்க Next Step ரெடியா, இன்னும் Loading-ஆ?",
+   "o": [
+    "Course, College ரெண்டுமே Fixed",
+    "Course Ready; College மட்டும் Pending",
+    "சில Options இருக்கு; இன்னும் Decide பண்ணல",
+    "எங்க Start பண்ணணும்னு தெரியல"
+   ]
+  },
+  {
+   "t": "Exam இல்லன்னாலும்… எந்த Subject-ஐ விரும்பிப் படிப்பீங்க?",
+   "w": 2,
+   "m": [
     "tech",
+    "people",
+    "business",
+    "creative"
+   ],
+   "o": [
+    "Maths / Computer Science",
+    "Physics / Chemistry / Biology",
+    "Commerce / Accountancy / Economics",
+    "Languages / History / மற்ற Arts Subjects"
+   ]
+  },
+  {
+   "t": "“இதைப் பத்தி இன்னும் தெரிஞ்சுக்கணுமே!”ன்னு எந்தத் துறை மேல ஆர்வம் வரும்?",
+   "w": 2,
+   "m": [
     "creative",
+    "tech",
     "business",
     "people"
-  ],
-  "q": [
-    {
-      "t": "12th முடிஞ்சதும்… உங்க Next Step ரெடியா, இன்னும் Loading-ஆ?",
-      "o": [
-        "Course, College ரெண்டுமே Fixed",
-        "Course Ready; College மட்டும் Pending",
-        "சில Options இருக்கு; இன்னும் Decide பண்ணல",
-        "எங்க Start பண்ணணும்னு தெரியல"
-      ]
-    },
-    {
-      "t": "Exam இல்லன்னாலும்… எந்த Subject-ஐ விரும்பிப் படிப்பீங்க?",
-      "w": 2,
-      "m": [
-        "tech",
-        "people",
-        "business",
-        "creative"
-      ],
-      "o": [
-        "Maths / Computer Science",
-        "Physics / Chemistry / Biology",
-        "Commerce / Accountancy / Economics",
-        "Languages / History / மற்ற Arts Subjects"
-      ]
-    },
-    {
-      "t": "“இதைப் பத்தி இன்னும் தெரிஞ்சுக்கணுமே!”ன்னு எந்தத் துறை மேல ஆர்வம் வரும்?",
-      "w": 2,
-      "m": [
-        "creative",
-        "tech",
-        "business",
-        "people"
-      ],
-      "o": [
-        "Creativity - கலை, புதிய படைப்புகள்",
-        "Technology - தொழில்நுட்பம், புதிய கண்டுபிடிப்புகள்",
-        "Business - வியாபாரம், பணநிர்வாகம்",
-        "Science & People - அறிவியல், ஆரோக்கியம், மனிதர்கள்"
-      ]
-    },
-    {
-      "t": "“இது எனக்கு ஈஸி!”ன்னு நீங்க சொல்ற விஷயம் எது?",
-      "w": 1,
-      "m": [
-        "tech",
-        "people",
-        "creative",
-        "business"
-      ],
-      "o": [
-        "Maths, Puzzles Solve பண்ணுவது",
-        "ஒரு விஷயத்தை Clear-ஆ Explain பண்ணுவது",
-        "புதுசா Write அல்லது Design பண்ணுவது",
-        "ஒரு வேலையை Plan பண்ணி முடிப்பது"
-      ]
-    },
-    {
-      "t": "Friends உங்க உதவியை அதிகமா எதுக்குத் தேடி வருவாங்க?",
-      "w": 1,
-      "m": [
-        "people",
-        "tech",
-        "creative",
-        "people"
-      ],
-      "o": [
-        "Subjects-ல Doubts கேட்க",
-        "Phone / Computer Problems சரி செய்ய",
-        "Writing, Drawing அல்லது Editing செய்ய",
-        "Personal Problems-ஐ பேசித் தீர்க்க"
-      ]
-    },
-    {
-      "t": "Free time கிடைச்சா… எதைச் செய்ய நீங்களே முன்வருவீங்க?",
-      "w": 1,
-      "m": [
-        "tech",
-        "people",
-        "creative",
-        "people"
-      ],
-      "o": [
-        "ஏதாவது Build அல்லது Repair பண்ண",
-        "ஒரு Topic பத்தி Search பண்ணிப் படிக்க",
-        "Writing, Drawing அல்லது Video Making",
-        "யாருக்காவது Teach அல்லது Help பண்ண"
-      ]
-    },
-    {
-      "t": "புதுசா ஒரு விஷயத்தைக் கத்துக்கும் போது… எப்படிச் சொன்னா சீக்கிரம் புரியும்?",
-      "o": [
-        "Books / Notes-ல படிச்சா",
-        "Videos / Pictures-ல பார்த்தா",
-        "நானே Practice பண்ணிப் பார்த்தா",
-        "யாராவது Explain பண்ணி, Doubts கேட்டா"
-      ]
-    },
-    {
-      "t": "நாளைக்கு ஒரு வேலை… அதில் எது இருந்தா உங்களுக்குப் பிடிக்கும்?",
-      "w": 1,
-      "m": [
-        "tech",
-        "creative",
-        "people",
-        "business"
-      ],
-      "o": [
-        "Problems-க்கு Solutions கண்டுபிடிக்கணும்",
-        "புதுப் புது Ideas-ஐ Create பண்ணணும்",
-        "மக்களோட Connect பண்ணி Help பண்ணணும்",
-        "வேலைகளை Plan பண்ணி Manage பண்ணணும்"
-      ]
-    },
-    {
-      "t": "ஒரு Course-க்கு உங்க “Yes”… முதலில் எதைப் பொறுத்தது?",
-      "o": [
-        "என் Interest-க்கு Match ஆகணும்",
-        "நல்ல Job Opportunities இருக்கணும்",
-        "Fees எங்க Budget-க்குள் இருக்கணும்",
-        "College Location எங்களுக்கு ஏத்தமாதிரி இருக்கணும்"
-      ]
-    },
-    {
-      "t": "உங்க Study Plan-க்கு இப்போ எது பொருத்தமா இருக்கும்?",
-      "o": [
-        "சில வருஷம் Full-time படிக்க Ready",
-        "Short-term Course முடிச்சு Job போகணும்",
-        "Work பண்ணிக்கிட்டே Study பண்ணணும்",
-        "என்னென்ன Options இருக்குன்னு முதலில் தெரிஞ்சுக்கணும்"
-      ]
-    }
-  ],
-  "cluster_info": {
-    "tech": {
-      "lead": "தர்க்கம், கணிதம், கணினி ஆகியவற்றின் மீது உங்களுக்கு இயல்பான ஈர்ப்பு உள்ளது. சிக்கலைப் பகுத்து, தீர்வு கண்டு, புதிதாக ஒன்றை உருவாக்குவது உங்கள் பலம்.",
-      "degree": [
-        "B.E / B.Tech (CSE, IT, AI & DS)",
-        "B.Sc Computer Science",
-        "BCA",
-        "B.Sc AI & ML",
-        "Polytechnic Diploma"
-      ],
-      "short": [
-        "Python Programming",
-        "Web Development",
-        "Data Analytics",
-        "Networking & Hardware"
-      ]
-    },
-    "creative": {
-      "lead": "புதிதாக உருவாக்குவது, எழுதுவது, வடிவமைப்பது ஆகியவை உங்களுக்கு இயல்பாக வருகின்றன. உங்கள் கருத்துகளை வெளிப்படுத்த இடமளிக்கும் படிப்புகள் உங்களுக்குப் பொருந்தும்.",
-      "degree": [
-        "B.Des",
-        "BFA",
-        "B.Sc Visual Communication",
-        "Animation & Multimedia",
-        "B.A English / Journalism & Mass Communication"
-      ],
-      "short": [
-        "Graphic Design",
-        "Video Editing",
-        "UI / UX Design",
-        "Content Writing"
-      ]
-    },
-    "business": {
-      "lead": "திட்டமிடுவது, நிர்வகிப்பது, பணம் மற்றும் வணிகத்தைப் புரிந்துகொண்டு நடத்துவது ஆகியவற்றில் உங்களுக்கு ஆர்வம் உள்ளது. ஒழுங்குபடுத்துவது உங்கள் பலம்.",
-      "degree": [
-        "B.Com",
-        "BBA",
-        "B.A Economics",
-        "CA / CMA / CS Foundation",
-        "BBA Logistics & Supply Chain"
-      ],
-      "short": [
-        "Tally & GST",
-        "Digital Marketing",
-        "Accounting & Taxation",
-        "Retail & Sales Management"
-      ]
-    },
-    "people": {
-      "lead": "அறிவியல், ஆரோக்கியம், பிறருக்கு உதவுவது, கற்றுக்கொடுப்பது ஆகியவற்றில் உங்களுக்கு ஆர்வம் உள்ளது. மக்களோடு இணைந்து பணிபுரியும் துறை உங்களுக்குப் பொருத்தமாக இருக்கும்.",
-      "degree": [
-        "MBBS / BDS / BAMS (NEET மூலம்)",
-        "B.Sc Nursing",
-        "B.Pharm",
-        "B.Sc Physics / Chemistry / Life Sciences",
-        "B.A / B.Sc Psychology",
-        "BSW (Social Work)"
-      ],
-      "short": [
-        "DMLT (Lab Technician)",
-        "Allied Health Diploma",
-        "Teacher Training (D.El.Ed)",
-        "Counselling Basics"
-      ]
-    }
+   ],
+   "o": [
+    "Creativity - கலை, புதிய படைப்புகள்",
+    "Technology - தொழில்நுட்பம், புதிய கண்டுபிடிப்புகள்",
+    "Business - வியாபாரம், பணநிர்வாகம்",
+    "Science & People - அறிவியல், ஆரோக்கியம், மனிதர்கள்"
+   ]
   },
-  "learn": [
-    [
-      "படித்துக் கற்பவர் (Reading)",
-      "புத்தகங்கள், குறிப்புகள், PDF ஆகியவை உங்களுக்கு நன்கு உதவும். சிறு குறிப்புகள் எழுதி, அடிக்கடி மீள்பார்வை செய்யுங்கள்."
-    ],
-    [
-      "பார்த்துக் கற்பவர் (Visual)",
-      "காணொளிகள், படங்கள், மனவரைபடங்கள் (Mind-maps) ஆகியவற்றைப் பயன்படுத்துங்கள். வண்ணக் குறிப்புகள் நினைவில் நிற்க உதவும்."
-    ],
-    [
-      "செய்து கற்பவர் (Hands-on)",
-      "பயிற்சி, செயல்திட்டங்கள் (Projects), செய்முறை மூலம் கற்றுக்கொள்ளுங்கள். ஒரு தலைப்பைப் படித்தவுடன் ஒரு சிறிய செயல்திட்டம் செய்யுங்கள்."
-    ],
-    [
-      "பேசிக் கற்பவர் (Discussion)",
-      "படிப்புக் குழு, வழிகாட்டி (Mentor), சந்தேக நிவர்த்தி வகுப்புகள் உங்களுக்குப் பொருந்தும். கற்றதை மற்றவர்களுக்கு விளக்குங்கள்."
-    ]
+  {
+   "t": "“இது எனக்கு ஈஸி!”ன்னு நீங்க சொல்ற விஷயம் எது?",
+   "w": 1,
+   "m": [
+    "tech",
+    "people",
+    "creative",
+    "business"
+   ],
+   "o": [
+    "Maths, Puzzles Solve பண்ணுவது",
+    "ஒரு விஷயத்தை Clear-ஆ Explain பண்ணுவது",
+    "புதுசா Write அல்லது Design பண்ணுவது",
+    "ஒரு வேலையை Plan பண்ணி முடிப்பது"
+   ]
+  },
+  {
+   "t": "Friends உங்க உதவியை அதிகமா எதுக்குத் தேடி வருவாங்க?",
+   "w": 1,
+   "m": [
+    "people",
+    "tech",
+    "creative",
+    "people"
+   ],
+   "o": [
+    "Subjects-ல Doubts கேட்க",
+    "Phone / Computer Problems சரி செய்ய",
+    "Writing, Drawing அல்லது Editing செய்ய",
+    "Personal Problems-ஐ பேசித் தீர்க்க"
+   ]
+  },
+  {
+   "t": "Free time கிடைச்சா… எதைச் செய்ய நீங்களே முன்வருவீங்க?",
+   "w": 1,
+   "m": [
+    "tech",
+    "people",
+    "creative",
+    "people"
+   ],
+   "o": [
+    "ஏதாவது Build அல்லது Repair பண்ண",
+    "ஒரு Topic பத்தி Search பண்ணிப் படிக்க",
+    "Writing, Drawing அல்லது Video Making",
+    "யாருக்காவது Teach அல்லது Help பண்ண"
+   ]
+  },
+  {
+   "t": "புதுசா ஒரு விஷயத்தைக் கத்துக்கும் போது… எப்படிச் சொன்னா சீக்கிரம் புரியும்?",
+   "o": [
+    "Books / Notes-ல படிச்சா",
+    "Videos / Pictures-ல பார்த்தா",
+    "நானே Practice பண்ணிப் பார்த்தா",
+    "யாராவது Explain பண்ணி, Doubts கேட்டா"
+   ]
+  },
+  {
+   "t": "நாளைக்கு ஒரு வேலை… அதில் எது இருந்தா உங்களுக்குப் பிடிக்கும்?",
+   "w": 1,
+   "m": [
+    "tech",
+    "creative",
+    "people",
+    "business"
+   ],
+   "o": [
+    "Problems-க்கு Solutions கண்டுபிடிக்கணும்",
+    "புதுப் புது Ideas-ஐ Create பண்ணணும்",
+    "மக்களோட Connect பண்ணி Help பண்ணணும்",
+    "வேலைகளை Plan பண்ணி Manage பண்ணணும்"
+   ]
+  },
+  {
+   "t": "ஒரு Course-க்கு உங்க “Yes”… முதலில் எதைப் பொறுத்தது?",
+   "o": [
+    "என் Interest-க்கு Match ஆகணும்",
+    "நல்ல Job Opportunities இருக்கணும்",
+    "Fees எங்க Budget-க்குள் இருக்கணும்",
+    "College Location எங்களுக்கு ஏத்தமாதிரி இருக்கணும்"
+   ]
+  },
+  {
+   "t": "உங்க Study Plan-க்கு இப்போ எது பொருத்தமா இருக்கும்?",
+   "o": [
+    "சில வருஷம் Full-time படிக்க Ready",
+    "Short-term Course முடிச்சு Job போகணும்",
+    "Work பண்ணிக்கிட்டே Study பண்ணணும்",
+    "என்னென்ன Options இருக்குன்னு முதலில் தெரிஞ்சுக்கணும்"
+   ]
+  }
+ ],
+ "cluster_info": {
+  "tech": {
+   "lead": "தர்க்கம், கணிதம், கணினி ஆகியவற்றின் மீது உங்களுக்கு இயல்பான ஈர்ப்பு உள்ளது. சிக்கலைப் பகுத்து, தீர்வு கண்டு, புதிதாக ஒன்றை உருவாக்குவது உங்கள் பலம்.",
+   "degree": [
+    "B.E / B.Tech (CSE, IT, AI & DS)",
+    "B.Sc Computer Science",
+    "BCA",
+    "B.Sc AI & ML",
+    "Polytechnic Diploma"
+   ],
+   "short": [
+    "Python Programming",
+    "Web Development",
+    "Data Analytics",
+    "Networking & Hardware"
+   ]
+  },
+  "creative": {
+   "lead": "புதிதாக உருவாக்குவது, எழுதுவது, வடிவமைப்பது ஆகியவை உங்களுக்கு இயல்பாக வருகின்றன. உங்கள் கருத்துகளை வெளிப்படுத்த இடமளிக்கும் படிப்புகள் உங்களுக்குப் பொருந்தும்.",
+   "degree": [
+    "B.Des",
+    "BFA",
+    "B.Sc Visual Communication",
+    "Animation & Multimedia",
+    "B.A English / Journalism & Mass Communication"
+   ],
+   "short": [
+    "Graphic Design",
+    "Video Editing",
+    "UI / UX Design",
+    "Content Writing"
+   ]
+  },
+  "business": {
+   "lead": "திட்டமிடுவது, நிர்வகிப்பது, பணம் மற்றும் வணிகத்தைப் புரிந்துகொண்டு நடத்துவது ஆகியவற்றில் உங்களுக்கு ஆர்வம் உள்ளது. ஒழுங்குபடுத்துவது உங்கள் பலம்.",
+   "degree": [
+    "B.Com",
+    "BBA",
+    "B.A Economics",
+    "CA / CMA / CS Foundation",
+    "BBA Logistics & Supply Chain"
+   ],
+   "short": [
+    "Tally & GST",
+    "Digital Marketing",
+    "Accounting & Taxation",
+    "Retail & Sales Management"
+   ]
+  },
+  "people": {
+   "lead": "அறிவியல், ஆரோக்கியம், பிறருக்கு உதவுவது, கற்றுக்கொடுப்பது ஆகியவற்றில் உங்களுக்கு ஆர்வம் உள்ளது. மக்களோடு இணைந்து பணிபுரியும் துறை உங்களுக்குப் பொருத்தமாக இருக்கும்.",
+   "degree": [
+    "MBBS / BDS / BAMS (NEET மூலம்)",
+    "B.Sc Nursing",
+    "B.Pharm",
+    "B.Sc Physics / Chemistry / Life Sciences",
+    "B.A / B.Sc Psychology",
+    "BSW (Social Work)"
+   ],
+   "short": [
+    "DMLT (Lab Technician)",
+    "Allied Health Diploma",
+    "Teacher Training (D.El.Ed)",
+    "Counselling Basics"
+   ]
+  }
+ },
+ "learn": [
+  [
+   "படித்துக் கற்பவர் (Reading)",
+   "புத்தகங்கள், குறிப்புகள், PDF ஆகியவை உங்களுக்கு நன்கு உதவும். சிறு குறிப்புகள் எழுதி, அடிக்கடி மீள்பார்வை செய்யுங்கள்."
   ],
-  "plan": [
-    [
-      "முழுநேரப் பட்டப் படிப்பு (Full-time Degree)",
-      "3 முதல் 4 ஆண்டுகள் முழுநேரப் பட்டப் படிப்பு உங்களுக்குப் பொருத்தமாக இருக்கும். அடித்தளம் வலுவாக அமையும்."
-    ],
-    [
-      "குறுகியகாலப் படிப்பு, பின்னர் வேலை (Short-term Course, then Job)",
-      "6 மாதம் முதல் 1 ஆண்டு வரையிலான திறன் படிப்பு அல்லது பட்டயப் படிப்பு. வேலைக்குத் தயாராவதற்கான விரைவான வழி."
-    ],
-    [
-      "வேலை + படிப்பு (Work + Study)",
-      "பகுதிநேர வேலையுடன் தொலைதூரக் கல்வி, திறந்தநிலைப் பல்கலைக்கழகம், மாலைக் கல்லூரி அல்லது இணையவழிப் படிப்பைச் சேர்த்துக்கொள்ளலாம்."
-    ],
-    [
-      "முதலில் வாய்ப்புகளை அறிய வேண்டும் (Explore options first)",
-      "தொழில் வழிகாட்டல் (Career Counselling), கல்லூரித் திறந்தவெளி நாள், இலவச அறிமுக வகுப்பு மூலம் வாய்ப்புகளைப் பாருங்கள். பிறகு முடிவு செய்யலாம்."
-    ]
+  [
+   "பார்த்துக் கற்பவர் (Visual)",
+   "காணொளிகள், படங்கள், மனவரைபடங்கள் (Mind-maps) ஆகியவற்றைப் பயன்படுத்துங்கள். வண்ணக் குறிப்புகள் நினைவில் நிற்க உதவும்."
   ],
-  "ready": [
-    "உங்கள் படிப்பும் கல்லூரியும் உறுதியாகிவிட்டன. சேர்க்கைத் தேதி, தேவையான ஆவணங்களைச் சரிபார்த்துத் தொடங்குங்கள்.",
-    "படிப்பு உறுதியாகிவிட்டது. கட்டணம், இடம், வேலைவாய்ப்பு (Placement) ஆகியவற்றை ஒப்பிட்டுக் கல்லூரிகளைத் தேர்ந்தெடுங்கள்.",
-    "சில வாய்ப்புகள் உள்ளன. மேலே உள்ள உங்கள் ஆர்வ முடிவுடன் ஒப்பிட்டு 2 அல்லது 3-ஐத் தேர்ந்தெடுங்கள்.",
-    "தொடங்குவதற்கு இந்த முடிவு ஒரு நல்ல ஆரம்பம். கீழே உள்ள படிப்புகளில் 2 அல்லது 3-ஐத் தேர்ந்தெடுங்கள்."
+  [
+   "செய்து கற்பவர் (Hands-on)",
+   "பயிற்சி, செயல்திட்டங்கள் (Projects), செய்முறை மூலம் கற்றுக்கொள்ளுங்கள். ஒரு தலைப்பைப் படித்தவுடன் ஒரு சிறிய செயல்திட்டம் செய்யுங்கள்."
   ],
-  "ready_title": [
-    "படிப்பு, கல்லூரி இரண்டும் உறுதி",
-    "படிப்பு உறுதி, கல்லூரி நிலுவையில்",
-    "சில வாய்ப்புகள் உள்ளன",
-    "தொடக்கப் புள்ளியைத் தேடுகிறீர்கள்"
-  ],
-  "factor": [
-    "உங்கள் ஆர்வத்திற்குப் பொருந்த வேண்டும்",
-    "நல்ல வேலைவாய்ப்பு இருக்க வேண்டும்",
-    "கட்டணம் உங்கள் பட்ஜெட்டுக்குள் இருக்க வேண்டும்",
-    "கல்லூரி அமைந்திருக்கும் இடம் உங்களுக்கு வசதியாக இருக்க வேண்டும்"
-  ],
-  "s_learn": [
-    "Reading",
-    "Visual",
-    "Hands-on",
-    "Discussion"
-  ],
-  "s_plan": [
-    "Full-time degree",
-    "Short course, then job",
-    "Work + study",
-    "Still exploring"
-  ],
-  "s_factor": [
-    "Interest",
-    "Job opportunities",
-    "Fees",
-    "Location"
-  ],
-  "s_ready": [
-    "Course & college fixed",
-    "Course ready",
-    "Few options",
-    "Not sure where to start"
-  ],
-  "groups": [
-    "Science (Maths / Computer)",
-    "Science (Biology)",
-    "Commerce",
-    "Arts / Humanities",
-    "Vocational / Other"
-  ],
-  "doing": [
-    {
-      "key": "search_college",
-      "ta": "கல்லூரியைத் தேடுகிறேன்",
-      "en": "Searching for a college"
-    },
-    {
-      "key": "in_college",
-      "ta": "கல்லூரியில் படிக்கிறேன்",
-      "en": "Studying in college"
-    },
-    {
-      "key": "course",
-      "ta": "ஒரு படிப்பு அல்லது பயிற்சியில் சேர்ந்துள்ளேன்",
-      "en": "Doing a course"
-    },
-    {
-      "key": "job_search",
-      "ta": "வேலை தேடுகிறேன்",
-      "en": "Looking for a job"
-    },
-    {
-      "key": "working",
-      "ta": "வேலை செய்கிறேன்",
-      "en": "Working"
-    },
-    {
-      "key": "exam_prep",
-      "ta": "போட்டித் தேர்வுக்குத் தயாராகிறேன்",
-      "en": "Preparing for entrance or competitive exams"
-    },
-    {
-      "key": "other",
-      "ta": "வேறு",
-      "en": "Something else"
-    }
+  [
+   "பேசிக் கற்பவர் (Discussion)",
+   "படிப்புக் குழு, வழிகாட்டி (Mentor), சந்தேக நிவர்த்தி வகுப்புகள் உங்களுக்குப் பொருந்தும். கற்றதை மற்றவர்களுக்கு விளக்குங்கள்."
   ]
+ ],
+ "plan": [
+  [
+   "முழுநேரப் பட்டப் படிப்பு (Full-time Degree)",
+   "3 முதல் 4 ஆண்டுகள் முழுநேரப் பட்டப் படிப்பு உங்களுக்குப் பொருத்தமாக இருக்கும். அடித்தளம் வலுவாக அமையும்."
+  ],
+  [
+   "குறுகியகாலப் படிப்பு, பின்னர் வேலை (Short-term Course, then Job)",
+   "6 மாதம் முதல் 1 ஆண்டு வரையிலான திறன் படிப்பு அல்லது பட்டயப் படிப்பு. வேலைக்குத் தயாராவதற்கான விரைவான வழி."
+  ],
+  [
+   "வேலை + படிப்பு (Work + Study)",
+   "பகுதிநேர வேலையுடன் தொலைதூரக் கல்வி, திறந்தநிலைப் பல்கலைக்கழகம், மாலைக் கல்லூரி அல்லது இணையவழிப் படிப்பைச் சேர்த்துக்கொள்ளலாம்."
+  ],
+  [
+   "முதலில் வாய்ப்புகளை அறிய வேண்டும் (Explore options first)",
+   "தொழில் வழிகாட்டல் (Career Counselling), கல்லூரித் திறந்தவெளி நாள், இலவச அறிமுக வகுப்பு மூலம் வாய்ப்புகளைப் பாருங்கள். பிறகு முடிவு செய்யலாம்."
+  ]
+ ],
+ "ready": [
+  "உங்கள் படிப்பும் கல்லூரியும் உறுதியாகிவிட்டன. சேர்க்கைத் தேதி, தேவையான ஆவணங்களைச் சரிபார்த்துத் தொடங்குங்கள்.",
+  "படிப்பு உறுதியாகிவிட்டது. கட்டணம், இடம், வேலைவாய்ப்பு (Placement) ஆகியவற்றை ஒப்பிட்டுக் கல்லூரிகளைத் தேர்ந்தெடுங்கள்.",
+  "சில வாய்ப்புகள் உள்ளன. மேலே உள்ள உங்கள் ஆர்வ முடிவுடன் ஒப்பிட்டு 2 அல்லது 3-ஐத் தேர்ந்தெடுங்கள்.",
+  "தொடங்குவதற்கு இந்த முடிவு ஒரு நல்ல ஆரம்பம். கீழே உள்ள படிப்புகளில் 2 அல்லது 3-ஐத் தேர்ந்தெடுங்கள்."
+ ],
+ "ready_title": [
+  "படிப்பு, கல்லூரி இரண்டும் உறுதி",
+  "படிப்பு உறுதி, கல்லூரி நிலுவையில்",
+  "சில வாய்ப்புகள் உள்ளன",
+  "தொடக்கப் புள்ளியைத் தேடுகிறீர்கள்"
+ ],
+ "factor": [
+  "உங்கள் ஆர்வத்திற்குப் பொருந்த வேண்டும்",
+  "நல்ல வேலைவாய்ப்பு இருக்க வேண்டும்",
+  "கட்டணம் உங்கள் பட்ஜெட்டுக்குள் இருக்க வேண்டும்",
+  "கல்லூரி அமைந்திருக்கும் இடம் உங்களுக்கு வசதியாக இருக்க வேண்டும்"
+ ],
+ "s_learn": [
+  "Reading",
+  "Visual",
+  "Hands-on",
+  "Discussion"
+ ],
+ "s_plan": [
+  "Full-time degree",
+  "Short course, then job",
+  "Work + study",
+  "Still exploring"
+ ],
+ "s_factor": [
+  "Interest",
+  "Job opportunities",
+  "Fees",
+  "Location"
+ ],
+ "s_ready": [
+  "Course & college fixed",
+  "Course ready",
+  "Few options",
+  "Not sure where to start"
+ ],
+ "groups": [
+  "Science (Maths / Computer)",
+  "Science (Biology)",
+  "Commerce",
+  "Arts / Humanities",
+  "Vocational / Other"
+ ],
+ "doing": [
+  {
+   "key": "search_college",
+   "ta": "கல்லூரியைத் தேடுகிறேன்",
+   "en": "Searching for a college"
+  },
+  {
+   "key": "in_college",
+   "ta": "கல்லூரியில் படிக்கிறேன்",
+   "en": "Studying in college"
+  },
+  {
+   "key": "course",
+   "ta": "ஒரு படிப்பு அல்லது பயிற்சியில் சேர்ந்துள்ளேன்",
+   "en": "Doing a course"
+  },
+  {
+   "key": "job_search",
+   "ta": "வேலை தேடுகிறேன்",
+   "en": "Looking for a job"
+  },
+  {
+   "key": "working",
+   "ta": "வேலை செய்கிறேன்",
+   "en": "Working"
+  },
+  {
+   "key": "exam_prep",
+   "ta": "போட்டித் தேர்வுக்குத் தயாராகிறேன்",
+   "en": "Preparing for entrance or competitive exams"
+  },
+  {
+   "key": "other",
+   "ta": "வேறு",
+   "en": "Something else"
+  }
+ ],
+ "sets": {
+  "college": {
+   "name": "College student",
+   "q": [
+    {
+     "t": "College life ஓடிட்டு இருக்கு… இப்போ உங்க mind-ல ஓடுற main goal என்ன?",
+     "o": [
+      "Get ready for a job",
+      "Explore higher studies",
+      "Start freelancing or a business",
+      "Discover my career direction"
+     ]
+    },
+    {
+     "t": "உங்க dream job notification வந்தாச்சு… apply பண்ண முன்னாடி எதை ready பண்ணணும்னு தோணும்?",
+     "o": [
+      "Technical and practical skills",
+      "Communication and confidence",
+      "Resume and interview preparation",
+      "First, understand if the role suits me"
+     ]
+    },
+    {
+     "t": "Experience வேணும்னு சொல்றாங்க… college படிக்கும்போதே அதை build பண்ண எந்த route பிடிக்கும்?",
+     "o": [
+      "An internship in my field",
+      "Projects based on real problems",
+      "Freelance or part-time work",
+      "Explore the options with guidance"
+     ]
+    },
+    {
+     "t": "Degree + ஒரு EXTRA SKILL… உங்க profile-க்கு எதை add பண்ண ஆசை?",
+     "o": [
+      "AI Tools, Coding or Data Analytics",
+      "Design, Video Editing or Content Writing",
+      "Digital Marketing, Business or Finance",
+      "A specialised skill related to my degree"
+     ]
+    },
+    {
+     "t": "Placement interview-ல “Tell me about yourself”ன்னு கேட்டாச்சு… எதில் practice இருந்தா இன்னும் confident-ஆ இருப்பீங்க?",
+     "o": [
+      "Speaking clearly in English",
+      "Explaining my skills and projects",
+      "Handling questions without freezing",
+      "I feel confident - ready for mock interviews"
+     ]
+    },
+    {
+     "t": "உங்க college-க்கு வெளியேயும் opportunities இருக்கு… அவற்றைக் கண்டுபிடிக்க என்ன help வேணும்?",
+     "o": [
+      "Internship openings relevant to me",
+      "Job openings that match my profile",
+      "LinkedIn and networking guidance",
+      "Help checking which opportunities are genuine"
+     ]
+    },
+    {
+     "t": "Government job அல்லது competitive exam… உங்க plan-ல இருக்கா?",
+     "o": [
+      "Yes - I am already preparing",
+      "Yes - I need a plan to get started",
+      "Maybe - help me explore suitable exams",
+      "No - I am focusing on other career paths"
+     ]
+    },
+    {
+     "t": "College project முதல் future workplace வரை… எந்த skill strong-ஆ இருந்தா “என்னால handle பண்ண முடியும்!”ன்னு தோணும்?",
+     "o": [
+      "Teamwork and collaboration",
+      "Presentation and public speaking",
+      "Time management and work planning",
+      "Problem-solving and decision-making"
+     ]
+    },
+    {
+     "t": "Classes, assignments எல்லாத்துக்கும் நடுவில்… skill upgrade-க்கு உங்க practical plan என்ன?",
+     "o": [
+      "Short sessions during the week",
+      "Weekend classes or workshops",
+      "Flexible learning at my own pace",
+      "A structured programme during semester breaks"
+     ]
+    },
+    {
+     "t": "உங்களுக்காக ஒரு CAREER BOOST PACK customise பண்ணலாம்… first எதை unlock பண்ணுவீங்க?",
+     "o": [
+      "Placement Prep - Resume, Aptitude & Mock Interviews",
+      "Internship Starter - Search & Application Support",
+      "Skill Builder - Practical Training & Portfolio Projects",
+      "Exam Prep - Exam Selection & Study Planning"
+     ]
+    }
+   ]
+  },
+  "course": {
+   "name": "Certificate course",
+   "q": [
+    {
+     "t": "Course முடிஞ்சதும்… உங்க first move என்ன?",
+     "o": [
+      "Job",
+      "Internship / Apprenticeship",
+      "Higher studies",
+      "Freelancing / Business",
+      "இன்னும் முடிவு பண்ணல"
+     ]
+    },
+    {
+     "t": "உங்க course-க்கு related-ஆ எந்த மாதிரி job role-ல வேலை செய்ய விருப்பம்?",
+     "o": [
+      "Technical / Operations",
+      "Office / Administration",
+      "Design / Creative",
+      "Customer Service / Sales",
+      "எனக்குப் பொருத்தமான role-ஐ explore பண்ண விருப்பம்"
+     ]
+    },
+    {
+     "t": "Class-ல கத்துக்கிறதை நீங்களே செய்து பார்க்க எவ்வளவு chance கிடைக்குது?",
+     "o": [
+      "அடிக்கடி",
+      "சில நேரம்",
+      "ரொம்பக் குறைவா",
+      "இதுவரை கிடைக்கல"
+     ]
+    },
+    {
+     "t": "உங்க field-ல என்ன job opportunities இருக்கு, அதுல எது உங்களுக்கு suit ஆகும்னு எவ்வளவு clarity இருக்கு?",
+     "o": [
+      "என்ன opportunities இருக்கு, எது எனக்கு suit ஆகும்னு தெரியும்",
+      "Opportunities தெரியும், ஆனா எந்த role suit ஆகும்னு தெரியல",
+      "சில opportunities மட்டும் தெரியும்",
+      "என் field-ல என்ன opportunities இருக்குன்னு தெரிஞ்சுக்கணும்"
+     ]
+    },
+    {
+     "t": "Internship தேர்வு பண்ணும்போது… உங்களுக்கு எது முக்கியம்?",
+     "o": [
+      "என் field-க்கு related-ஆ இருக்கணும்",
+      "Practical tasks செய்ய வாய்ப்பு இருக்கணும்",
+      "Industry mentor கிட்ட கத்துக்க வாய்ப்பு இருக்கணும்",
+      "Job-க்குத் தேவையான experience கிடைக்கணும்"
+     ]
+    },
+    {
+     "t": "Workplace-ல செய்யுற tasks-க்கு தயாராக, எந்த மாதிரி practical training உங்களுக்கு உதவும்?",
+     "o": [
+      "Tools / Equipment practice",
+      "Real projects",
+      "Workplace tasks மாதிரி practice",
+      "செய்த work-க்கு trainer feedback"
+     ]
+    },
+    {
+     "t": "உங்க course-கூட ஒரு extra skill add பண்ணலாம்னா, எதைக் கத்துக்க விரும்புறீங்க?",
+     "o": [
+      "என் field-ல advanced skill",
+      "என் field-க்கு related-ஆன புது skill",
+      "Computer / Digital tools",
+      "AI tools",
+      "எந்த skill பொருந்தும்னு guidance வேணும்"
+     ]
+    },
+    {
+     "t": "ஒரு extra certification தேர்வு பண்ணும்போது, எதுக்கு priority கொடுப்பீங்க?",
+     "o": [
+      "என் field-ல specialise பண்ண உதவணும்",
+      "ஒரு related skill கத்துக்க உதவணும்",
+      "Job opportunities-க்கு பயன்படணும்",
+      "Higher studies-க்கு உதவணும்",
+      "சரியான certification தேர்வு பண்ண guidance வேணும்"
+     ]
+    },
+    {
+     "t": "Workplace-க்கு தயாராக எந்த soft skill-ல practice வேணும்?",
+     "o": [
+      "Spoken English",
+      "Ideas-ஐ தெளிவா சொல்லும் திறன்",
+      "Teamwork",
+      "Time management",
+      "குழுவில் confidence-ஆ பேசுறது"
+     ]
+    },
+    {
+     "t": "Job அல்லது internship தேட ஆரம்பிக்கும்போது, எந்த support முதல்ல வேணும்?",
+     "o": [
+      "என் course-க்கு ஏற்ற roles தெரிஞ்சுக்க",
+      "Job / Internship openings கண்டுபிடிக்க",
+      "Resume / Portfolio தயார் பண்ண",
+      "Interview practice பண்ண",
+      "Application process-க்கு guidance பெற"
+     ]
+    }
+   ]
+  }
+ },
+ "set_of": {
+  "in_college": "college",
+  "course": "course"
+ },
+ "set_intro": {
+  "school": "10 கேள்விகள். உங்கள் ஆர்வம், கற்றல் முறை, படிப்புத் திட்டம் ஆகியவற்றைக் கண்டறியலாம்.",
+  "college": "10 கேள்விகள். உங்கள் இலக்கு, திறன்கள், தேவையான உதவி ஆகியவற்றைக் கண்டறியலாம்.",
+  "course": "10 கேள்விகள். படிப்புக்குப் பிறகான உங்கள் முதல் அடி, தேவையான பயிற்சி, உதவி ஆகியவற்றைக் கண்டறியலாம்."
+ },
+ "highlights": {
+  "college": [
+   [
+    0,
+    "உங்கள் முக்கிய இலக்கு"
+   ],
+   [
+    3,
+    "சேர்க்க விரும்பும் கூடுதல் திறன்"
+   ],
+   [
+    6,
+    "அரசுத் தேர்வு பற்றிய திட்டம்"
+   ],
+   [
+    9,
+    "முதலில் தேவையான உதவி (Career Boost Pack)"
+   ]
+  ],
+  "course": [
+   [
+    0,
+    "படிப்புக்குப் பிறகு உங்கள் முதல் அடி"
+   ],
+   [
+    1,
+    "விரும்பும் வேலைப் பிரிவு"
+   ],
+   [
+    6,
+    "கூடுதலாகக் கற்க விரும்பும் திறன்"
+   ],
+   [
+    9,
+    "முதலில் தேவையான உதவி"
+   ]
+  ]
+ },
+ "set_note": {
+  "college": "உங்கள் பதில்கள் TATTI நிர்வாகத்துக்குச் சென்றுவிட்டன. உங்களுக்குப் பொருத்தமான பயிற்சி மற்றும் வழிகாட்டுதலை அவர்கள் தெரிவிப்பார்கள்.",
+  "course": "உங்கள் பதில்கள் TATTI நிர்வாகத்துக்குச் சென்றுவிட்டன. உங்களுக்குப் பொருத்தமான பயிற்சி மற்றும் வழிகாட்டுதலை அவர்கள் தெரிவிப்பார்கள்."
+ }
 }

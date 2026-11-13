@@ -4,19 +4,30 @@
   var app = document.getElementById("app");
   var D;
   try {
-    var res = await fetch("/static/quiz-data.json?v=2");
+    var res = await fetch("/static/quiz-data.json?v=3");
     D = await res.json();
   } catch (e) {
     app.textContent = "வினாடி வினா ஏற்றப்படவில்லை. பக்கத்தைப் புதுப்பிக்கவும் (Refresh).";
     return;
   }
-  var COLORS = D.colors, CL = D.cl, ORDER = D.order, Q = D.q, CLUSTER_INFO = D.cluster_info;
+  var COLORS = D.colors, CL = D.cl, ORDER = D.order, CLUSTER_INFO = D.cluster_info;
+  var QCOLOR = "--purple";            // every question screen uses this one colour
+  var SCHOOL_Q = D.q;                 // 12th-class quiz
+  var Q = SCHOOL_Q;                   // the question set this student is answering
+  var curSet = "school";
   var LEARN = D.learn, PLAN = D.plan, READY = D.ready, READY_TITLE = D.ready_title, FACTOR = D.factor, DOING = D.doing;
 
   var answers = Q.map(function () { return null; });
   var meta = { name: "", phone: "", doing: "" };
   var timer = null;
-  var LET = ["A", "B", "C", "D"];
+  var LET = ["A", "B", "C", "D", "E"];
+
+  /* Which question set a student gets depends on what they are doing now (quiz-data.json "set_of"). */
+  function setFor(doing) { return (D.set_of && D.set_of[doing]) || "school"; }
+  function useSet(key) {
+    var q = key === "school" ? SCHOOL_Q : D.sets[key].q;
+    if (key !== curSet || Q !== q) { curSet = key; Q = q; answers = Q.map(function () { return null; }); }
+  }
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -61,7 +72,8 @@
     left.appendChild(brand);
     var h = el("h1", null, "12-ஆம் வகுப்புக்குப் பிறகு உங்கள் பாதை என்ன?");
     left.appendChild(h);
-    left.appendChild(el("p", "sub", "10 கேள்விகள். உங்கள் ஆர்வம், கற்றல் முறை, படிப்புத் திட்டம் ஆகியவற்றைக் கண்டறியலாம்."));
+    var sub = el("p", "sub", D.set_intro.school);
+    left.appendChild(sub);
 
     var form = el("form", "form");
     form.noValidate = true;
@@ -83,6 +95,9 @@
     var o0 = el("option", null, "தேர்ந்தெடுக்கவும் (Select)"); o0.value = ""; o0.disabled = true; gr.appendChild(o0);
     DOING.forEach(function (d) { var o = el("option", null, d.ta + " (" + d.en + ")"); o.value = d.key; gr.appendChild(o); });
     gr.value = meta.doing;
+    function syncIntro() { sub.textContent = D.set_intro[setFor(gr.value)] || D.set_intro.school; }
+    gr.addEventListener("change", syncIntro);
+    syncIntro();
     field("f-doing", "12-ஆம் வகுப்பு முடித்த பிறகு தற்போது என்ன செய்கிறீர்கள்? (What are you doing now after 12th?)", gr);
     var err = el("p", "err"); err.id = "f-err"; err.setAttribute("role", "alert");
     form.appendChild(err);
@@ -97,6 +112,7 @@
       if (!/^[0-9+\- ]{0,15}$/.test(ph.value.trim())) { err.textContent = "தொலைபேசி எண்ணில் இலக்கங்கள் மட்டும் உள்ளிடவும்."; ph.focus(); return; }
       if (!gr.value) { err.textContent = "நீங்கள் இப்போது என்ன செய்கிறீர்கள் என்பதைத் தேர்ந்தெடுக்கவும்."; gr.focus(); return; }
       meta = { name: n, phone: ph.value.trim(), doing: gr.value };
+      useSet(setFor(meta.doing));
       showQ(0);
     });
     left.appendChild(form);
@@ -114,7 +130,7 @@
     clearTimeout(timer);
     var q = Q[i];
     var v = el("section", "view");
-    setAccent(v, COLORS[i]);
+    setAccent(v, QCOLOR);
 
     var top = el("div", "top");
     var back = el("button", "back", "← முந்தைய கேள்வி");
@@ -133,7 +149,7 @@
     segs.setAttribute("aria-valuenow", String(i + 1));
     Q.forEach(function (_, n) {
       var s = el("span", "seg");
-      if (n <= i) s.style.background = "var(" + COLORS[n] + ")";
+      if (n <= i) s.style.background = "var(" + QCOLOR + ")";
       segs.appendChild(s);
     });
     v.appendChild(segs);
@@ -167,6 +183,7 @@
 
   function showResult() {
     clearTimeout(timer);
+    if (curSet !== "school") { showSetResult(); return; }
     var r = compute(answers);
     var top = r.ranked[0];
     var second = r.ranked[1];
@@ -229,6 +246,50 @@
 
     var sec = r.score[second] > 0 ? CL[second].name + " துறையிலும் உங்களுக்கு ஆர்வம் உள்ளது. அந்தத் துறைப் படிப்புகளையும் ஒருமுறை பாருங்கள். " : "";
     v.appendChild(el("p", "note", sec + "இது ஒரு வழிகாட்டி மட்டுமே. தகுதி, கட்-ஆஃப், கட்டணம் ஆகியவை ஒவ்வொரு கல்லூரிக்கும் மாறுபடும். சேர்க்கைக்கு முன் கல்லூரியின் இணையதளத்தில் சரிபார்த்துக்கொள்ளுங்கள்."));
+
+    var act = el("div", "actions");
+    var again = el("button", "go", "மீண்டும் முயற்சி செய்யுங்கள்");
+    again.type = "button";
+    again.id = "retry-btn";
+    again.addEventListener("click", function () {
+      answers = Q.map(function () { return null; });
+      showStart();
+    });
+    var edit = el("button", "go ghost", "பதில்களை மாற்றுங்கள்");
+    edit.type = "button";
+    edit.id = "edit-btn";
+    edit.addEventListener("click", function () { showQ(0); });
+    act.appendChild(again);
+    act.appendChild(edit);
+    v.appendChild(act);
+
+    mount(v, h);
+    doSave(box, { name: meta.name, phone: meta.phone, doing: meta.doing, answers: answers.slice() });
+  }
+
+  /* College-student and certificate-course quizzes: no interest scoring, so show what the student told us. */
+  function showSetResult() {
+    var v = el("section", "view result");
+    setAccent(v, QCOLOR);
+    v.appendChild(el("p", "eyebrow", (meta.name ? meta.name + " · " : "") + D.sets[curSet].name));
+    var h = el("h1", null, "நன்றி! உங்கள் தேவைகள் பதிவாகிவிட்டன");
+    v.appendChild(h);
+    v.appendChild(el("p", "lead", D.set_note[curSet]));
+
+    var box = el("div", "save-state");
+    box.id = "save-state";
+    v.appendChild(box);
+
+    var finds = el("div", "finds");
+    D.highlights[curSet].forEach(function (hl) {
+      var a = answers[hl[0]];
+      if (a == null) return;
+      var d = el("div", "find");
+      d.appendChild(el("p", "eyebrow", hl[1]));
+      d.appendChild(el("h3", null, Q[hl[0]].o[a]));
+      finds.appendChild(d);
+    });
+    v.appendChild(finds);
 
     var act = el("div", "actions");
     var again = el("button", "go", "மீண்டும் முயற்சி செய்யுங்கள்");
