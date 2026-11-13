@@ -4,7 +4,7 @@
   var app = document.getElementById("app");
   var D;
   try {
-    var res = await fetch("/static/quiz-data.json?v=3");
+    var res = await fetch("/static/quiz-data.json?v=4");
     D = await res.json();
   } catch (e) {
     app.textContent = "வினாடி வினா ஏற்றப்படவில்லை. பக்கத்தைப் புதுப்பிக்கவும் (Refresh).";

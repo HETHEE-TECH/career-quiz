@@ -401,12 +401,13 @@ def build_panels(rows):
             panel("Picks a course by", DATA["s_factor"], [r["ans"][8] for r in school]),
             panel("Where they are now", DATA["s_ready"], [r["ans"][0] for r in school]),
         ]
-    for key, qi, title in (("college", 0, "College: main goal"), ("college", 9, "College: first support"),
-                           ("course", 0, "Course: first move"), ("course", 9, "Course: first support")):
+    for key in DATA["sets"]:
         sub = [r for r in rows if r["qset"] == key]
-        if sub:
+        if not sub:
+            continue
+        for qi in (0, 9):
             labels = [o[:38] + ("…" if len(o) > 38 else "") for o in SETS[key][qi]["o"]]
-            out.append(panel(title, labels, [r["ans"][qi] for r in sub]))
+            out.append(panel(f"{SET_NAMES[key]}: Q{qi + 1}", labels, [r["ans"][qi] for r in sub]))
     out.append(panel("Doing now", doing_labels,
                      [DOING_KEYS.index(r["doing_key"]) if r["doing_key"] in DOING_KEYS else len(DOING_KEYS) for r in rows]))
     out.append(panel("Quiz taken", list(SET_NAMES.values()), [list(SET_NAMES).index(r["qset"]) for r in rows]))
