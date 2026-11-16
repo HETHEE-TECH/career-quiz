@@ -23,9 +23,26 @@
     </div>
   </div>
 
+  {% if saved %}<div class="flash ok">Follow-up குறிப்பு சேமிக்கப்பட்டது.</div>{% endif %}
   {% if deleted is not none %}<div class="flash ok">{{ deleted }} response{{ "" if deleted == 1 else "s" }} நீக்கப்பட்டது.</div>{% endif %}
   {% if error == "none" %}<div class="flash bad">முதல்ல நீக்க வேண்டிய Response-களை டிக் பண்ணுங்க.</div>{% endif %}
   {% if error == "confirm" %}<div class="flash bad">எதுவும் நீக்கப்படல. Confirm பெட்டியில DELETE என்று சரியா தட்டுங்க.</div>{% endif %}
+
+  {% if total > 0 %}
+  <div class="tiles">
+    <div class="tile"><span class="n">{{ stats.total }}</span><span class="l">மொத்தம்</span></div>
+    <a class="tile" href="/admin?frm={{ stats.today_str }}&to={{ stats.today_str }}"><span class="n">{{ stats.today }}</span><span class="l">இன்று</span></a>
+    <a class="tile" href="/admin?frm={{ stats.week_str }}"><span class="n">{{ stats.week }}</span><span class="l">கடந்த 7 நாள்</span></a>
+    {% for key, name, n in stats.by_quiz %}{% if n %}
+    <a class="tile small" href="/admin?quiz={{ key }}"><span class="n">{{ n }}</span><span class="l">{{ name }}</span></a>
+    {% endif %}{% endfor %}
+  </div>
+  <div class="tiles status-tiles">
+    {% for key, label, n in stats.by_status %}
+    <a class="tile small st-{{ key }}" href="/admin?status={{ key }}"><span class="n">{{ n }}</span><span class="l">{{ label }}</span></a>
+    {% endfor %}
+  </div>
+  {% endif %}
 
   {% if panels %}
   <div class="panels">
@@ -48,6 +65,16 @@
 
   <form class="ctrl" method="get" action="/admin">
     <input type="search" name="q" value="{{ q }}" placeholder="Name அல்லது Phone-ல தேடு" aria-label="Search responses">
+    <select name="quiz" aria-label="Filter by quiz">
+      <option value="">All quizzes</option>
+      {% for key, name in quizzes %}<option value="{{ key }}" {{ "selected" if quiz == key }}>{{ name }}</option>{% endfor %}
+    </select>
+    <select name="status" aria-label="Filter by follow-up status">
+      <option value="">All status</option>
+      {% for key, label in statuses %}<option value="{{ key }}" {{ "selected" if status == key }}>{{ label }}</option>{% endfor %}
+    </select>
+    <label class="dt">From <input type="date" name="frm" value="{{ frm }}"></label>
+    <label class="dt">To <input type="date" name="to" value="{{ to }}"></label>
     <select name="interest" aria-label="Filter by interest">
       <option value="">All interests</option>
       {% for key, label in interests %}<option value="{{ key }}" {{ "selected" if interest == key }}>{{ label }}</option>{% endfor %}
@@ -58,6 +85,7 @@
       <option value="name" {{ "selected" if sort == "name" }}>Name A–Z</option>
     </select>
     <button class="btn-sm" type="submit">Apply</button>
+    <a class="btn-sm" href="/admin">Clear</a>
   </form>
 
   {% if total == 0 %}
@@ -84,7 +112,7 @@
     <label class="pick" title="Select"><input type="checkbox" name="ids" value="{{ r.id }}" form="bulkform" class="rowpick" aria-label="Select {{ r.name }}"></label>
     <details class="rec">
       <summary class="recsum">
-        <span class="strong" data-l="Name">{{ r.name }}</span>
+        <span class="strong" data-l="Name">{{ r.name }}{% if r.status != "new" %} <em class="badge st-{{ r.status }}">{{ r.status_label }}</em>{% endif %}</span>
         <span class="muted" data-l="Doing now">{{ r.doing }}</span>
         <span data-l="Interest"><i class="dot" style="--c: var({{ r.top_color }})"></i>{{ r.top_label }}</span>
         <span data-l="Learning">{{ r.learn }}</span>
@@ -104,6 +132,15 @@
             </form>
           </details>
         </div>
+        <form class="followup" method="post" action="/admin/note/{{ r.id }}">
+          <input type="hidden" name="csrf" value="{{ csrf }}">
+          <input type="hidden" name="back" value="{{ qs }}">
+          <select name="status" aria-label="Follow-up status">
+            {% for key, label in statuses %}<option value="{{ key }}" {{ "selected" if r.status == key }}>{{ label }}</option>{% endfor %}
+          </select>
+          <input type="text" name="note" maxlength="500" value="{{ r.note }}" placeholder="Follow-up குறிப்பு (எ.கா. நாளை கூப்பிடணும்)" aria-label="Note">
+          <button class="btn-sm btn-primary" type="submit">Save</button>
+        </form>
         <ul class="qa">
           {% for item in r.qa %}
           <li><b>Q{{ loop.index }}. {{ item.q }}</b>{{ item.a }}</li>

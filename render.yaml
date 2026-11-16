@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: career-quiz
+    runtime: python
+    plan: starter            # disk (data safe) needs a paid plan; "free" loses data on restart
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    disk:
+      name: quiz-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false          # you type this in the Render dashboard
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SESSION_HTTPS_ONLY
+        value: "1"
+      - key: TRUST_PROXY
+        value: "1"
+      - key: DB_PATH
+        value: /var/data/responses.db
+      - key: TIMEZONE
+        value: Asia/Kolkata
+      - key: DATABASE_URL
+        sync: false          # paste the Neon connection string in the Render dashboard (optional)

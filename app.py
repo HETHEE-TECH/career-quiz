@@ -93,18 +93,70 @@ def compute(ans):
 
 
 # ---------------------------------------------------------------- database
+# SQLite file by default (local use). If DATABASE_URL is set to a Postgres address
+# (Neon, Supabase, Render Postgres...) the same code stores the data there instead,
+# which survives Render restarts and re-deploys.
+DATABASE_URL = os.getenv("DATABASE_URL", "").strip()
+USE_PG = DATABASE_URL.startswith(("postgres://", "postgresql://"))
+
+STATUSES = [("new", "New"), ("called", "Called"), ("followup", "Follow-up needed"), ("done", "Done")]
+STATUS_KEYS = [k for k, _ in STATUSES]
+
+
+class _PG:
+    """Lets the SQLite-style '?' queries below run unchanged on Postgres."""
+
+    def __init__(self, con):
+        self.con = con
+
+    def execute(self, sql, params=()):
+        return self.con.execute(sql.replace("?", "%s"), params)
+
+
 @contextmanager
 def conn():
-    con = sqlite3.connect(DB_PATH)
-    con.row_factory = sqlite3.Row
-    try:
-        yield con
-        con.commit()
-    finally:
-        con.close()
+    if USE_PG:
+        import psycopg
+        from psycopg.rows import dict_row
+
+        con = psycopg.connect(DATABASE_URL, row_factory=dict_row, connect_timeout=10)
+        try:
+            yield _PG(con)
+            con.commit()
+        except Exception:
+            con.rollback()
+            raise
+        finally:
+            con.close()
+    else:
+        con = sqlite3.connect(DB_PATH)
+        con.row_factory = sqlite3.Row
+        try:
+            yield con
+            con.commit()
+        finally:
+            con.close()
 
 
 def init_db():
+    if USE_PG:
+        with conn() as con:
+            con.execute(
+                """CREATE TABLE IF NOT EXISTS responses (
+                    id BIGSERIAL PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    phone TEXT NOT NULL DEFAULT '',
+                    grp TEXT NOT NULL DEFAULT '',
+                    doing TEXT NOT NULL DEFAULT '',
+                    qset TEXT NOT NULL DEFAULT 'school',
+                    status TEXT NOT NULL DEFAULT 'new',
+                    note TEXT NOT NULL DEFAULT '',
+                    answers TEXT NOT NULL,
+                    top TEXT NOT NULL,
+                    created_at TEXT NOT NULL
+                )"""
+            )
+        return
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     with conn() as con:
         con.execute("PRAGMA journal_mode=WAL")
@@ -116,6 +168,8 @@ def init_db():
                 grp TEXT NOT NULL DEFAULT '',
                 doing TEXT NOT NULL DEFAULT '',
                 qset TEXT NOT NULL DEFAULT 'school',
+                status TEXT NOT NULL DEFAULT 'new',
+                note TEXT NOT NULL DEFAULT '',
                 answers TEXT NOT NULL,
                 top TEXT NOT NULL,
                 created_at TEXT NOT NULL
@@ -123,15 +177,25 @@ def init_db():
         )
 
 
+NEW_COLUMNS = [
+    ("doing", "TEXT NOT NULL DEFAULT ''"),
+    ("qset", "TEXT NOT NULL DEFAULT 'school'"),
+    ("status", "TEXT NOT NULL DEFAULT 'new'"),
+    ("note", "TEXT NOT NULL DEFAULT ''"),
+]
+
 
 def migrate_db():
-    """Databases made before the "doing now" question get the new column."""
+    """Databases made by an older version get the columns added since."""
     with conn() as con:
+        if USE_PG:
+            for name, ddl in NEW_COLUMNS:
+                con.execute(f"ALTER TABLE responses ADD COLUMN IF NOT EXISTS {name} {ddl}")
+            return
         cols = {r["name"] for r in con.execute("PRAGMA table_info(responses)")}
-        if "doing" not in cols:
-            con.execute("ALTER TABLE responses ADD COLUMN doing TEXT NOT NULL DEFAULT ''")
-        if "qset" not in cols:
-            con.execute("ALTER TABLE responses ADD COLUMN qset TEXT NOT NULL DEFAULT 'school'")
+        for name, ddl in NEW_COLUMNS:
+            if name not in cols:
+                con.execute(f"ALTER TABLE responses ADD COLUMN {name} {ddl}")
 
 
 init_db()
@@ -341,6 +405,9 @@ def prepare(row) -> dict:
         "ans": ans,
         "qset": qset,
         "qset_name": SET_NAMES[qset],
+        "status": row["status"] if row["status"] in STATUS_KEYS else "new",
+        "status_label": dict(STATUSES).get(row["status"], "New"),
+        "note": row["note"] or "",
         "top": top,
         "top_label": CL[top]["short"] if school else "—",
         "top_color": CL[top]["color"] if school else "--muted",
@@ -353,12 +420,35 @@ def prepare(row) -> dict:
     }
 
 
-def load_rows(q: str, interest: str, sort: str):
+def local_date(iso: str):
+    try:
+        return datetime.fromisoformat(iso).astimezone(TZ).date()
+    except ValueError:
+        return None
+
+
+def parse_day(s: str):
+    try:
+        return datetime.strptime(s, "%Y-%m-%d").date()
+    except ValueError:
+        return None
+
+
+def load_rows(q: str, interest: str, sort: str, quiz: str = "", frm: str = "", to: str = "", status: str = ""):
     with conn() as con:
         raw = con.execute("SELECT * FROM responses ORDER BY id DESC LIMIT ?", (MAX_ROWS,)).fetchall()
     rows = [prepare(r) for r in raw]
     total_rows = list(rows)
     needle = q.strip().lower()
+    if quiz in SETS:
+        rows = [r for r in rows if r["qset"] == quiz]
+    if status in STATUS_KEYS:
+        rows = [r for r in rows if r["status"] == status]
+    d1, d2 = parse_day(frm), parse_day(to)
+    if d1:
+        rows = [r for r in rows if (d := local_date(r["created_at"])) and d >= d1]
+    if d2:
+        rows = [r for r in rows if (d := local_date(r["created_at"])) and d <= d2]
     if interest in ORDER:
         rows = [r for r in rows if r["top"] == interest]
     if needle:
@@ -370,6 +460,20 @@ def load_rows(q: str, interest: str, sort: str):
     else:
         rows.sort(key=lambda r: r["created_at"], reverse=True)
     return total_rows, rows
+
+
+def dashboard(rows):
+    today = datetime.now(TZ).date()
+    days = [local_date(r["created_at"]) for r in rows]
+    return {
+        "total": len(rows),
+        "today": sum(1 for d in days if d == today),
+        "week": sum(1 for d in days if d and d >= today - timedelta(days=6)),
+        "by_quiz": [(k, SET_NAMES[k], sum(1 for r in rows if r["qset"] == k)) for k in SETS],
+        "by_status": [(k, lab, sum(1 for r in rows if r["status"] == k)) for k, lab in STATUSES],
+        "today_str": today.isoformat(),
+        "week_str": (today - timedelta(days=6)).isoformat(),
+    }
 
 
 def panel(title, labels, values, colors=None):
@@ -452,11 +556,12 @@ def logout(request: Request, csrf: str = Form("")):
 
 
 @app.get("/admin")
-def admin(request: Request, q: str = "", interest: str = "", sort: str = "new", deleted: str = "", error: str = ""):
+def admin(request: Request, q: str = "", interest: str = "", sort: str = "new", deleted: str = "", error: str = "",
+          quiz: str = "", frm: str = "", to: str = "", status: str = "", saved: str = ""):
     if not is_admin(request):
         return RedirectResponse("/admin/login", status_code=303)
-    all_rows, rows = load_rows(q, interest, sort)
-    qs = urlencode({"q": q, "interest": interest, "sort": sort})
+    all_rows, rows = load_rows(q, interest, sort, quiz, frm, to, status)
+    qs = urlencode({"q": q, "interest": interest, "sort": sort, "quiz": quiz, "frm": frm, "to": to, "status": status})
     return templates.TemplateResponse(
         request,
         "admin.html",
@@ -465,6 +570,14 @@ def admin(request: Request, q: str = "", interest: str = "", sort: str = "new", 
             "total": len(all_rows),
             "panels": build_panels(all_rows) if all_rows else [],
             "q": q,
+            "quiz": quiz,
+            "frm": frm,
+            "to": to,
+            "status": status,
+            "saved": saved == "1",
+            "stats": dashboard(all_rows),
+            "quizzes": [(k, SET_NAMES[k]) for k in SETS],
+            "statuses": STATUSES,
             "interest": interest,
             "sort": sort,
             "qs": qs,
@@ -477,22 +590,23 @@ def admin(request: Request, q: str = "", interest: str = "", sort: str = "new", 
 
 
 @app.get("/admin/export.csv")
-def export_csv(request: Request, q: str = "", interest: str = "", sort: str = "new"):
+def export_csv(request: Request, q: str = "", interest: str = "", sort: str = "new",
+               quiz: str = "", frm: str = "", to: str = "", status: str = ""):
     if not is_admin(request):
         return RedirectResponse("/admin/login", status_code=303)
-    _, rows = load_rows(q, interest, sort)
+    _, rows = load_rows(q, interest, sort, quiz, frm, to, status)
     out = io.StringIO()
     w = csv.writer(out)
     w.writerow(
         ["Name", "Phone", "Doing now", "Quiz", "Top interest", "Technology %", "Creativity %", "Business %",
          "Science & People %", "Learning style", "Study plan", "Picks course by", "Where they are now",
-         "Submitted (IST)"] + [f"Q{i + 1}" for i in range(10)]
+         "Submitted (IST)", "Status", "Note"] + [f"Q{i + 1}" for i in range(10)]
     )
     for r in rows:
         w.writerow(
             [csv_safe(r["name"]), r["phone"], r["doing"], r["qset_name"], r["top_label"],
              r["pct"].get("tech", ""), r["pct"].get("creative", ""), r["pct"].get("business", ""), r["pct"].get("people", ""),
-             r["learn"], r["plan"], r["factor"], r["ready"], r["when"]]
+             r["learn"], r["plan"], r["factor"], r["ready"], r["when"], dict(STATUSES)[r["status"]], csv_safe(r["note"])]
             + [LET[a] if a is not None else "" for a in r["ans"]]
         )
     body = "﻿" + out.getvalue()  # BOM so Excel reads Tamil text correctly
@@ -538,3 +652,18 @@ def delete_all(request: Request, confirm: str = Form(""), csrf: str = Form("")):
     with conn() as con:
         n = con.execute("DELETE FROM responses").rowcount
     return RedirectResponse(f"/admin?deleted={n}", status_code=303)
+
+
+@app.post("/admin/note/{rid}")
+def save_note(request: Request, rid: int, status: str = Form("new"), note: str = Form(""),
+              back: str = Form(""), csrf: str = Form("")):
+    if not is_admin(request):
+        return RedirectResponse("/admin/login", status_code=303)
+    check_csrf(request, csrf)
+    if status not in STATUS_KEYS:
+        status = "new"
+    note = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]", " ", note).strip()[:500]
+    with conn() as con:
+        con.execute("UPDATE responses SET status = ?, note = ? WHERE id = ?", (status, note, rid))
+    back = back if re.fullmatch(r"[A-Za-z0-9_=&%.+\-]{0,300}", back) else ""
+    return RedirectResponse("/admin?" + (back + "&" if back else "") + "saved=1", status_code=303)
