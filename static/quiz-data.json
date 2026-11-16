@@ -963,5 +963,267 @@
   "jobseeker": "உங்கள் பதில்கள் TATTI நிர்வாகத்துக்குச் சென்றுவிட்டன. உங்களுக்குப் பொருத்தமான பயிற்சி மற்றும் வழிகாட்டுதலை அவர்கள் தெரிவிப்பார்கள்.",
   "working": "உங்கள் பதில்கள் TATTI நிர்வாகத்துக்குச் சென்றுவிட்டன. உங்களுக்குப் பொருத்தமான பயிற்சி மற்றும் வழிகாட்டுதலை அவர்கள் தெரிவிப்பார்கள்.",
   "exam": "உங்கள் பதில்கள் TATTI நிர்வாகத்துக்குச் சென்றுவிட்டன. உங்களுக்குப் பொருத்தமான பயிற்சி மற்றும் வழிகாட்டுதலை அவர்கள் தெரிவிப்பார்கள்."
+ },
+ "tatti": {
+  "url": "https://www.tatti.in/course-offered/",
+  "title": "TATTI-ல உங்களுக்குப் பொருத்தமான படிப்புகள்",
+  "link": "அனைத்துப் படிப்புகளையும் tatti.in-ல் பார்க்கவும்",
+  "empty": "உங்கள் பதில்களுக்கு ஏற்ற படிப்பைத் தேர்ந்தெடுக்க TATTI நிர்வாகம் உதவும். அனைத்துப் படிப்புகளையும் கீழே உள்ள இணைப்பில் பார்க்கலாம்.",
+  "max_groups": 4,
+  "groups": {
+   "tech_ai": {
+    "title": "AI & Technology",
+    "courses": [
+     "Artificial Intelligence",
+     "Data Science",
+     "Python",
+     "Multi-Cloud AI Specialist (Azure & AWS)",
+     "AI-Driven DevSecOps",
+     "AI Infra Specialist",
+     "Blockchain Technology"
+    ]
+   },
+   "data": {
+    "title": "Data & Excel",
+    "courses": [
+     "AI-Powered Data & Business Analytics",
+     "Data Visualization with Power BI",
+     "Advanced Excel",
+     "Advanced Excel and Macros",
+     "Excel Macros and VBA"
+    ]
+   },
+   "design": {
+    "title": "Design & Media",
+    "courses": [
+     "UI and UX Design",
+     "Media Courses",
+     "B.Sc Film and TV Production (with St. Joseph University)"
+    ]
+   },
+   "business": {
+    "title": "Business & Marketing",
+    "courses": [
+     "Digital Marketing",
+     "Sales & Marketing Management",
+     "Customer Relationship Management",
+     "FMCG & E-Commerce",
+     "Decoding Entrepreneurship",
+     "Entrepreneurship Management"
+    ]
+   },
+   "finance": {
+    "title": "Accounts & Finance",
+    "courses": [
+     "Computerized Accounting",
+     "Taxation & GST",
+     "Financial Management",
+     "B.Com FinTech & AI (with St. Joseph University)"
+    ]
+   },
+   "management": {
+    "title": "Management",
+    "courses": [
+     "Product Management",
+     "Technical Program Management",
+     "Human Resource Management",
+     "Retail Management",
+     "Logistics",
+     "Event Management",
+     "Travel and Tourism Management",
+     "International Business"
+    ]
+   },
+   "technical": {
+    "title": "Technical & Hands-on",
+    "courses": [
+     "Computer Hardware & Networking and CCTV Installation",
+     "E-Vehicle",
+     "Solar",
+     "B.Sc Renewable Energy Technology (with St. Joseph University)",
+     "Embroidery Course"
+    ]
+   },
+   "degree": {
+    "title": "Degree & Government Programs",
+    "courses": [
+     "Work-Integrated UG Programs (with PMIST and JOY University)",
+     "Government Certificate Courses",
+     "Zoho YCP (Young Creators Program)"
+    ]
+   }
+  },
+  "cluster": {
+   "tech": [
+    "tech_ai",
+    "data",
+    "technical"
+   ],
+   "creative": [
+    "design"
+   ],
+   "business": [
+    "business",
+    "finance"
+   ],
+   "people": [
+    "management",
+    "business"
+   ]
+  },
+  "always": {
+   "school": [
+    "degree"
+   ]
+  },
+  "rules": {
+   "college": [
+    [
+     3,
+     {
+      "0": [
+       "tech_ai",
+       "data"
+      ],
+      "1": [
+       "design"
+      ],
+      "2": [
+       "business",
+       "finance"
+      ],
+      "3": [
+       "management"
+      ]
+     }
+    ],
+    [
+     0,
+     {
+      "2": [
+       "business"
+      ]
+     }
+    ]
+   ],
+   "course": [
+    [
+     1,
+     {
+      "0": [
+       "technical"
+      ],
+      "1": [
+       "finance",
+       "data"
+      ],
+      "2": [
+       "design"
+      ],
+      "3": [
+       "business"
+      ]
+     }
+    ],
+    [
+     6,
+     {
+      "0": [
+       "technical"
+      ],
+      "2": [
+       "data"
+      ],
+      "3": [
+       "tech_ai"
+      ]
+     }
+    ]
+   ],
+   "jobseeker": [
+    [
+     1,
+     {
+      "0": [
+       "tech_ai",
+       "technical"
+      ],
+      "1": [
+       "finance",
+       "data"
+      ],
+      "2": [
+       "business"
+      ]
+     }
+    ],
+    [
+     7,
+     {
+      "0": [
+       "data"
+      ],
+      "1": [
+       "tech_ai"
+      ],
+      "3": [
+       "technical"
+      ]
+     }
+    ]
+   ],
+   "working": [
+    [
+     4,
+     {
+      "0": [
+       "technical"
+      ],
+      "1": [
+       "data"
+      ],
+      "2": [
+       "tech_ai"
+      ],
+      "3": [
+       "management"
+      ]
+     }
+    ],
+    [
+     2,
+     {
+      "2": [
+       "business"
+      ],
+      "3": [
+       "tech_ai"
+      ]
+     }
+    ]
+   ],
+   "exam": [
+    [
+     7,
+     {
+      "0": [
+       "data"
+      ],
+      "2": [
+       "finance",
+       "business"
+      ]
+     }
+    ],
+    [
+     0,
+     {
+      "0": [
+       "degree"
+      ]
+     }
+    ]
+   ]
+  }
  }
 }

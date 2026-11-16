@@ -4,7 +4,7 @@
   var app = document.getElementById("app");
   var D;
   try {
-    var res = await fetch("/static/quiz-data.json?v=4");
+    var res = await fetch("/static/quiz-data.json?v=5");
     D = await res.json();
   } catch (e) {
     app.textContent = "வினாடி வினா ஏற்றப்படவில்லை. பக்கத்தைப் புதுப்பிக்கவும் (Refresh).";
@@ -243,6 +243,7 @@
     info.short.forEach(function (t) { c2.appendChild(el("span", "chip", t)); });
     courses.appendChild(c2);
     v.appendChild(courses);
+    v.appendChild(tattiBlock(tattiGroups("school", answers, r.ranked)));
 
     var sec = r.score[second] > 0 ? CL[second].name + " துறையிலும் உங்களுக்கு ஆர்வம் உள்ளது. அந்தத் துறைப் படிப்புகளையும் ஒருமுறை பாருங்கள். " : "";
     v.appendChild(el("p", "note", sec + "இது ஒரு வழிகாட்டி மட்டுமே. தகுதி, கட்-ஆஃப், கட்டணம் ஆகியவை ஒவ்வொரு கல்லூரிக்கும் மாறுபடும். சேர்க்கைக்கு முன் கல்லூரியின் இணையதளத்தில் சரிபார்த்துக்கொள்ளுங்கள்."));
@@ -265,6 +266,40 @@
 
     mount(v, h);
     doSave(box, { name: meta.name, phone: meta.phone, doing: meta.doing, answers: answers.slice() });
+  }
+
+  /* TATTI course suggestions. Groups come from answers (rules in quiz-data.json "tatti"). */
+  function tattiGroups(set, ans, ranked) {
+    var T = D.tatti, out = [];
+    function add(list) { (list || []).forEach(function (g) { if (T.groups[g] && out.indexOf(g) < 0) out.push(g); }); }
+    if (set === "school" && ranked) {
+      add(T.cluster[ranked[0]]);
+      add((T.always || {}).school);   // degree programmes always make the list
+      add((T.cluster[ranked[1]] || []).slice(0, 1));
+    } else {
+      (T.rules[set] || []).forEach(function (rule) {
+        var a = ans[rule[0]];
+        if (a != null) add(rule[1][String(a)]);
+      });
+    }
+    add((T.always || {})[set]);
+    return out.slice(0, T.max_groups);
+  }
+  function tattiBlock(groups) {
+    var T = D.tatti;
+    var box = el("div", "courses tatti");
+    box.appendChild(el("h2", null, T.title));
+    if (!groups.length) box.appendChild(el("p", "note", T.empty));
+    groups.forEach(function (g) {
+      box.appendChild(el("p", "eyebrow", T.groups[g].title));
+      var chips = el("div", "chips");
+      T.groups[g].courses.forEach(function (c) { chips.appendChild(el("span", "chip", c)); });
+      box.appendChild(chips);
+    });
+    var a = el("a", "btn-sm", T.link);
+    a.href = T.url; a.target = "_blank"; a.rel = "noopener noreferrer"; a.id = "tatti-link";
+    box.appendChild(a);
+    return box;
   }
 
   /* College-student and certificate-course quizzes: no interest scoring, so show what the student told us. */
@@ -290,6 +325,7 @@
       finds.appendChild(d);
     });
     v.appendChild(finds);
+    v.appendChild(tattiBlock(tattiGroups(curSet, answers, null)));
 
     var act = el("div", "actions");
     var again = el("button", "go", "மீண்டும் முயற்சி செய்யுங்கள்");
