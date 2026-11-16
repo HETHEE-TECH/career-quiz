@@ -667,3 +667,16 @@ def save_note(request: Request, rid: int, status: str = Form("new"), note: str =
         con.execute("UPDATE responses SET status = ?, note = ? WHERE id = ?", (status, note, rid))
     back = back if re.fullmatch(r"[A-Za-z0-9_=&%.+\-]{0,300}", back) else ""
     return RedirectResponse("/admin?" + (back + "&" if back else "") + "saved=1", status_code=303)
+
+
+@app.get("/admin/print/{rid}")
+def print_one(request: Request, rid: int):
+    if not is_admin(request):
+        return RedirectResponse("/admin/login", status_code=303)
+    with conn() as con:
+        row = con.execute("SELECT * FROM responses WHERE id = ?", (rid,)).fetchone()
+    if row is None:
+        raise HTTPException(status_code=404, detail="Not found")
+    r = prepare(row)
+    bars = [(CL[c]["short"], CL[c]["color"], r["pct"][c]) for c in ORDER] if r["qset"] == "school" else []
+    return templates.TemplateResponse(request, "print.html", {"r": r, "bars": bars})

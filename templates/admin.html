@@ -123,6 +123,7 @@
       <div class="recbody">
         <div class="dhead">
           <p class="muted">Quiz: {{ r.qset_name }} · Phone: {{ r.phone or "not given" }}{% if r.qset == "school" %} · Where they are now: {{ r.ready }}{% endif %}</p>
+          <a class="btn-sm" href="/admin/print/{{ r.id }}" target="_blank" rel="noopener">Print / PDF</a>
           <details class="del">
             <summary class="btn-sm btn-danger">Delete</summary>
             <form method="post" action="/admin/delete/{{ r.id }}">

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ r.name }} · Quiz report{% endblock %}
+{% block wrapclass %}printpage{% endblock %}
+{% block body %}
+<main>
+<section class="view report">
+  <div class="noprint report-bar">
+    <a class="btn-sm" href="/admin">← Back to Admin</a>
+    <button class="btn-sm btn-primary" type="button" id="print-btn">Print / Save as PDF</button>
+  </div>
+  <header class="report-head">
+    <img class="inst-logo" src="/static/img/logo.jpg" alt="TATTI logo" width="64" height="64">
+    <div>
+      <p class="eyebrow">Tamil Nadu Advanced Technical Training Institute · Chennai</p>
+      <h1>Career Quiz Report</h1>
+    </div>
+  </header>
+  <table class="facts">
+    <tr><th>Name</th><td>{{ r.name }}</td><th>Phone</th><td>{{ r.phone or "—" }}</td></tr>
+    <tr><th>Doing now</th><td>{{ r.doing }}</td><th>Quiz</th><td>{{ r.qset_name }}</td></tr>
+    <tr><th>Submitted</th><td>{{ r.when }}</td><th>Follow-up</th><td>{{ r.status_label }}{% if r.note %} — {{ r.note }}{% endif %}</td></tr>
+  </table>
+  {% if r.qset == "school" %}
+  <h2>Result</h2>
+  <table class="facts">
+    <tr><th>Top interest</th><td>{{ r.top_label }}</td><th>Learning style</th><td>{{ r.learn }}</td></tr>
+    <tr><th>Study plan</th><td>{{ r.plan }}</td><th>Picks course by</th><td>{{ r.factor }}</td></tr>
+    <tr><th>Where they are now</th><td colspan="3">{{ r.ready }}</td></tr>
+  </table>
+  <div class="dist">
+    {% for label, color, pct in bars %}
+    <div class="drow" style="--c: var({{ color }})">
+      <span class="lab">{{ label }}</span>
+      <span class="track"><span class="fill" style="width: {{ pct }}%"></span></span>
+      <span class="n">{{ pct }}%</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <h2>Answers</h2>
+  <ol class="qa report-qa">
+    {% for item in r.qa %}
+    <li><b>{{ item.q }}</b>{{ item.a }}</li>
+    {% endfor %}
+  </ol>
+</section>
+</main>
+{% endblock %}
+{% block scripts %}<script src="/static/print.js?v=1"></script>{% endblock %}
