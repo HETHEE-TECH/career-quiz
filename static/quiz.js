@@ -4,7 +4,7 @@
   var app = document.getElementById("app");
   var D;
   try {
-    var res = await fetch("/static/quiz-data.json?v=5");
+    var res = await fetch("/static/quiz-data.json?v=6");
     D = await res.json();
   } catch (e) {
     app.textContent = "வினாடி வினா ஏற்றப்படவில்லை. பக்கத்தைப் புதுப்பிக்கவும் (Refresh).";
@@ -244,6 +244,7 @@
     courses.appendChild(c2);
     v.appendChild(courses);
     v.appendChild(tattiBlock(tattiGroups("school", answers, r.ranked)));
+    v.appendChild(contactBlock());
 
     var sec = r.score[second] > 0 ? CL[second].name + " துறையிலும் உங்களுக்கு ஆர்வம் உள்ளது. அந்தத் துறைப் படிப்புகளையும் ஒருமுறை பாருங்கள். " : "";
     v.appendChild(el("p", "note", sec + "இது ஒரு வழிகாட்டி மட்டுமே. தகுதி, கட்-ஆஃப், கட்டணம் ஆகியவை ஒவ்வொரு கல்லூரிக்கும் மாறுபடும். சேர்க்கைக்கு முன் கல்லூரியின் இணையதளத்தில் சரிபார்த்துக்கொள்ளுங்கள்."));
@@ -302,6 +303,23 @@
     return box;
   }
 
+  function contactBlock() {
+    var C = D.contact, box = el("div", "contact");
+    box.appendChild(el("h2", null, C.title));
+    var row = el("div", "contact-row");
+    C.numbers.forEach(function (n, i) {
+      var a = el("a", "go call", "📞 " + n.label);
+      a.href = "tel:" + n.tel; a.id = "call-" + i;
+      row.appendChild(a);
+    });
+    var w = el("a", "go wa", C.wa_label);
+    w.href = "https://wa.me/" + C.wa + "?text=" + encodeURIComponent(C.wa_msg.replace("{name}", meta.name || ""));
+    w.target = "_blank"; w.rel = "noopener noreferrer"; w.id = "wa-link";
+    row.appendChild(w);
+    box.appendChild(row);
+    return box;
+  }
+
   /* College-student and certificate-course quizzes: no interest scoring, so show what the student told us. */
   function showSetResult() {
     var v = el("section", "view result");
@@ -326,6 +344,7 @@
     });
     v.appendChild(finds);
     v.appendChild(tattiBlock(tattiGroups(curSet, answers, null)));
+    v.appendChild(contactBlock());
 
     var act = el("div", "actions");
     var again = el("button", "go", "மீண்டும் முயற்சி செய்யுங்கள்");
