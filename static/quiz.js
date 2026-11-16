@@ -4,7 +4,7 @@
   var app = document.getElementById("app");
   var D;
   try {
-    var res = await fetch("/static/quiz-data.json?v=6");
+    var res = await fetch("/static/quiz-data.json?v=7");
     D = await res.json();
   } catch (e) {
     app.textContent = "வினாடி வினா ஏற்றப்படவில்லை. பக்கத்தைப் புதுப்பிக்கவும் (Refresh).";
@@ -15,7 +15,35 @@
   var SCHOOL_Q = D.q;                 // 12th-class quiz
   var Q = SCHOOL_Q;                   // the question set this student is answering
   var curSet = "school";
-  var LEARN = D.learn, PLAN = D.plan, READY = D.ready, READY_TITLE = D.ready_title, FACTOR = D.factor, DOING = D.doing;
+  var DOING = D.doing;
+  var LEARN, PLAN, READY, READY_TITLE, FACTOR;
+
+  /* ---- Tamil / English. Tamil is the base text; the English text lives in quiz-data.json "en". ---- */
+  var EN = D.en || {};
+  var L = "ta";
+  try { if (localStorage.getItem("quiz-lang") === "en") L = "en"; } catch (e) {}
+  function tr(s) { return L === "en" && EN.ui && EN.ui[s] ? EN.ui[s] : s; }
+  function pickL(ta, en) { return L === "en" && en != null ? en : ta; }
+  function syncLang() {
+    var e = L === "en";
+    LEARN = e && EN.learn ? EN.learn : D.learn;
+    PLAN = e && EN.plan ? EN.plan : D.plan;
+    READY = e && EN.ready ? EN.ready : D.ready;
+    READY_TITLE = e && EN.ready_title ? EN.ready_title : D.ready_title;
+    FACTOR = e && EN.factor ? EN.factor : D.factor;
+    document.documentElement.lang = e ? "en" : "ta";
+  }
+  syncLang();
+  /* question text in the chosen language (scoring always uses the Tamil/base Q, answers are indexes) */
+  function qdef(i) {
+    var e = L === "en" ? (curSet === "school" ? EN.school : (EN.sets || {})[curSet]) : null;
+    return e && e[i] ? e[i] : Q[i];
+  }
+  function introFor(key) {
+    return pickL(D.set_intro[key] || D.set_intro.school, EN.set_intro && (EN.set_intro[key] || EN.set_intro.school));
+  }
+  var current = function () {};       // re-draws the screen the student is on
+  var captureDraft = null;            // copies half-typed start-form values before a re-draw
 
   var answers = Q.map(function () { return null; });
   var meta = { name: "", phone: "", doing: "" };
@@ -62,6 +90,7 @@
   }
 
   function showStart() {
+    current = showStart;
     var v = el("section", "view start");
     var left = el("div");
     var brand = el("div", "inst");
@@ -70,9 +99,9 @@
     brand.appendChild(logo);
     brand.appendChild(el("p", "eyebrow", "Tamil Nadu Advanced Technical Training Institute · Chennai"));
     left.appendChild(brand);
-    var h = el("h1", null, "12-ஆம் வகுப்புக்குப் பிறகு உங்கள் பாதை என்ன?");
+    var h = el("h1", null, tr("12-ஆம் வகுப்புக்குப் பிறகு உங்கள் பாதை என்ன?"));
     left.appendChild(h);
-    var sub = el("p", "sub", D.set_intro.school);
+    var sub = el("p", "sub", introFor("school"));
     left.appendChild(sub);
 
     var form = el("form", "form");
@@ -88,35 +117,36 @@
       return node;
     }
     var nm = el("input"); nm.type = "text"; nm.maxLength = 60; nm.autocomplete = "name"; nm.value = meta.name;
-    field("f-name", "உங்கள் பெயர் (Your Name)", nm);
+    field("f-name", tr("உங்கள் பெயர் (Your Name)"), nm);
     var ph = el("input"); ph.type = "tel"; ph.maxLength = 15; ph.autocomplete = "tel"; ph.inputMode = "numeric"; ph.value = meta.phone;
-    field("f-phone", "தொலைபேசி எண் (Phone Number), விருப்பம். நிர்வாகம் தொடர்புகொள்வதற்கு மட்டும் பயன்படும்.", ph);
+    field("f-phone", tr("தொலைபேசி எண் (Phone Number), விருப்பம். நிர்வாகம் தொடர்புகொள்வதற்கு மட்டும் பயன்படும்."), ph);
     var gr = el("select");
-    var o0 = el("option", null, "தேர்ந்தெடுக்கவும் (Select)"); o0.value = ""; o0.disabled = true; gr.appendChild(o0);
-    DOING.forEach(function (d) { var o = el("option", null, d.ta + " (" + d.en + ")"); o.value = d.key; gr.appendChild(o); });
+    var o0 = el("option", null, tr("தேர்ந்தெடுக்கவும் (Select)")); o0.value = ""; o0.disabled = true; gr.appendChild(o0);
+    DOING.forEach(function (d) { var o = el("option", null, L === "en" ? d.en : d.ta + " (" + d.en + ")"); o.value = d.key; gr.appendChild(o); });
     gr.value = meta.doing;
-    function syncIntro() { sub.textContent = D.set_intro[setFor(gr.value)] || D.set_intro.school; }
+    function syncIntro() { sub.textContent = introFor(setFor(gr.value)); }
     gr.addEventListener("change", syncIntro);
     syncIntro();
-    field("f-doing", "12-ஆம் வகுப்பு முடித்த பிறகு தற்போது என்ன செய்கிறீர்கள்? (What are you doing now after 12th?)", gr);
+    field("f-doing", tr("12-ஆம் வகுப்பு முடித்த பிறகு தற்போது என்ன செய்கிறீர்கள்? (What are you doing now after 12th?)"), gr);
     var err = el("p", "err"); err.id = "f-err"; err.setAttribute("role", "alert");
     form.appendChild(err);
-    var b = el("button", "go", "தொடங்கலாம் (Start) →");
+    var b = el("button", "go", tr("தொடங்கலாம் (Start) →"));
     b.type = "submit";
     b.id = "start-btn";
     form.appendChild(b);
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var n = nm.value.trim();
-      if (!n) { err.textContent = "பெயரை உள்ளிடவும் (Please enter your name)."; nm.focus(); return; }
-      if (!/^[0-9+\- ]{0,15}$/.test(ph.value.trim())) { err.textContent = "தொலைபேசி எண்ணில் இலக்கங்கள் மட்டும் உள்ளிடவும்."; ph.focus(); return; }
-      if (!gr.value) { err.textContent = "நீங்கள் இப்போது என்ன செய்கிறீர்கள் என்பதைத் தேர்ந்தெடுக்கவும்."; gr.focus(); return; }
+      if (!n) { err.textContent = tr("பெயரை உள்ளிடவும் (Please enter your name)."); nm.focus(); return; }
+      if (!/^[0-9+\- ]{0,15}$/.test(ph.value.trim())) { err.textContent = tr("தொலைபேசி எண்ணில் இலக்கங்கள் மட்டும் உள்ளிடவும்."); ph.focus(); return; }
+      if (!gr.value) { err.textContent = tr("நீங்கள் இப்போது என்ன செய்கிறீர்கள் என்பதைத் தேர்ந்தெடுக்கவும்."); gr.focus(); return; }
       meta = { name: n, phone: ph.value.trim(), doing: gr.value };
       useSet(setFor(meta.doing));
       showQ(0);
     });
+    captureDraft = function () { meta.name = nm.value; meta.phone = ph.value; meta.doing = gr.value; };
     left.appendChild(form);
-    left.appendChild(el("p", "fine", "சுமார் 2 நிமிடங்கள் போதும். சரியான பதில், தவறான பதில் என்று எதுவும் இல்லை."));
+    left.appendChild(el("p", "fine", tr("சுமார் 2 நிமிடங்கள் போதும். சரியான பதில், தவறான பதில் என்று எதுவும் இல்லை.")));
     v.appendChild(left);
 
     var ring = el("div", "ring");
@@ -127,19 +157,21 @@
   }
 
   function showQ(i) {
+    current = function () { showQ(i); };
+    captureDraft = null;
     clearTimeout(timer);
-    var q = Q[i];
+    var q = qdef(i);
     var v = el("section", "view");
     setAccent(v, QCOLOR);
 
     var top = el("div", "top");
-    var back = el("button", "back", "← முந்தைய கேள்வி");
+    var back = el("button", "back", tr("← முந்தைய கேள்வி"));
     back.type = "button";
     back.id = "back-btn";
     if (i === 0) back.hidden = true;
     back.addEventListener("click", function () { showQ(i - 1); });
     top.appendChild(back);
-    top.appendChild(el("span", "qno", "கேள்வி " + (i + 1) + " / " + Q.length));
+    top.appendChild(el("span", "qno", tr("கேள்வி ") + (i + 1) + " / " + Q.length));
     v.appendChild(top);
 
     var segs = el("div", "segs");
@@ -181,9 +213,11 @@
     mount(v, h);
   }
 
-  function showResult() {
+  function showResult(redraw) {
+    current = function () { showResult(true); };
+    captureDraft = null;
     clearTimeout(timer);
-    if (curSet !== "school") { showSetResult(); return; }
+    if (curSet !== "school") { showSetResult(redraw); return; }
     var r = compute(answers);
     var top = r.ranked[0];
     var second = r.ranked[1];
@@ -191,10 +225,10 @@
     var v = el("section", "view result");
     setAccent(v, CL[top].color);
 
-    v.appendChild(el("p", "eyebrow", (meta.name ? meta.name + " · " : "") + "உங்கள் முடிவு"));
+    v.appendChild(el("p", "eyebrow", (meta.name ? meta.name + " · " : "") + tr("உங்கள் முடிவு")));
     var h = el("h1", null, CL[top].name);
     v.appendChild(h);
-    v.appendChild(el("p", "lead", info.lead));
+    v.appendChild(el("p", "lead", pickL(info.lead, EN.lead && EN.lead[top])));
 
     var bars = el("div", "bars");
     r.ranked.forEach(function (c, n) {
@@ -202,11 +236,11 @@
       var row = el("div", "bar" + (n === 0 ? " top1" : ""));
       row.style.setProperty("--c", "var(" + CL[c].color + ")");
       row.appendChild(el("span", "name", CL[c].name));
-      var tr = el("span", "track");
+      var trk = el("span", "track");
       var f = el("span", "fill");
       f.style.width = pct + "%";
-      tr.appendChild(f);
-      row.appendChild(tr);
+      trk.appendChild(f);
+      row.appendChild(trk);
       row.appendChild(el("span", "pct", pct + "%"));
       bars.appendChild(row);
     });
@@ -226,19 +260,19 @@
     }
     var ls = LEARN[answers[6] != null ? answers[6] : 0];
     var pl = PLAN[answers[9] != null ? answers[9] : 3];
-    find("கற்றல் முறை (Learning Style)", ls[0], ls[1]);
-    find("படிப்புத் திட்டம் (Study Plan)", pl[0], pl[1]);
-    if (answers[8] != null) find("படிப்பைத் தேர்ந்தெடுக்கும்போது முக்கியமானது", FACTOR[answers[8]], "கல்லூரிகளை ஒப்பிடும்போது இதையே முதல் அளவுகோலாக வைத்துக்கொள்ளுங்கள்.");
-    if (answers[0] != null) find("தற்போதைய நிலை", READY_TITLE[answers[0]], READY[answers[0]]);
+    find(tr("கற்றல் முறை (Learning Style)"), ls[0], ls[1]);
+    find(tr("படிப்புத் திட்டம் (Study Plan)"), pl[0], pl[1]);
+    if (answers[8] != null) find(tr("படிப்பைத் தேர்ந்தெடுக்கும்போது முக்கியமானது"), FACTOR[answers[8]], tr("கல்லூரிகளை ஒப்பிடும்போது இதையே முதல் அளவுகோலாக வைத்துக்கொள்ளுங்கள்."));
+    if (answers[0] != null) find(tr("தற்போதைய நிலை"), READY_TITLE[answers[0]], READY[answers[0]]);
     v.appendChild(finds);
 
     var courses = el("div", "courses");
-    courses.appendChild(el("h2", null, "இந்தத் துறையில் பார்க்க வேண்டிய படிப்புகள்"));
-    courses.appendChild(el("p", "eyebrow", "பட்டப் படிப்பு / பட்டயப் படிப்பு (Degree / Diploma)"));
+    courses.appendChild(el("h2", null, tr("இந்தத் துறையில் பார்க்க வேண்டிய படிப்புகள்")));
+    courses.appendChild(el("p", "eyebrow", tr("பட்டப் படிப்பு / பட்டயப் படிப்பு (Degree / Diploma)")));
     var c1 = el("div", "chips");
     info.degree.forEach(function (t) { c1.appendChild(el("span", "chip", t)); });
     courses.appendChild(c1);
-    courses.appendChild(el("p", "eyebrow", "குறுகியகாலத் திறன் படிப்புகள் (Short-term Skill Courses)"));
+    courses.appendChild(el("p", "eyebrow", tr("குறுகியகாலத் திறன் படிப்புகள் (Short-term Skill Courses)")));
     var c2 = el("div", "chips");
     info.short.forEach(function (t) { c2.appendChild(el("span", "chip", t)); });
     courses.appendChild(c2);
@@ -246,27 +280,33 @@
     v.appendChild(tattiBlock(tattiGroups("school", answers, r.ranked)));
     v.appendChild(contactBlock());
 
-    var sec = r.score[second] > 0 ? CL[second].name + " துறையிலும் உங்களுக்கு ஆர்வம் உள்ளது. அந்தத் துறைப் படிப்புகளையும் ஒருமுறை பாருங்கள். " : "";
-    v.appendChild(el("p", "note", sec + "இது ஒரு வழிகாட்டி மட்டுமே. தகுதி, கட்-ஆஃப், கட்டணம் ஆகியவை ஒவ்வொரு கல்லூரிக்கும் மாறுபடும். சேர்க்கைக்கு முன் கல்லூரியின் இணையதளத்தில் சரிபார்த்துக்கொள்ளுங்கள்."));
+    var sec = r.score[second] > 0 ? CL[second].name + tr(" துறையிலும் உங்களுக்கு ஆர்வம் உள்ளது. அந்தத் துறைப் படிப்புகளையும் ஒருமுறை பாருங்கள். ") : "";
+    v.appendChild(el("p", "note", sec + tr("இது ஒரு வழிகாட்டி மட்டுமே. தகுதி, கட்-ஆஃப், கட்டணம் ஆகியவை ஒவ்வொரு கல்லூரிக்கும் மாறுபடும். சேர்க்கைக்கு முன் கல்லூரியின் இணையதளத்தில் சரிபார்த்துக்கொள்ளுங்கள்.")));
 
     var act = el("div", "actions");
-    var again = el("button", "go", "மீண்டும் முயற்சி செய்யுங்கள்");
+    var again = el("button", "go", tr("மீண்டும் முயற்சி செய்யுங்கள்"));
     again.type = "button";
     again.id = "retry-btn";
     again.addEventListener("click", function () {
       answers = Q.map(function () { return null; });
       showStart();
     });
-    var edit = el("button", "go ghost", "பதில்களை மாற்றுங்கள்");
+    var edit = el("button", "go ghost", tr("பதில்களை மாற்றுங்கள்"));
     edit.type = "button";
     edit.id = "edit-btn";
     edit.addEventListener("click", function () { showQ(0); });
+    var pdf = el("button", "go ghost", tr("முடிவை PDF-ஆகச் சேமிக்கவும்"));
+    pdf.type = "button";
+    pdf.id = "pdf-btn";
+    pdf.addEventListener("click", function () { window.print(); });
     act.appendChild(again);
     act.appendChild(edit);
+    act.appendChild(pdf);
     v.appendChild(act);
 
     mount(v, h);
-    doSave(box, { name: meta.name, phone: meta.phone, doing: meta.doing, answers: answers.slice() });
+    if (redraw) renderSave();
+    else doSave({ name: meta.name, phone: meta.phone, doing: meta.doing, answers: answers.slice() });
   }
 
   /* TATTI course suggestions. Groups come from answers (rules in quiz-data.json "tatti"). */
@@ -289,31 +329,32 @@
   function tattiBlock(groups) {
     var T = D.tatti;
     var box = el("div", "courses tatti");
-    box.appendChild(el("h2", null, T.title));
-    if (!groups.length) box.appendChild(el("p", "note", T.empty));
+    var TE = EN.tatti || {};
+    box.appendChild(el("h2", null, pickL(T.title, TE.title)));
+    if (!groups.length) box.appendChild(el("p", "note", pickL(T.empty, TE.empty)));
     groups.forEach(function (g) {
       box.appendChild(el("p", "eyebrow", T.groups[g].title));
       var chips = el("div", "chips");
       T.groups[g].courses.forEach(function (c) { chips.appendChild(el("span", "chip", c)); });
       box.appendChild(chips);
     });
-    var a = el("a", "btn-sm", T.link);
+    var a = el("a", "btn-sm", pickL(T.link, TE.link));
     a.href = T.url; a.target = "_blank"; a.rel = "noopener noreferrer"; a.id = "tatti-link";
     box.appendChild(a);
     return box;
   }
 
   function contactBlock() {
-    var C = D.contact, box = el("div", "contact");
-    box.appendChild(el("h2", null, C.title));
+    var C = D.contact, CE = EN.contact || {}, box = el("div", "contact");
+    box.appendChild(el("h2", null, pickL(C.title, CE.title)));
     var row = el("div", "contact-row");
     C.numbers.forEach(function (n, i) {
       var a = el("a", "go call", "📞 " + n.label);
       a.href = "tel:" + n.tel; a.id = "call-" + i;
       row.appendChild(a);
     });
-    var w = el("a", "go wa", C.wa_label);
-    w.href = "https://wa.me/" + C.wa + "?text=" + encodeURIComponent(C.wa_msg.replace("{name}", meta.name || ""));
+    var w = el("a", "go wa", pickL(C.wa_label, CE.wa_label));
+    w.href = "https://wa.me/" + C.wa + "?text=" + encodeURIComponent(pickL(C.wa_msg, CE.wa_msg).replace("{name}", meta.name || ""));
     w.target = "_blank"; w.rel = "noopener noreferrer"; w.id = "wa-link";
     row.appendChild(w);
     box.appendChild(row);
@@ -321,25 +362,27 @@
   }
 
   /* College-student and certificate-course quizzes: no interest scoring, so show what the student told us. */
-  function showSetResult() {
+  function showSetResult(redraw) {
+    current = function () { showResult(true); };
+    captureDraft = null;
     var v = el("section", "view result");
     setAccent(v, QCOLOR);
     v.appendChild(el("p", "eyebrow", (meta.name ? meta.name + " · " : "") + D.sets[curSet].name));
-    var h = el("h1", null, "நன்றி! உங்கள் தேவைகள் பதிவாகிவிட்டன");
+    var h = el("h1", null, tr("நன்றி! உங்கள் தேவைகள் பதிவாகிவிட்டன"));
     v.appendChild(h);
-    v.appendChild(el("p", "lead", D.set_note[curSet]));
+    v.appendChild(el("p", "lead", pickL(D.set_note[curSet], EN.set_note && EN.set_note[curSet])));
 
     var box = el("div", "save-state");
     box.id = "save-state";
     v.appendChild(box);
 
     var finds = el("div", "finds");
-    D.highlights[curSet].forEach(function (hl) {
+    D.highlights[curSet].forEach(function (hl, hi) {
       var a = answers[hl[0]];
       if (a == null) return;
       var d = el("div", "find");
-      d.appendChild(el("p", "eyebrow", hl[1]));
-      d.appendChild(el("h3", null, Q[hl[0]].o[a]));
+      d.appendChild(el("p", "eyebrow", pickL(hl[1], EN.highlights && EN.highlights[curSet] && EN.highlights[curSet][hi])));
+      d.appendChild(el("h3", null, qdef(hl[0]).o[a]));
       finds.appendChild(d);
     });
     v.appendChild(finds);
@@ -347,62 +390,96 @@
     v.appendChild(contactBlock());
 
     var act = el("div", "actions");
-    var again = el("button", "go", "மீண்டும் முயற்சி செய்யுங்கள்");
+    var again = el("button", "go", tr("மீண்டும் முயற்சி செய்யுங்கள்"));
     again.type = "button";
     again.id = "retry-btn";
     again.addEventListener("click", function () {
       answers = Q.map(function () { return null; });
       showStart();
     });
-    var edit = el("button", "go ghost", "பதில்களை மாற்றுங்கள்");
+    var edit = el("button", "go ghost", tr("பதில்களை மாற்றுங்கள்"));
     edit.type = "button";
     edit.id = "edit-btn";
     edit.addEventListener("click", function () { showQ(0); });
+    var pdf = el("button", "go ghost", tr("முடிவை PDF-ஆகச் சேமிக்கவும்"));
+    pdf.type = "button";
+    pdf.id = "pdf-btn";
+    pdf.addEventListener("click", function () { window.print(); });
     act.appendChild(again);
     act.appendChild(edit);
+    act.appendChild(pdf);
     v.appendChild(act);
 
     mount(v, h);
-    doSave(box, { name: meta.name, phone: meta.phone, doing: meta.doing, answers: answers.slice() });
+    if (redraw) renderSave();
+    else doSave({ name: meta.name, phone: meta.phone, doing: meta.doing, answers: answers.slice() });
   }
 
-  function doSave(box, payload) {
-    box.className = "save-state";
-    box.textContent = "உங்கள் பதில்கள் சேமிக்கப்படுகின்றன…";
+  /* ---- saving ---- */
+  var saveStatus = "idle", savePayload = null;
+  function renderSave() {
+    var box = document.getElementById("save-state");
+    if (!box) return;
+    var cls = "save-state", txt = "";
+    if (saveStatus === "saving") txt = tr("உங்கள் பதில்கள் சேமிக்கப்படுகின்றன…");
+    else if (saveStatus === "ok") { cls += " ok"; txt = tr("உங்கள் பதில்கள் நிர்வாகத்திற்குச் சென்றுவிட்டன."); }
+    else {
+      cls += " bad";
+      txt = saveStatus === "429" ? tr("தற்போது பலர் சமர்ப்பிக்கிறார்கள். சிறிது நேரம் கழித்து மீண்டும் சேமிக்கவும். உங்கள் முடிவு இங்கே தெரியும்.")
+          : saveStatus === "net" ? tr("இணையத் தொடர்பில் சிக்கல். சேமிக்க இயலவில்லை. ")
+          : tr("சேமிக்க இயலவில்லை. ");
+    }
+    box.className = cls;
+    box.textContent = txt;
+    if (saveStatus === "429" || saveStatus === "err" || saveStatus === "net") addRetry(box);
+  }
+  function doSave(payload) {
+    savePayload = payload;
+    saveStatus = "saving";
+    renderSave();
     fetch("/api/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     }).then(function (res) {
-      if (!box.isConnected) return;
-      box.textContent = "";
-      if (res.ok) {
-        box.className = "save-state ok";
-        box.textContent = "உங்கள் பதில்கள் நிர்வாகத்திற்குச் சென்றுவிட்டன.";
-        return;
-      }
-      box.className = "save-state bad";
-      if (res.status === 429) {
-        box.textContent = "தற்போது பலர் சமர்ப்பிக்கிறார்கள். சிறிது நேரம் கழித்து மீண்டும் சேமிக்கவும். உங்கள் முடிவு இங்கே தெரியும்.";
-      } else {
-        box.textContent = "சேமிக்க இயலவில்லை. ";
-      }
-      addRetry(box, payload);
+      saveStatus = res.ok ? "ok" : (res.status === 429 ? "429" : "err");
+      renderSave();
     }).catch(function () {
-      if (!box.isConnected) return;
-      box.className = "save-state bad";
-      box.textContent = "இணையத் தொடர்பில் சிக்கல். சேமிக்க இயலவில்லை. ";
-      addRetry(box, payload);
+      saveStatus = "net";
+      renderSave();
     });
   }
-
-  function addRetry(box, payload) {
-    var rb = el("button", "btn-sm", "மீண்டும் சேமிக்கவும்");
+  function addRetry(box) {
+    var rb = el("button", "btn-sm", tr("மீண்டும் சேமிக்கவும்"));
     rb.type = "button";
     rb.id = "resave-btn";
-    rb.addEventListener("click", function () { doSave(box, payload); });
+    rb.addEventListener("click", function () { doSave(savePayload); });
     box.appendChild(rb);
   }
+
+  /* ---- language switch (top right) ---- */
+  var bar = document.getElementById("langbar");
+  function drawLangBar() {
+    if (!bar) return;
+    bar.innerHTML = "";
+    [["ta", "தமிழ்"], ["en", "English"]].forEach(function (x) {
+      var b = el("button", "lang", x[1]);
+      b.type = "button";
+      b.id = "lang-" + x[0];
+      b.setAttribute("aria-pressed", L === x[0] ? "true" : "false");
+      b.addEventListener("click", function () {
+        if (L === x[0]) return;
+        if (captureDraft) captureDraft();
+        L = x[0];
+        try { localStorage.setItem("quiz-lang", L); } catch (e) {}
+        syncLang();
+        drawLangBar();
+        current();
+      });
+      bar.appendChild(b);
+    });
+  }
+  drawLangBar();
 
   showStart();
 })();
