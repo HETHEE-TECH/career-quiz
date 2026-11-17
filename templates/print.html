@@ -20,13 +20,12 @@
     <tr><th>Doing now</th><td>{{ r.doing }}</td><th>Quiz</th><td>{{ r.qset_name }}</td></tr>
     <tr><th>Submitted</th><td>{{ r.when }}</td><th>Follow-up</th><td>{{ r.status_label }}{% if r.note %} — {{ r.note }}{% endif %}</td></tr>
   </table>
-  {% if r.qset == "school" %}
   <h2>Result</h2>
   <table class="facts">
-    <tr><th>Top interest</th><td>{{ r.top_label }}</td><th>Learning style</th><td>{{ r.learn }}</td></tr>
-    <tr><th>Study plan</th><td>{{ r.plan }}</td><th>Picks course by</th><td>{{ r.factor }}</td></tr>
-    <tr><th>Where they are now</th><td colspan="3">{{ r.ready }}</td></tr>
+    {% if r.qset == "school" %}<tr><th>Top interest</th><td colspan="3">{{ r.top_label }}</td></tr>{% endif %}
+    <tr><th>Main answer</th><td>{{ r.main }}</td><th>Help needed first</th><td>{{ r.help }}</td></tr>
   </table>
+  {% if r.qset == "school" %}
   <div class="dist">
     {% for label, color, pct in bars %}
     <div class="drow" style="--c: var({{ color }})">

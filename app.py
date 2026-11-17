@@ -59,22 +59,22 @@ CL = DATA["cl"]
 GROUPS = DATA["groups"]  # the old 12th-group question; kept so older rows stay readable
 DOING = DATA["doing"]
 DOING_KEYS = [d["key"] for d in DOING]
-LET = "ABCDE"
-# Three question sets. "school" is the original 12th-class quiz; the other two come from the
-# college-student and certificate-course questionnaires. Which one a student gets depends on
-# the "doing now" choice (DATA["set_of"]); everybody else gets the 12th-class quiz.
+LET = "ABCDEFG"  # the longest question has 7 options
+# Six quizzes, one per "doing now" choice (DATA["set_of"]): school (after 12th), college, course,
+# jobseeker, working, exam. A student only ever gets the quiz that matches the choice they made;
+# the server checks the answers against that same quiz, so questions can never be mixed up.
 SETS = {"school": Q, **{k: v["q"] for k, v in DATA["sets"].items()}}
-SET_NAMES = {"school": "12th quiz", **{k: v["name"] for k, v in DATA["sets"].items()}}
+SET_NAMES = {"school": DATA["school_name"], **{k: v["name"] for k, v in DATA["sets"].items()}}
 
 
 def set_for(doing: str) -> str:
-    return DATA["set_of"].get(doing, "school")
+    return DATA["set_of"][doing]
 
 
 def compute(ans):
-    """Same scoring as the browser. Returns per-interest scores and the ranking."""
+    """Same scoring as the browser (only the after-12th quiz has interest scoring).
+    Questions whose option has no interest (m is None) add nothing."""
     score = {c: 0 for c in ORDER}
-    tie = {c: 0.0 for c in ORDER}
     max_score = 0
     for i, q in enumerate(Q):
         if "m" not in q:
@@ -83,12 +83,9 @@ def compute(ans):
         a = ans[i] if i < len(ans) else None
         if a is None or not 0 <= a < len(q["m"]):
             continue
-        score[q["m"][a]] += q["w"]
-    if len(ans) > 2 and ans[2] is not None:
-        tie[Q[2]["m"][ans[2]]] += 0.2
-    if len(ans) > 1 and ans[1] is not None:
-        tie[Q[1]["m"][ans[1]]] += 0.1
-    ranked = sorted(ORDER, key=lambda c: score[c] + tie[c], reverse=True)
+        if q["m"][a]:
+            score[q["m"][a]] += q["w"]
+    ranked = sorted(ORDER, key=lambda c: score[c], reverse=True)
     return {"score": score, "max": max_score, "ranked": ranked}
 
 
@@ -336,7 +333,7 @@ class Submission(BaseModel):
     @field_validator("doing")
     @classmethod
     def clean_doing(cls, v):
-        if v and v not in DOING_KEYS:
+        if v not in DOING_KEYS:
             raise ValueError("unknown option")
         return v
 
@@ -384,9 +381,15 @@ def prepare(row) -> dict:
     res = compute(ans) if school else {"score": {}, "max": 0, "ranked": [None]}
     top = res["ranked"][0]
 
-    def pick(labels, i):
-        a = ans[i] if i < len(ans) else None
-        return labels[a] if a is not None and 0 <= a < len(labels) else "—"
+    def key_answer(pos):
+        """The answer to the pos-th highlighted question of this quiz (see quiz-data.json "highlights")."""
+        hl = DATA["highlights"].get(qset, [])
+        if not hl:
+            return "—"
+        qi = hl[pos][0] if pos >= 0 else hl[-1][0]
+        a = ans[qi] if qi < len(ans) else None
+        opts = SETS[qset][qi]["o"]
+        return opts[a] if a is not None and 0 <= a < len(opts) else "—"
 
     qa = []
     for i, q in enumerate(SETS[qset]):
@@ -412,10 +415,8 @@ def prepare(row) -> dict:
         "top_label": CL[top]["short"] if school else "—",
         "top_color": CL[top]["color"] if school else "--muted",
         "pct": {c: round(res["score"][c] / res["max"] * 100) if res["max"] else 0 for c in ORDER} if school else {},
-        "learn": pick(DATA["s_learn"], 6) if school else "—",
-        "plan": pick(DATA["s_plan"], 9) if school else "—",
-        "factor": pick(DATA["s_factor"], 8) if school else "—",
-        "ready": pick(DATA["s_ready"], 0) if school else "—",
+        "main": key_answer(0),
+        "help": key_answer(-1),
         "qa": qa,
     }
 
@@ -494,18 +495,12 @@ def panel(title, labels, values, colors=None):
 
 def build_panels(rows):
     doing_labels = [d["en"] for d in DOING] + ["Not given"]
-    school = [r for r in rows if r["qset"] == "school"]
     out = []
+    school = [r for r in rows if r["qset"] == "school"]
     if school:
-        out += [
-            panel("Interest (12th quiz)", [CL[c]["short"] for c in ORDER], [ORDER.index(r["top"]) for r in school],
-                  [CL[c]["color"] for c in ORDER]),
-            panel("Learning style", DATA["s_learn"], [r["ans"][6] for r in school]),
-            panel("Study plan", DATA["s_plan"], [r["ans"][9] for r in school]),
-            panel("Picks a course by", DATA["s_factor"], [r["ans"][8] for r in school]),
-            panel("Where they are now", DATA["s_ready"], [r["ans"][0] for r in school]),
-        ]
-    for key in DATA["sets"]:
+        out.append(panel("Interest (After 12th quiz)", [CL[c]["short"] for c in ORDER],
+                         [ORDER.index(r["top"]) for r in school], [CL[c]["color"] for c in ORDER]))
+    for key in SETS:  # every quiz: first and last question
         sub = [r for r in rows if r["qset"] == key]
         if not sub:
             continue
@@ -599,14 +594,14 @@ def export_csv(request: Request, q: str = "", interest: str = "", sort: str = "n
     w = csv.writer(out)
     w.writerow(
         ["Name", "Phone", "Doing now", "Quiz", "Top interest", "Technology %", "Creativity %", "Business %",
-         "Science & People %", "Learning style", "Study plan", "Picks course by", "Where they are now",
+         "Science & People %", "Main answer", "Help needed first",
          "Submitted (IST)", "Status", "Note"] + [f"Q{i + 1}" for i in range(10)]
     )
     for r in rows:
         w.writerow(
             [csv_safe(r["name"]), r["phone"], r["doing"], r["qset_name"], r["top_label"],
              r["pct"].get("tech", ""), r["pct"].get("creative", ""), r["pct"].get("business", ""), r["pct"].get("people", ""),
-             r["learn"], r["plan"], r["factor"], r["ready"], r["when"], dict(STATUSES)[r["status"]], csv_safe(r["note"])]
+             csv_safe(r["main"]), csv_safe(r["help"]), r["when"], dict(STATUSES)[r["status"]], csv_safe(r["note"])]
             + [LET[a] if a is not None else "" for a in r["ans"]]
         )
     body = "﻿" + out.getvalue()  # BOM so Excel reads Tamil text correctly

@@ -4,7 +4,7 @@
   var app = document.getElementById("app");
   var D;
   try {
-    var res = await fetch("/static/quiz-data.json?v=7");
+    var res = await fetch("/static/quiz-data.json?v=8");
     D = await res.json();
   } catch (e) {
     app.textContent = "வினாடி வினா ஏற்றப்படவில்லை. பக்கத்தைப் புதுப்பிக்கவும் (Refresh).";
@@ -16,7 +16,6 @@
   var Q = SCHOOL_Q;                   // the question set this student is answering
   var curSet = "school";
   var DOING = D.doing;
-  var LEARN, PLAN, READY, READY_TITLE, FACTOR;
 
   /* ---- Tamil / English. Tamil is the base text; the English text lives in quiz-data.json "en". ---- */
   var EN = D.en || {};
@@ -25,13 +24,7 @@
   function tr(s) { return L === "en" && EN.ui && EN.ui[s] ? EN.ui[s] : s; }
   function pickL(ta, en) { return L === "en" && en != null ? en : ta; }
   function syncLang() {
-    var e = L === "en";
-    LEARN = e && EN.learn ? EN.learn : D.learn;
-    PLAN = e && EN.plan ? EN.plan : D.plan;
-    READY = e && EN.ready ? EN.ready : D.ready;
-    READY_TITLE = e && EN.ready_title ? EN.ready_title : D.ready_title;
-    FACTOR = e && EN.factor ? EN.factor : D.factor;
-    document.documentElement.lang = e ? "en" : "ta";
+    document.documentElement.lang = L === "en" ? "en" : "ta";
   }
   syncLang();
   /* question text in the chosen language (scoring always uses the Tamil/base Q, answers are indexes) */
@@ -48,10 +41,11 @@
   var answers = Q.map(function () { return null; });
   var meta = { name: "", phone: "", doing: "" };
   var timer = null;
-  var LET = ["A", "B", "C", "D", "E"];
+  var LET = ["A", "B", "C", "D", "E", "F", "G"];   // longest question has 7 options
 
-  /* Which question set a student gets depends on what they are doing now (quiz-data.json "set_of"). */
-  function setFor(doing) { return (D.set_of && D.set_of[doing]) || "school"; }
+  /* Which quiz a student gets depends only on the "doing now" choice (quiz-data.json "set_of"):
+     one choice = one quiz, so questions of different quizzes never mix. */
+  function setFor(doing) { return D.set_of[doing]; }
   function useSet(key) {
     var q = key === "school" ? SCHOOL_Q : D.sets[key].q;
     if (key !== curSet || Q !== q) { curSet = key; Q = q; answers = Q.map(function () { return null; }); }
@@ -71,10 +65,10 @@
     if (focusEl) { focusEl.setAttribute("tabindex", "-1"); focusEl.focus({ preventScroll: true }); }
   }
 
-  /* Same scoring as the server (app.py compute). The server's result is the one stored. */
+  /* Same scoring as the server (app.py compute). Only the after-12th quiz is scored.
+     An option whose "m" entry is null (e.g. "still exploring") adds nothing. */
   function compute(ans) {
     var score = { tech: 0, creative: 0, business: 0, people: 0 };
-    var tie = { tech: 0, creative: 0, business: 0, people: 0 };
     var max = 0;
     Q.forEach(function (q, i) {
       if (!q.m) return;
@@ -83,9 +77,7 @@
       if (a == null || !q.m[a]) return;
       score[q.m[a]] += q.w;
     });
-    if (ans[2] != null && Q[2].m[ans[2]]) tie[Q[2].m[ans[2]]] += 0.2;
-    if (ans[1] != null && Q[1].m[ans[1]]) tie[Q[1].m[ans[1]]] += 0.1;
-    var ranked = ORDER.slice().sort(function (a, b) { return (score[b] + tie[b]) - (score[a] + tie[a]); });
+    var ranked = ORDER.slice().sort(function (a, b) { return score[b] - score[a]; });
     return { score: score, max: max, ranked: ranked };
   }
 
@@ -250,21 +242,7 @@
     box.id = "save-state";
     v.appendChild(box);
 
-    var finds = el("div", "finds");
-    function find(label, title, text) {
-      var d = el("div", "find");
-      d.appendChild(el("p", "eyebrow", label));
-      d.appendChild(el("h3", null, title));
-      d.appendChild(el("p", null, text));
-      finds.appendChild(d);
-    }
-    var ls = LEARN[answers[6] != null ? answers[6] : 0];
-    var pl = PLAN[answers[9] != null ? answers[9] : 3];
-    find(tr("கற்றல் முறை (Learning Style)"), ls[0], ls[1]);
-    find(tr("படிப்புத் திட்டம் (Study Plan)"), pl[0], pl[1]);
-    if (answers[8] != null) find(tr("படிப்பைத் தேர்ந்தெடுக்கும்போது முக்கியமானது"), FACTOR[answers[8]], tr("கல்லூரிகளை ஒப்பிடும்போது இதையே முதல் அளவுகோலாக வைத்துக்கொள்ளுங்கள்."));
-    if (answers[0] != null) find(tr("தற்போதைய நிலை"), READY_TITLE[answers[0]], READY[answers[0]]);
-    v.appendChild(finds);
+    v.appendChild(highlightsBlock());
 
     var courses = el("div", "courses");
     courses.appendChild(el("h2", null, tr("இந்தத் துறையில் பார்க்க வேண்டிய படிப்புகள்")));
@@ -344,6 +322,20 @@
     return box;
   }
 
+  /* "What you told us": the answers to the highlighted questions of the quiz this student took. */
+  function highlightsBlock() {
+    var finds = el("div", "finds");
+    D.highlights[curSet].forEach(function (hl, hi) {
+      var a = answers[hl[0]];
+      if (a == null) return;
+      var d = el("div", "find");
+      d.appendChild(el("p", "eyebrow", pickL(hl[1], EN.highlights && EN.highlights[curSet] && EN.highlights[curSet][hi])));
+      d.appendChild(el("h3", null, qdef(hl[0]).o[a]));
+      finds.appendChild(d);
+    });
+    return finds;
+  }
+
   function contactBlock() {
     var C = D.contact, CE = EN.contact || {}, box = el("div", "contact");
     box.appendChild(el("h2", null, pickL(C.title, CE.title)));
@@ -376,16 +368,7 @@
     box.id = "save-state";
     v.appendChild(box);
 
-    var finds = el("div", "finds");
-    D.highlights[curSet].forEach(function (hl, hi) {
-      var a = answers[hl[0]];
-      if (a == null) return;
-      var d = el("div", "find");
-      d.appendChild(el("p", "eyebrow", pickL(hl[1], EN.highlights && EN.highlights[curSet] && EN.highlights[curSet][hi])));
-      d.appendChild(el("h3", null, qdef(hl[0]).o[a]));
-      finds.appendChild(d);
-    });
-    v.appendChild(finds);
+    v.appendChild(highlightsBlock());
     v.appendChild(tattiBlock(tattiGroups(curSet, answers, null)));
     v.appendChild(contactBlock());
 

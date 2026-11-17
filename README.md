@@ -5,6 +5,22 @@
 - **Students:** `/` திறந்து Quiz எழுதுவாங்க (login வேண்டாம்). பதில்கள் SQLite-ல save ஆகும்.
 - **Admin:** `/admin` திறந்து login பண்ணா, எல்லா Responses, summary, search, CSV export, delete எல்லாம் கிடைக்கும்.
 
+## 6 Quiz வகைகள்
+
+Start screen-ல "இப்போ என்ன செய்றீங்க?" Dropdown-ல தேர்ந்தெடுக்கறதை வச்சு, அதுக்குரிய Quiz மட்டும் வரும் (`set_of` in `static/quiz-data.json`).
+ஒரு Option = ஒரு Quiz. Server-ம் அதே Quiz-ஓட Answers-ஐ Check பண்றதால Questions கலக்காது.
+
+| Dropdown | Quiz |
+|---|---|
+| 12-ஆம் வகுப்பு முடித்து படிப்பு / கல்லூரி தேடுகிறேன் | After 12th (interest result + TATTI courses) |
+| கல்லூரியில் படிக்கிறேன் | College student |
+| சான்றிதழ் படிப்பு / பயிற்சி | Certificate course |
+| வேலை தேடுகிறேன் | Job seeker |
+| வேலை செய்கிறேன் | Working professional |
+| போட்டித் தேர்வுக்குத் தயாராகிறேன் | Exam preparation |
+
+Questions மாத்தினா பழைய Responses-ஐ Admin-ல "Delete all" பண்ணுங்க (Export CSV எடுத்த பிறகு). இல்லன்னா பழைய Answers புது Questions-ஓட தப்பாப் பொருந்தும்.
+
 ## Local-ல ஓட்டறது
 
 Python 3.10 அல்லது அதுக்கு மேல வேணும்.

@@ -41,135 +41,107 @@
  ],
  "q": [
   {
-   "t": "12th முடிஞ்சதும்… உங்க Next Step ரெடியா, இன்னும் Loading-ஆ?",
+   "t": "12-ஆம் வகுப்புக்குப் பிறகு நீங்கள் என்ன செய்யத் திட்டமிட்டுள்ளீர்கள்?",
    "o": [
-    "Course, College ரெண்டுமே Fixed",
-    "Course Ready; College மட்டும் Pending",
-    "சில Options இருக்கு; இன்னும் Decide பண்ணல",
-    "எங்க Start பண்ணணும்னு தெரியல"
+    "நுழைவுத் தேர்வுகளுக்குத் தயாராக வேண்டும்",
+    "திறன் பயிற்சித் திட்டத்தில் சேர வேண்டும்",
+    "படிப்பைத் தொடர்வதற்கு முன் சிறிது இடைவெளி எடுக்க வேண்டும்",
+    "பட்டப் படிப்பு அல்லது தொழில்முறைப் படிப்பில் சேர வேண்டும்"
    ]
   },
   {
-   "t": "Exam இல்லன்னாலும்… எந்த Subject-ஐ விரும்பிப் படிப்பீங்க?",
-   "w": 2,
-   "m": [
-    "tech",
-    "people",
-    "business",
-    "creative"
+   "t": "எந்தத் துறையை இன்னும் ஆராய விரும்புகிறீர்கள்?",
+   "o": [
+    "கலை, மானுடவியல் அல்லது படைப்பாற்றல் படிப்புகள்",
+    "அறிவியல் அல்லது தொழில்நுட்பம்",
+    "வணிகவியல் அல்லது வணிகம்",
+    "இன்னும் ஆராய்ந்து கொண்டிருக்கிறேன்"
    ],
-   "o": [
-    "Maths / Computer Science",
-    "Physics / Chemistry / Biology",
-    "Commerce / Accountancy / Economics",
-    "Languages / History / மற்ற Arts Subjects"
-   ]
-  },
-  {
-   "t": "“இதைப் பத்தி இன்னும் தெரிஞ்சுக்கணுமே!”ன்னு எந்தத் துறை மேல ஆர்வம் வரும்?",
-   "w": 2,
+   "w": 1,
    "m": [
     "creative",
     "tech",
     "business",
+    null
+   ]
+  },
+  {
+   "t": "எந்த வகையான படிப்பைப் பற்றி யோசிக்கிறீர்கள்?",
+   "o": [
+    "படைப்பாற்றல் துறையில் பட்டப் படிப்பு",
+    "குறிப்பிட்ட தொழிலுக்கான தொழில்முறைப் படிப்பு",
+    "டிப்ளமா அல்லது திறன் சார்ந்த படிப்பு",
+    "இன்னும் முடிவு செய்யவில்லை."
+   ]
+  },
+  {
+   "t": "படிப்பைத் தேர்வு செய்வதில் எவ்வளவு தூரம் முன்னேறியுள்ளீர்கள்?",
+   "o": [
+    "ஒரு படிப்பைத் தேர்ந்தெடுத்து, கல்லூரிகளையும் பட்டியலிட்டுள்ளேன்.",
+    "ஒரு படிப்பைத் தேர்ந்தெடுத்துவிட்டேன்; கல்லூரி விவரங்கள் தேவை.",
+    "மனதில் ஒரு தொழில் இருக்கிறது; அதற்கேற்ற படிப்பு தேவை.",
+    "படிப்பு மற்றும் தொழில் இரண்டிலும் வழிகாட்டுதல் தேவை."
+   ]
+  },
+  {
+   "t": "உங்கள் எதிர்காலப் படிப்பு பள்ளிப் பாடங்களோடு எப்படித் தொடர்புடையதாக இருக்க வேண்டும்?",
+   "o": [
+    "அதே பாடத் துறையில் தொடர வேண்டும்",
+    "தொடர்புடைய வேறொரு பாடத் துறையை ஆராய வேண்டும்",
+    "எனக்கு ஆர்வமுள்ள வேறு துறைக்கு மாற வேண்டும்",
+    "இன்னும் முடிவு செய்யவில்லை."
+   ]
+  },
+  {
+   "t": "உங்கள் படிப்புத் தேர்வை அதிகம் பாதிப்பது எது?",
+   "o": [
+    "நான் பள்ளியில் படித்த பாடங்கள்",
+    "படைப்பாற்றல் தொழிலில் எனக்குள்ள ஆர்வம்",
+    "ஒரு குறிப்பிட்ட தொழிலில் நுழைய வேண்டும் என்ற என் இலக்கு",
+    "படிப்புக்குப் பிறகு கிடைக்கும் வேலைவாய்ப்புகள்"
+   ]
+  },
+  {
+   "t": "இதுவரை கேள்விப்படாத ஒரு படிப்பை நீங்கள் பரிசீலிப்பீர்களா?",
+   "o": [
+    "ஆம், பயனுள்ள திறன்களைக் கற்றுத் தந்தால்",
+    "ஆம், பொருத்தமான தொழில் வாய்ப்புகளை வழங்கினால்",
+    "ஒருவேளை, அதைப் பற்றி மேலும் தெரிந்த பிறகு",
+    "எனக்கு ஏற்கனவே தெரிந்த படிப்புகளையே விரும்புகிறேன்."
+   ]
+  },
+  {
+   "t": "எந்த வகையான வேலையைக் கற்றுக்கொள்ள நீங்கள் விரும்புவீர்கள்?",
+   "o": [
+    "வடிவமைப்புகள், கதைகள் அல்லது காட்சி உள்ளடக்கங்களை உருவாக்குவது",
+    "தொழில்நுட்பம், கருவிகள் அல்லது உபகரணங்களுடன் பணியாற்றுவது",
+    "வணிகச் செயல்பாடுகள் அல்லது நிதியை நிர்வகிப்பது",
+    "கேள்விகளை ஆராய்ந்து தகவல்களைப் பகுப்பாய்வு செய்வது"
+   ],
+   "w": 2,
+   "m": [
+    "creative",
+    "tech",
+    "business",
     "people"
-   ],
-   "o": [
-    "Creativity - கலை, புதிய படைப்புகள்",
-    "Technology - தொழில்நுட்பம், புதிய கண்டுபிடிப்புகள்",
-    "Business - வியாபாரம், பணநிர்வாகம்",
-    "Science & People - அறிவியல், ஆரோக்கியம், மனிதர்கள்"
    ]
   },
   {
-   "t": "“இது எனக்கு ஈஸி!”ன்னு நீங்க சொல்ற விஷயம் எது?",
-   "w": 1,
-   "m": [
-    "tech",
-    "people",
-    "creative",
-    "business"
-   ],
+   "t": "நீங்கள் விரும்பும் படிப்பு கிடைக்கவில்லை என்றால், எதைப் பரிசீலிப்பீர்கள்?",
    "o": [
-    "Maths, Puzzles Solve பண்ணுவது",
-    "ஒரு விஷயத்தை Clear-ஆ Explain பண்ணுவது",
-    "புதுசா Write அல்லது Design பண்ணுவது",
-    "ஒரு வேலையை Plan பண்ணி முடிப்பது"
+    "அதே துறையில் தொடர்புடைய வேறொரு படிப்பு",
+    "அதே படிப்பை வேறொரு கல்லூரியில்",
+    "எனக்கு ஆர்வமுள்ள வேறு துறை",
+    "முடிவு செய்ய எனக்கு உதவி தேவைப்படும்."
    ]
   },
   {
-   "t": "Friends உங்க உதவியை அதிகமா எதுக்குத் தேடி வருவாங்க?",
-   "w": 1,
-   "m": [
-    "people",
-    "tech",
-    "creative",
-    "people"
-   ],
+   "t": "இறுதியாகப் படிப்பைத் தேர்வு செய்ய உங்களுக்கு எது உதவும்?",
    "o": [
-    "Subjects-ல Doubts கேட்க",
-    "Phone / Computer Problems சரி செய்ய",
-    "Writing, Drawing அல்லது Editing செய்ய",
-    "Personal Problems-ஐ பேசித் தீர்க்க"
-   ]
-  },
-  {
-   "t": "Free time கிடைச்சா… எதைச் செய்ய நீங்களே முன்வருவீங்க?",
-   "w": 1,
-   "m": [
-    "tech",
-    "people",
-    "creative",
-    "people"
-   ],
-   "o": [
-    "ஏதாவது Build அல்லது Repair பண்ண",
-    "ஒரு Topic பத்தி Search பண்ணிப் படிக்க",
-    "Writing, Drawing அல்லது Video Making",
-    "யாருக்காவது Teach அல்லது Help பண்ண"
-   ]
-  },
-  {
-   "t": "புதுசா ஒரு விஷயத்தைக் கத்துக்கும் போது… எப்படிச் சொன்னா சீக்கிரம் புரியும்?",
-   "o": [
-    "Books / Notes-ல படிச்சா",
-    "Videos / Pictures-ல பார்த்தா",
-    "நானே Practice பண்ணிப் பார்த்தா",
-    "யாராவது Explain பண்ணி, Doubts கேட்டா"
-   ]
-  },
-  {
-   "t": "நாளைக்கு ஒரு வேலை… அதில் எது இருந்தா உங்களுக்குப் பிடிக்கும்?",
-   "w": 1,
-   "m": [
-    "tech",
-    "creative",
-    "people",
-    "business"
-   ],
-   "o": [
-    "Problems-க்கு Solutions கண்டுபிடிக்கணும்",
-    "புதுப் புது Ideas-ஐ Create பண்ணணும்",
-    "மக்களோட Connect பண்ணி Help பண்ணணும்",
-    "வேலைகளை Plan பண்ணி Manage பண்ணணும்"
-   ]
-  },
-  {
-   "t": "ஒரு Course-க்கு உங்க “Yes”… முதலில் எதைப் பொறுத்தது?",
-   "o": [
-    "என் Interest-க்கு Match ஆகணும்",
-    "நல்ல Job Opportunities இருக்கணும்",
-    "Fees எங்க Budget-க்குள் இருக்கணும்",
-    "College Location எங்களுக்கு ஏத்தமாதிரி இருக்கணும்"
-   ]
-  },
-  {
-   "t": "உங்க Study Plan-க்கு இப்போ எது பொருத்தமா இருக்கும்?",
-   "o": [
-    "சில வருஷம் Full-time படிக்க Ready",
-    "Short-term Course முடிச்சு Job போகணும்",
-    "Work பண்ணிக்கிட்டே Study பண்ணணும்",
-    "என்னென்ன Options இருக்குன்னு முதலில் தெரிஞ்சுக்கணும்"
+    "நான் என்னென்ன பாடங்களைப் படிப்பேன் என்று தெரிந்துகொள்வது",
+    "நான் கற்கும் செயல்முறைத் திறன்களைப் புரிந்துகொள்வது",
+    "அந்தப் படிப்பு எந்தத் தொழில்களுக்கு வழிவகுக்கும் என்று தெரிந்துகொள்வது",
+    "கட்டணம் மற்றும் சேர்க்கைத் தகுதிகளைப் புரிந்துகொள்வது"
    ]
   }
  ],
@@ -240,84 +212,6 @@
    ]
   }
  },
- "learn": [
-  [
-   "படித்துக் கற்பவர் (Reading)",
-   "புத்தகங்கள், குறிப்புகள், PDF ஆகியவை உங்களுக்கு நன்கு உதவும். சிறு குறிப்புகள் எழுதி, அடிக்கடி மீள்பார்வை செய்யுங்கள்."
-  ],
-  [
-   "பார்த்துக் கற்பவர் (Visual)",
-   "காணொளிகள், படங்கள், மனவரைபடங்கள் (Mind-maps) ஆகியவற்றைப் பயன்படுத்துங்கள். வண்ணக் குறிப்புகள் நினைவில் நிற்க உதவும்."
-  ],
-  [
-   "செய்து கற்பவர் (Hands-on)",
-   "பயிற்சி, செயல்திட்டங்கள் (Projects), செய்முறை மூலம் கற்றுக்கொள்ளுங்கள். ஒரு தலைப்பைப் படித்தவுடன் ஒரு சிறிய செயல்திட்டம் செய்யுங்கள்."
-  ],
-  [
-   "பேசிக் கற்பவர் (Discussion)",
-   "படிப்புக் குழு, வழிகாட்டி (Mentor), சந்தேக நிவர்த்தி வகுப்புகள் உங்களுக்குப் பொருந்தும். கற்றதை மற்றவர்களுக்கு விளக்குங்கள்."
-  ]
- ],
- "plan": [
-  [
-   "முழுநேரப் பட்டப் படிப்பு (Full-time Degree)",
-   "3 முதல் 4 ஆண்டுகள் முழுநேரப் பட்டப் படிப்பு உங்களுக்குப் பொருத்தமாக இருக்கும். அடித்தளம் வலுவாக அமையும்."
-  ],
-  [
-   "குறுகியகாலப் படிப்பு, பின்னர் வேலை (Short-term Course, then Job)",
-   "6 மாதம் முதல் 1 ஆண்டு வரையிலான திறன் படிப்பு அல்லது பட்டயப் படிப்பு. வேலைக்குத் தயாராவதற்கான விரைவான வழி."
-  ],
-  [
-   "வேலை + படிப்பு (Work + Study)",
-   "பகுதிநேர வேலையுடன் தொலைதூரக் கல்வி, திறந்தநிலைப் பல்கலைக்கழகம், மாலைக் கல்லூரி அல்லது இணையவழிப் படிப்பைச் சேர்த்துக்கொள்ளலாம்."
-  ],
-  [
-   "முதலில் வாய்ப்புகளை அறிய வேண்டும் (Explore options first)",
-   "தொழில் வழிகாட்டல் (Career Counselling), கல்லூரித் திறந்தவெளி நாள், இலவச அறிமுக வகுப்பு மூலம் வாய்ப்புகளைப் பாருங்கள். பிறகு முடிவு செய்யலாம்."
-  ]
- ],
- "ready": [
-  "உங்கள் படிப்பும் கல்லூரியும் உறுதியாகிவிட்டன. சேர்க்கைத் தேதி, தேவையான ஆவணங்களைச் சரிபார்த்துத் தொடங்குங்கள்.",
-  "படிப்பு உறுதியாகிவிட்டது. கட்டணம், இடம், வேலைவாய்ப்பு (Placement) ஆகியவற்றை ஒப்பிட்டுக் கல்லூரிகளைத் தேர்ந்தெடுங்கள்.",
-  "சில வாய்ப்புகள் உள்ளன. மேலே உள்ள உங்கள் ஆர்வ முடிவுடன் ஒப்பிட்டு 2 அல்லது 3-ஐத் தேர்ந்தெடுங்கள்.",
-  "தொடங்குவதற்கு இந்த முடிவு ஒரு நல்ல ஆரம்பம். கீழே உள்ள படிப்புகளில் 2 அல்லது 3-ஐத் தேர்ந்தெடுங்கள்."
- ],
- "ready_title": [
-  "படிப்பு, கல்லூரி இரண்டும் உறுதி",
-  "படிப்பு உறுதி, கல்லூரி நிலுவையில்",
-  "சில வாய்ப்புகள் உள்ளன",
-  "தொடக்கப் புள்ளியைத் தேடுகிறீர்கள்"
- ],
- "factor": [
-  "உங்கள் ஆர்வத்திற்குப் பொருந்த வேண்டும்",
-  "நல்ல வேலைவாய்ப்பு இருக்க வேண்டும்",
-  "கட்டணம் உங்கள் பட்ஜெட்டுக்குள் இருக்க வேண்டும்",
-  "கல்லூரி அமைந்திருக்கும் இடம் உங்களுக்கு வசதியாக இருக்க வேண்டும்"
- ],
- "s_learn": [
-  "Reading",
-  "Visual",
-  "Hands-on",
-  "Discussion"
- ],
- "s_plan": [
-  "Full-time degree",
-  "Short course, then job",
-  "Work + study",
-  "Still exploring"
- ],
- "s_factor": [
-  "Interest",
-  "Job opportunities",
-  "Fees",
-  "Location"
- ],
- "s_ready": [
-  "Course & college fixed",
-  "Course ready",
-  "Few options",
-  "Not sure where to start"
- ],
  "groups": [
   "Science (Maths / Computer)",
   "Science (Biology)",
@@ -328,8 +222,8 @@
  "doing": [
   {
    "key": "search_college",
-   "ta": "கல்லூரியைத் தேடுகிறேன்",
-   "en": "Searching for a college"
+   "ta": "12-ஆம் வகுப்பு முடித்து, படிப்பு / கல்லூரியைத் தேடுகிறேன்",
+   "en": "After 12th, searching for a course or college"
   },
   {
    "key": "in_college",
@@ -338,8 +232,8 @@
   },
   {
    "key": "course",
-   "ta": "ஒரு படிப்பு அல்லது பயிற்சியில் சேர்ந்துள்ளேன்",
-   "en": "Doing a course"
+   "ta": "சான்றிதழ் படிப்பு அல்லது பயிற்சியில் சேர்ந்துள்ளேன்",
+   "en": "Doing a certificate course"
   },
   {
    "key": "job_search",
@@ -355,11 +249,6 @@
    "key": "exam_prep",
    "ta": "போட்டித் தேர்வுக்குத் தயாராகிறேன்",
    "en": "Preparing for entrance or competitive exams"
-  },
-  {
-   "key": "other",
-   "ta": "வேறு",
-   "en": "Something else"
   }
  ],
  "sets": {
@@ -563,192 +452,194 @@
    "name": "Job seeker",
    "q": [
     {
-     "t": "வேலை தேட ஆரம்பிச்சு எவ்வளவு நாள் ஆச்சு?",
+     "t": "When did you graduate?",
      "o": [
-      "1 மாசத்துக்கும் குறைவா",
-      "1 முதல் 3 மாசம்",
-      "3 முதல் 6 மாசம்",
-      "6 மாசத்துக்கு மேல"
+      "Within the last 6 months",
+      "6 months to less than 1 year ago",
+      "1 to less than 3 years ago",
+      "3 or more years ago"
      ]
     },
     {
-     "t": "எந்த மாதிரி வேலை தேடுறீங்க?",
+     "t": "Right now, உங்க career journey-ல which option fits you best?",
      "o": [
-      "Technical / IT / Operations",
-      "Office / Admin / Accounts",
-      "Sales / Marketing / Customer Service",
-      "எனக்குப் பொருத்தமான வேலையை explore பண்ண guidance வேணும்"
+      "I’m a fresher.",
+      "எனக்கு work experience இருக்கு. இப்போ என் next job தேடுறேன்",
+      "Career break-க்குப் பிறகு I’m ready to return to work"
      ]
     },
     {
-     "t": "வேலை தேடுறதுல இப்போ உங்களுக்கு மிகப்பெரிய தடை எது?",
+     "t": "Where are you in your job search right now?",
      "o": [
-      "Openings எங்க இருக்குன்னு தெரியல",
-      "Interview call வரல",
-      "Interview-ல நல்லா பதில் சொல்ல முடியல",
-      "தேவையான skills அல்லது experience இல்ல"
+      "Exploring roles before I start applying",
+      "Actively applying for jobs",
+      "கொஞ்சம் time எடுத்துட்டு job search start பண்ணப் போறேன்",
+      "I’m building my skills first, then I’ll start applying"
      ]
     },
     {
-     "t": "உங்க Resume இப்போ எந்த நிலையில இருக்கு?",
+     "t": "Which field are you aiming for?",
      "o": [
-      "Ready, update-ஆ இருக்கு",
-      "இருக்கு, ஆனா improve பண்ணணும்",
-      "இதுவரை உருவாக்கல",
-      "Fresher-ஆ என்ன எழுதணும்னு தெரியல"
+      "IT / Software / Data",
+      "Engineering / Manufacturing",
+      "Sales / Marketing",
+      "Finance / Accounts",
+      "HR / Admin",
+      "Operations / Customer Support",
+      "Other"
      ]
     },
     {
-     "t": "Job openings-ஐ எங்கே அதிகமா தேடுறீங்க?",
+     "t": "Job-க்கு apply பண்ண இன்னும் கொஞ்சம் ready ஆக, உங்களுக்கு என்ன help வேணும்?",
      "o": [
-      "Job portals (Naukri, LinkedIn போன்றவை)",
-      "நண்பர்கள் / உறவினர்கள் / Referral",
-      "Walk-in drives / Campus drives",
-      "இன்னும் சரியா தேட ஆரம்பிக்கல"
+      "என் field-ல use பண்ற AI tools-ஐ confident-ஆ பயன்படுத்தக் கத்துக்க",
+      "Catch up on the latest software and tools in my field",
+      "Employers கேட்குற skills-ஐ develop பண்ண",
+      "Get hands-on experience through a practical course or internship",
+      "I already feel ready to apply"
      ]
     },
     {
-     "t": "Interview-க்கு போகும்போது எதுல அதிகமா பயம்?",
+     "t": "When it comes to soft skills, where would you like more practice?",
      "o": [
-      "Spoken English",
-      "Technical questions",
-      "என்னைப் பற்றிச் சொல்றது (Self introduction)",
-      "HR questions, salary பேசுறது"
+      "Speaking English with confidence",
+      "என் ideas-ஐ clear-ஆ explain பண்ண",
+      "Staying calm when I feel nervous in an interview",
+      "Handling pressure and feedback at work",
+      "I’m comfortable with these skills"
      ]
     },
     {
-     "t": "Experience இல்லன்னு reject ஆனா என்ன பண்ணுவீங்க?",
+     "t": "Placement-க்கு prepare பண்ண, என்ன support இருந்தா helpful-ஆ இருக்கும்?",
      "o": [
-      "Internship / Training சேருவேன்",
-      "புதுசா ஒரு skill கத்துக்குவேன்",
-      "எந்த Entry-level வேலையும் எடுத்துக்குவேன்",
-      "என்ன பண்ணணும்னு தெரியல"
+      "Help with creating or updating my resume",
+      "Mock interviews with feedback",
+      "All of the above",
+      "I’m comfortable preparing on my own"
      ]
     },
     {
-     "t": "வேலை கிடைக்க எந்த skill-ஐ upgrade பண்ண விரும்புறீங்க?",
+     "t": "நீங்க தேடுற roles-க்கு job updates கிடைக்கிறது எவ்வளவு easy-ஆ இருக்கு?",
      "o": [
-      "Computer / Digital tools",
-      "AI tools",
-      "Spoken English / Communication",
-      "என் field-ல technical skill",
-      "எந்த skill தேவைன்னு guidance வேணும்"
+      "Easy. I regularly find relevant openings on time",
+      "Openings கிடைக்குது, but only a few match what I’m looking for",
+      "பொருத்தமான openings சில நேரம் late-ஆதான் தெரியுது",
+      "I’d like guidance on where to look for reliable job updates"
      ]
     },
     {
-     "t": "வேலையைத் தேர்ந்தெடுக்கும்போது உங்களுக்கு எது முக்கியம்?",
+     "t": "Are you open to exploring jobs in a different field?",
      "o": [
-      "நல்ல Salary",
-      "Job security",
-      "கத்துக்கவும் வளரவும் வாய்ப்பு",
-      "வீட்டுக்குப் பக்கத்துல இருக்கணும்"
+      "Yes, I already have another field in mind",
+      "Yes, என் skills-க்கு suit ஆகுற fields தெரிஞ்சுக்க விரும்புறேன்",
+      "Maybe, if I know what skills I’d need to make the switch",
+      "For now, I’d like to focus on the field I’ve chosen"
      ]
     },
     {
-     "t": "வேலை தேட முதல்ல என்ன support வேணும்?",
+     "t": "Which skills feel like your strong suit?",
      "o": [
-      "Resume / Portfolio தயார் பண்ண",
-      "Job openings / Referral கண்டுபிடிக்க",
-      "Mock interview practice",
-      "Skill training",
-      "Career counselling"
+      "Using AI tools confidently for tasks like research, writing or planning",
+      "Coding / Data analysis",
+      "Design / Content creation",
+      "Sales / Customer handling",
+      "Technical skills in my field",
+      "Other"
      ]
     }
    ]
   },
   "working": {
-   "name": "Working",
+   "name": "Working professional",
    "q": [
     {
-     "t": "தற்போதைய வேலையில எவ்வளவு காலமா இருக்கீங்க?",
+     "t": "இப்போது உங்களுடைய வேலை வாழ்க்கையில் அடுத்ததாக என்ன சாதிக்க வேண்டும் என்று நினைக்கிறீர்கள்?",
      "o": [
-      "6 மாசத்துக்கும் குறைவா",
-      "6 மாசம் முதல் 1 வருஷம்",
-      "1 முதல் 3 வருஷம்",
-      "3 வருஷத்துக்கு மேல"
+      "இப்போதைய நிறுவனத்திலேயே நல்ல பதவிக்கு முன்னேற வேண்டும்",
+      "இதைவிட நல்ல நிறுவனத்தில் வேலைக்குச் செல்ல வேண்டும்",
+      "சொந்தமாகத் தொழில் தொடங்க வேண்டும் அல்லது Freelancing செய்ய வேண்டும்",
+      "எனக்கு எந்தத் துறை பொருத்தமாக இருக்கும் என்று தெரிந்துகொள்ள வேண்டும்"
      ]
     },
     {
-     "t": "இப்போ இருக்கிற வேலையைப் பற்றி எப்படி feel பண்றீங்க?",
+     "t": "உங்களுக்குப் பிடித்தமான ஒரு வேலைவாய்ப்பு அறிவிப்பைப் பார்க்கிறீர்கள். அதற்கு விண்ணப்பிப்பதற்கு முன்பு, எதில் நீங்கள் தயாராக இருக்க வேண்டும் என்று நினைக்கிறீர்கள்?",
      "o": [
-      "Happy, வளர்ந்துட்டு இருக்கேன்",
-      "பரவாயில்ல, ஆனா வளர்ச்சி இல்ல",
-      "வேற role-க்கு மாறணும்",
-      "வேற field-க்கே மாறணும்"
+      "அந்த வேலைக்குத் தேவையான Technical Skills-ஐ வளர்த்துக்கொள்வது",
+      "Communication மற்றும் தன்னம்பிக்கையை மேம்படுத்துவது",
+      "Resume தயார் செய்து Interview-க்குப் பயிற்சி செய்வது",
+      "அந்த வேலை எனக்குப் பொருத்தமாக இருக்குமா என்று முதலில் தெரிந்துகொள்வது"
      ]
     },
     {
-     "t": "அடுத்த 1 முதல் 2 வருஷத்துல உங்க goal என்ன?",
+     "t": "வேலை அனுபவம் இன்னும் அதிகமாக வேண்டும் என்று நினைக்கிறீர்கள். அதற்காக நீங்கள் எதைத் தேர்ந்தெடுப்பீர்கள்?",
      "o": [
-      "Promotion",
-      "அதிக salary-ல வேற வேலை",
-      "சொந்தமா Business ஆரம்பிக்க",
-      "புதுசா ஒரு field கத்துக்க"
+      "இப்போதைய நிறுவனத்தில் புதிய பொறுப்புகளையும் திட்டங்களையும் ஏற்றுக்கொள்வது",
+      "நிஜமான வேலைச் சூழலை அடிப்படையாகக் கொண்ட Projects செய்வது",
+      "Freelancing அல்லது கூடுதல் வேலைகளில் ஈடுபடுவது",
+      "அனுபவம் பெறுவதற்கான சரியான வழியைத் தெரிந்துகொள்ள வழிகாட்டுதல் பெறுவது"
      ]
     },
     {
-     "t": "வேலை பார்த்துக்கிட்டே கத்துக்க எவ்வளவு நேரம் கிடைக்கும்?",
+     "t": "உங்களுடைய தற்போதைய வேலைக்குத் தேவையான திறமைகளுடன், இன்னொரு புதிய திறனையும் கற்றுக்கொள்ள வாய்ப்பு கிடைத்தால், எதைத் தேர்ந்தெடுப்பீர்கள்?",
      "o": [
-      "வார நாட்கள்ல மாலை நேரம்",
-      "வார இறுதியில மட்டும்",
-      "அதிகாலை அல்லது இரவு",
-      "கிட்டத்தட்ட நேரமே இல்ல"
+      "AI Tools, Coding அல்லது Data Analytics",
+      "Leadership, Communication அல்லது Project Management",
+      "Digital Marketing, Business அல்லது Finance",
+      "நான் வேலை செய்யும் துறைக்குத் தேவையான கூடுதல் திறன்"
      ]
     },
     {
-     "t": "எந்த skill-ஐ add பண்ண விரும்புறீங்க?",
+     "t": "ஒரு முக்கியமான Interview அல்லது Office Meeting-ல் உங்களைப் பற்றியும், உங்களுடைய வேலை அனுபவத்தைப் பற்றியும் கேட்கிறார்கள். எந்த விஷயத்தில் இன்னும் நன்றாகப் பேசப் பழக வேண்டும் என்று நினைக்கிறீர்கள்?",
      "o": [
-      "என் field-ல advanced technical skill",
-      "Computer, Excel, Digital tools",
-      "வேலையை வேகமாக்க AI tools",
-      "Leadership / Team handling",
-      "எது பொருந்தும்னு guidance வேணும்"
+      "ஆங்கிலத்தில் தயக்கமில்லாமல் தெளிவாகப் பேசுவது",
+      "என்னுடைய திறமைகள் மற்றும் வேலை அனுபவத்தைச் சரியாக எடுத்துச் சொல்வது",
+      "கடினமான கேள்விகளுக்கும் பதற்றமில்லாமல் பதிலளிப்பது",
+      "ஏற்கனவே நம்பிக்கையுடன் பேசுவேன்; இன்னும் சிறப்பாகப் பேசத் தயாராக இருக்கிறேன்"
      ]
     },
     {
-     "t": "எந்த முறையில் கத்துக்கிறது உங்களுக்கு வசதி?",
+     "t": "தற்போதைய வேலையைவிட இன்னும் நல்ல வேலைவாய்ப்புகளைத் தேடுகிறீர்கள். உங்களுக்கு எந்த உதவி அதிகம் தேவைப்படும்?",
      "o": [
-      "Weekend classes",
-      "குறுகிய மாலை நேர sessions",
-      "Online, என் வேகத்துல",
-      "Weekend workshop + Online கலவை"
+      "என்னுடைய அனுபவத்திற்குப் பொருத்தமான வேலைவாய்ப்புகளைக் கண்டுபிடிப்பது",
+      "பதவி உயர்வு மற்றும் Career Growth வாய்ப்புகளைத் தெரிந்துகொள்வது",
+      "LinkedIn Profile மேம்படுத்துவது மற்றும் புதிய Professional Contacts உருவாக்குவது",
+      "உண்மையான வேலைவாய்ப்புகளை அடையாளம் கண்டு சரியானதைத் தேர்ந்தெடுப்பது"
      ]
     },
     {
-     "t": "வேலையோட சேர்த்து Higher studies அல்லது Certification பண்ண விருப்பம் இருக்கா?",
+     "t": "உங்களுடைய Career Growth-க்காக ஏதாவது புதிய Certification அல்லது Competitive Exam எழுத வேண்டும் என்று நினைக்கிறீர்களா?",
      "o": [
-      "ஆமா, Degree",
-      "ஆமா, Professional certificate",
-      "குறுகிய Skill courses மட்டும்",
-      "இப்போ இல்ல"
+      "ஆம் – ஏற்கனவே அதற்காகத் தயாராகிக் கொண்டிருக்கிறேன்",
+      "ஆம் – எப்படித் தொடங்குவது என்று தெரியவில்லை; வழிகாட்டுதல் தேவை",
+      "இன்னும் முடிவு செய்யவில்லை; எனக்குப் பொருத்தமான வாய்ப்புகளைத் தெரிந்துகொள்ள விரும்புகிறேன்",
+      "இல்லை – இப்போதைக்கு என்னுடைய வேலையிலும் பதவி உயர்விலும் கவனம் செலுத்துகிறேன்"
      ]
     },
     {
-     "t": "வேலையிடத்துல எந்த soft skill-ஐ improve பண்ண விரும்புறீங்க?",
+     "t": "உங்களுடைய வேலை இடத்தில் இன்னும் சிறப்பாகச் செயல்படவும், மற்றவர்களுடன் இணைந்து வேலை செய்யவும் எந்தத் திறன் உங்களுக்கு உதவும் என்று நினைக்கிறீர்கள்?",
      "o": [
-      "Spoken English",
-      "Team-ஐ lead பண்றது",
-      "Presentation / Report எழுதுறது",
-      "Time management",
-      "Meeting-ல confidence-ஆ பேசுறது"
+      "Teamwork – மற்றவர்களுடன் இணைந்து வேலை செய்வது",
+      "Leadership மற்றும் Communication – குழுவை வழிநடத்திப் பேசுவது",
+      "Time Management – நேரத்தைச் சரியாகப் பயன்படுத்துவது",
+      "Problem-Solving – பிரச்சினைகளைச் சரியாகப் புரிந்துகொண்டு தீர்வு காண்பது"
      ]
     },
     {
-     "t": "Career-ஐ மாத்தணும்னா உங்களுக்கு என்ன பயம்?",
+     "t": "வேலை, குடும்பப் பொறுப்புகள் எனப் பல விஷயங்களுக்கு நடுவில் புதிய திறன்களைக் கற்றுக்கொள்ள உங்களுக்கு எந்த முறை வசதியாக இருக்கும்?",
      "o": [
-      "வருமானம் போயிடுமோன்னு",
-      "தேவையான skills இல்லையேன்னு",
-      "எந்த field-னு தெரியலையேன்னு",
-      "தயாராக நேரம் இல்லையேன்னு"
+      "வார நாட்களில் தினமும் சிறிது நேரம் கற்றுக்கொள்வது",
+      "வார இறுதி நாட்களில் Classes அல்லது Workshops செல்வது",
+      "எனக்குக் கிடைக்கும் நேரத்தில் Online-ல் கற்றுக்கொள்வது",
+      "சரியான திட்டமிடலுடன் தொடர்ச்சியான பயிற்சி வகுப்புகளில் கலந்துகொள்வது"
      ]
     },
     {
-     "t": "முதல்ல என்ன support வேணும்?",
+     "t": "உங்களுக்காக ஒரு CAREER BOOST PACK தயார் செய்தால், முதலில் எந்தப் பயிற்சியைத் தேர்ந்தெடுப்பீர்கள்?",
      "o": [
-      "Career guidance",
-      "Skill upgrade course",
-      "சரியான Certification தேர்வு பண்ண உதவி",
-      "Job மாற Resume / Interview support"
+      "Career Advancement – Resume தயாரித்தல், Interview பயிற்சி மற்றும் Mock Interviews",
+      "Skill Development – புதிய திறன்களைக் கற்றுக்கொள்வது மற்றும் Practical Projects செய்வது",
+      "Leadership Development – Communication, Team Management மற்றும் Decision-Making பயிற்சி",
+      "Career Change Support – புதிய வேலை தேடுதல், Career Guidance மற்றும் Placement Assistance"
      ]
     }
    ]
@@ -757,100 +648,100 @@
    "name": "Exam preparation",
    "q": [
     {
-     "t": "எந்த வகைத் தேர்வுக்குத் தயாராகிறீங்க?",
+     "t": "இப்போது உங்களுடைய முக்கியமான இலக்கு என்ன?",
      "o": [
-      "Government job exams (TNPSC, SSC, Banking, Railways)",
-      "Engineering / Science entrance exams",
-      "Medical / Allied health entrance (NEET போன்றவை)",
-      "வேற Entrance exam அல்லது இன்னும் முடிவு பண்ணல"
+      "அரசு வேலைக்கான தேர்வுகளில் வெற்றி பெற வேண்டும்",
+      "உயர் படிப்புக்கான Entrance Exam எழுத வேண்டும்",
+      "Banking, SSC, Railway போன்ற தேர்வுகளில் தேர்ச்சி பெற வேண்டும்",
+      "எனக்கு எந்தத் தேர்வு சரியாக இருக்கும் என்று முதலில் தெரிந்துகொள்ள வேண்டும்"
      ]
     },
     {
-     "t": "எவ்வளவு காலமா தயாராகிட்டு இருக்கீங்க?",
+     "t": "ஒரு தேர்வுக்குத் தயாராகலாம் என்று முடிவு செய்துவிட்டீர்கள். ஆனால் எப்படித் தொடங்குவது என்று தெரியவில்லை என்றால், எதில் உதவி தேவைப்படும்?",
      "o": [
-      "இப்போதான் ஆரம்பிச்சிருக்கேன்",
-      "6 மாசத்துக்கும் குறைவா",
-      "6 முதல் 12 மாசம்",
-      "1 வருஷத்துக்கு மேல"
+      "எனக்கு ஏற்ற Exam எது என்று தேர்வு செய்வது",
+      "Syllabus மற்றும் Exam Pattern பற்றித் தெரிந்துகொள்வது",
+      "சரியான Study Plan தயார் செய்வது",
+      "எந்த Subject-க்கு அதிக முக்கியத்துவம் கொடுக்க வேண்டும் என்று தெரிந்துகொள்வது"
      ]
     },
     {
-     "t": "எப்படி தயாராகிறீங்க?",
+     "t": "தேர்வுக்காகப் படிக்கும்போது உங்களுக்கு எதில் அதிக சிரமம் இருக்கிறது?",
      "o": [
-      "நானே படிக்கிறேன் (Self-study)",
-      "Coaching centre",
-      "Online classes / Apps",
-      "இவற்றோட கலவை"
+      "Maths மற்றும் Quantitative Aptitude கணக்குகளைச் செய்வது",
+      "Reasoning மற்றும் Logical Questions-க்கு பதிலளிப்பது",
+      "English மற்றும் General Knowledge படிப்பது",
+      "படித்ததைப் புரிந்துகொண்டு நினைவில் வைத்துக்கொள்வது"
      ]
     },
     {
-     "t": "தினமும் எத்தனை மணி நேரம் படிக்கிறீங்க?",
+     "t": "உங்களுடைய தினசரி வேலைகள் அல்லது படிப்புக்கு இடையில், Exam Preparation-க்காக எவ்வளவு நேரம் ஒதுக்க முடியும்?",
      "o": [
-      "2 மணி நேரத்துக்கும் குறைவா",
-      "2 முதல் 4 மணி நேரம்",
-      "4 முதல் 6 மணி நேரம்",
-      "6 மணி நேரத்துக்கு மேல"
+      "1–2 மணி நேரம்",
+      "3–4 மணி நேரம்",
+      "5–6 மணி நேரம்",
+      "முழு நேரமும் படிப்பதற்குத் தயாராக இருக்கிறேன்"
      ]
     },
     {
-     "t": "தயாராகுறதுல உங்களுக்கு மிகப்பெரிய சவால் எது?",
+     "t": "நீங்கள் ஒரு Mock Test எழுதிப் பார்க்கும்போது பொதுவாக என்ன நடக்கும்?",
      "o": [
-      "Syllabus பெருசா இருக்கு",
-      "Time management",
-      "Motivation-ஐத் தக்க வைக்கிறது",
-      "Practice tests, Revision",
-      "சரியான study materials தெரியல"
+      "பதில் தெரியும், ஆனால் நேரத்திற்குள் முடிக்க முடியவில்லை",
+      "தெரிந்த கேள்விகளுக்குக்கூட சில நேரங்களில் தவறான பதில் அளிக்கிறேன்",
+      "சில கேள்விகளைப் புரிந்துகொள்வதே சிரமமாக இருக்கிறது",
+      "நன்றாக எழுதுகிறேன், ஆனால் இன்னும் Practice செய்ய வேண்டும்"
      ]
     },
     {
-     "t": "Mock tests எவ்வளவு எழுதுறீங்க?",
+     "t": "Exam Preparation-க்கு எந்த முறையில் படித்தால் உங்களுக்கு நன்றாகப் புரியும்?",
      "o": [
-      "தொடர்ந்து எழுதுறேன்",
-      "சில நேரம்",
-      "ரொம்பக் குறைவா",
-      "இதுவரை எழுதல"
+      "நேரடியாக Coaching Centre-க்குச் சென்று படிப்பது",
+      "வீட்டிலிருந்தே Online Classes மூலம் படிப்பது",
+      "நானே Study Materials வைத்துப் படிப்பது",
+      "எனக்கென்று தனியாக ஒரு Mentor வழிகாட்டினால் நன்றாக இருக்கும்"
      ]
     },
     {
-     "t": "Exam-ல வெற்றி கிடைக்கலன்னா உங்க backup plan என்ன?",
+     "t": "தேர்வில் நல்ல மதிப்பெண் எடுக்க உங்களிடம் எந்தத் திறன் இன்னும் மேம்பட வேண்டும் என்று நினைக்கிறீர்கள்?",
      "o": [
-      "வேற exam எழுதுவேன்",
-      "Degree அல்லது Course சேருவேன்",
-      "வேலைக்குப் போவேன்",
-      "இன்னும் backup plan இல்ல"
+      "Speed & Accuracy – வேகமாகவும் சரியாகவும் பதிலளிப்பது",
+      "Time Management – கொடுக்கப்பட்ட நேரத்திற்குள் தேர்வை முடிப்பது",
+      "Memory & Concentration – படித்ததை நினைவில் வைத்துக்கொண்டு கவனமாகப் படிப்பது",
+      "Problem-Solving – கடினமான கேள்விகளையும் புரிந்துகொண்டு விடை காண்பது"
      ]
     },
     {
-     "t": "Exam-க்கு நடுவுல எந்த extra skill கத்துக்க விரும்புறீங்க?",
+     "t": "Exam Preparation செய்யும்போது உங்களுக்கு எந்த மாதிரியான உதவி இருந்தால் பயனுள்ளதாக இருக்கும்?",
      "o": [
-      "Computer / Digital skills",
-      "Spoken English",
-      "Job-க்கு உதவுற குறுகிய Course",
-      "எதுவும் வேண்டாம், Exam-ல மட்டும் focus"
+      "தினமும் என்ன படிக்க வேண்டும் என்று ஒரு Study Timetable",
+      "புரியாத பாடங்களைத் தெளிவாகச் சொல்லிக்கொடுக்கும் Coaching",
+      "அடிக்கடி Mock Test வைத்து என்னுடைய மதிப்பெண்ணைச் சரிபார்ப்பது",
+      "தொடர்ந்து வழிகாட்டி, என்னுடைய முன்னேற்றத்தைக் கண்காணிப்பது"
      ]
     },
     {
-     "t": "Result எதிர்பார்த்தபடி வரலன்னா என்ன பண்ணுவீங்க?",
+     "t": "இப்போது உங்களுடைய Exam Preparation எந்த நிலையில் இருக்கிறது?",
      "o": [
-      "அடுத்த வருஷம் மறுபடி try பண்ணுவேன்",
-      "வேற Exam-க்கு மாறுவேன்",
-      "Degree / Course சேருவேன்",
-      "என்ன பண்ணணும்னு guidance வேணும்"
+      "இன்னும் படிக்கத் தொடங்கவில்லை; தொடங்கத் தயாராக இருக்கிறேன்",
+      "இப்போதுதான் தயாராகத் தொடங்கியிருக்கிறேன்",
+      "ஏற்கனவே படித்துக்கொண்டிருக்கிறேன்; இன்னும் Practice தேவைப்படுகிறது",
+      "ஏற்கனவே தேர்வு எழுதியிருக்கிறேன்; இந்த முறை இன்னும் நல்ல மதிப்பெண் பெற வேண்டும்"
      ]
     },
     {
-     "t": "முதல்ல என்ன support வேணும்?",
+     "t": "உங்களுக்காக ஒரு EXAM SUCCESS PACK தயார் செய்தால், முதலில் எதைத் தேர்ந்தெடுப்பீர்கள்?",
      "o": [
-      "சரியான Exam தேர்வு பண்ண guidance",
-      "Study plan / Time table",
-      "Mock tests / சந்தேகம் தீர்க்க",
-      "Backup-க்கான Skill course"
+      "Exam Guidance – எனக்கு ஏற்ற தேர்வைத் தேர்ந்தெடுக்க உதவி",
+      "Complete Preparation – Coaching, Study Materials மற்றும் முழுமையான பயிற்சி",
+      "Mock Test & Assessment – மாதிரித் தேர்வுகள் மற்றும் மதிப்பெண் மதிப்பீடு",
+      "Personal Study Plan – எனக்கான தனிப்பட்ட Study Timetable, Mentorship மற்றும் Progress Tracking"
      ]
     }
    ]
   }
  },
  "set_of": {
+  "search_college": "school",
   "in_college": "college",
   "course": "course",
   "job_search": "jobseeker",
@@ -858,7 +749,7 @@
   "exam_prep": "exam"
  },
  "set_intro": {
-  "school": "10 கேள்விகள். உங்கள் ஆர்வம், கற்றல் முறை, படிப்புத் திட்டம் ஆகியவற்றைக் கண்டறியலாம்.",
+  "school": "10 கேள்விகள். உங்கள் ஆர்வம், படிப்புத் தேர்வு, தேவையான வழிகாட்டுதல் ஆகியவற்றைக் கண்டறியலாம்.",
   "college": "10 கேள்விகள். உங்கள் இலக்கு, திறன்கள், தேவையான உதவி ஆகியவற்றைக் கண்டறியலாம்.",
   "course": "10 கேள்விகள். படிப்புக்குப் பிறகான உங்கள் முதல் அடி, தேவையான பயிற்சி, உதவி ஆகியவற்றைக் கண்டறியலாம்.",
   "jobseeker": "10 கேள்விகள். உங்கள் வேலை தேடல், தேவையான திறன்கள், உதவி ஆகியவற்றைக் கண்டறியலாம்.",
@@ -904,56 +795,74 @@
   ],
   "jobseeker": [
    [
-    0,
-    "வேலை தேடும் காலம்"
+    1,
+    "உங்கள் தற்போதைய நிலை"
    ],
    [
     2,
-    "முக்கிய தடை"
+    "வேலை தேடலில் உங்கள் நிலை"
    ],
    [
-    7,
-    "மேம்படுத்த விரும்பும் திறன்"
+    3,
+    "நீங்கள் இலக்கு வைக்கும் துறை"
    ],
    [
-    9,
-    "முதலில் தேவையான உதவி"
+    6,
+    "Placement-க்குத் தேவையான உதவி"
    ]
   ],
   "working": [
    [
-    2,
-    "அடுத்த 1 முதல் 2 வருஷ இலக்கு"
+    0,
+    "உங்கள் அடுத்த இலக்கு"
    ],
    [
-    4,
-    "சேர்க்க விரும்பும் திறன்"
+    3,
+    "கற்க விரும்பும் புதிய திறன்"
    ],
    [
-    5,
+    8,
     "வசதியான கற்றல் முறை"
    ],
    [
     9,
-    "முதலில் தேவையான உதவி"
+    "முதலில் தேவையான உதவி (Career Boost Pack)"
    ]
   ],
   "exam": [
    [
     0,
-    "தயாராகும் தேர்வு"
+    "உங்கள் முக்கிய இலக்கு"
    ],
    [
-    4,
-    "முக்கிய சவால்"
+    2,
+    "படிப்பில் அதிக சிரமம்"
    ],
    [
-    6,
-    "மாற்றுத் திட்டம் (Backup)"
+    3,
+    "தினமும் ஒதுக்கக்கூடிய நேரம்"
    ],
    [
     9,
-    "முதலில் தேவையான உதவி"
+    "முதலில் தேவையான உதவி (Exam Success Pack)"
+   ]
+  ],
+  "school": [
+   [
+    0,
+    "12-ஆம் வகுப்புக்குப் பிறகு உங்கள் திட்டம்"
+   ],
+   [
+    3,
+    "படிப்பைத் தேர்வு செய்வதில் உங்கள் நிலை"
+   ],
+   [
+    5,
+    "படிப்புத் தேர்வைப் பாதிக்கும் முக்கிய காரணம்"
+   ],
+   [
+    9,
+    "இறுதி முடிவுக்கு உதவும் தகவல்"
    ]
   ]
  },
@@ -1142,29 +1051,37 @@
    ],
    "jobseeker": [
     [
-     1,
+     3,
      {
       "0": [
        "tech_ai",
-       "technical"
-      ],
-      "1": [
-       "finance",
        "data"
       ],
+      "1": [
+       "technical"
+      ],
       "2": [
+       "business"
+      ],
+      "3": [
+       "finance"
+      ],
+      "4": [
+       "management"
+      ],
+      "5": [
        "business"
       ]
      }
     ],
     [
-     7,
+     4,
      {
       "0": [
-       "data"
+       "tech_ai"
       ],
       "1": [
-       "tech_ai"
+       "data"
       ],
       "3": [
        "technical"
@@ -1174,52 +1091,50 @@
    ],
    "working": [
     [
-     4,
+     3,
      {
       "0": [
-       "technical"
+       "tech_ai",
+       "data"
       ],
       "1": [
-       "data"
-      ],
-      "2": [
-       "tech_ai"
-      ],
-      "3": [
        "management"
-      ]
-     }
-    ],
-    [
-     2,
-     {
+      ],
       "2": [
-       "business"
+       "business",
+       "finance"
       ],
       "3": [
-       "tech_ai"
-      ]
-     }
-    ]
-   ],
-   "exam": [
-    [
-     7,
-     {
-      "0": [
-       "data"
-      ],
-      "2": [
-       "finance",
-       "business"
+       "technical"
       ]
      }
     ],
     [
      0,
      {
-      "0": [
+      "2": [
+       "business"
+      ]
+     }
+    ]
+   ],
+   "exam": [
+    [
+     0,
+     {
+      "1": [
        "degree"
+      ],
+      "2": [
+       "finance"
+      ]
+     }
+    ],
+    [
+     9,
+     {
+      "1": [
+       "data"
       ]
      }
     ]
@@ -1281,93 +1196,93 @@
   },
   "school": [
    {
-    "t": "After 12th… is your next step ready, or still loading?",
+    "t": "What are you planning to do after Class 12?",
     "o": [
-     "Course and college both fixed",
-     "Course ready; only college pending",
-     "I have a few options; haven't decided yet",
-     "I don't know where to start"
+     "Prepare for entrance exams",
+     "Join a skill training programme",
+     "Take a break before continuing my studies",
+     "Join a degree or professional course"
     ]
    },
    {
-    "t": "Even without an exam… which subject would you happily study?",
+    "t": "Which field would you like to explore further?",
     "o": [
-     "Maths / Computer Science",
-     "Physics / Chemistry / Biology",
-     "Commerce / Accountancy / Economics",
-     "Languages / History / other Arts subjects"
+     "Arts, humanities or creative studies",
+     "Science or technology",
+     "Commerce or business",
+     "I am still exploring."
     ]
    },
    {
-    "t": "“I want to know more about this!” Which field makes you say that?",
+    "t": "Which type of course are you considering?",
     "o": [
-     "Creativity - art, new creations",
-     "Technology - technology, new inventions",
-     "Business - trade, money management",
-     "Science & People - science, health, people"
+     "A degree in a creative field",
+     "A professional course for a specific career",
+     "A diploma or skill-based course",
+     "I have not decided yet."
     ]
    },
    {
-    "t": "What do you say “This is easy for me!” about?",
+    "t": "How far have you progressed in choosing a course?",
     "o": [
-     "Solving maths and puzzles",
-     "Explaining something clearly",
-     "Writing or designing something new",
-     "Planning a task and finishing it"
+     "I have selected a course and shortlisted colleges.",
+     "I have selected a course but need college details.",
+     "I have a career in mind but need a suitable course.",
+     "I need guidance on both courses and careers."
     ]
    },
    {
-    "t": "What do friends most often come to you for help with?",
+    "t": "How would you like your future studies to connect with your school subjects?",
     "o": [
-     "Doubts in school subjects",
-     "Fixing phone or computer problems",
-     "Writing, drawing or editing",
-     "Talking through personal problems"
+     "Continue in the same subject area",
+     "Explore a related subject area",
+     "Move into a different field that interests me",
+     "I have not decided yet."
     ]
    },
    {
-    "t": "In your free time, what do you take the initiative to do?",
+    "t": "What would influence your course choice the most?",
     "o": [
-     "Build or repair something",
-     "Search and read about a topic",
-     "Writing, drawing or video making",
-     "Teach or help someone"
+     "The subjects I have studied at school",
+     "My interest in a creative career",
+     "My goal of entering a specific profession",
+     "The job opportunities after the course"
     ]
    },
    {
-    "t": "When you learn something new… what helps you understand fastest?",
+    "t": "Would you consider a course you have not heard of before?",
     "o": [
-     "Reading books or notes",
-     "Watching videos or pictures",
-     "Practising it myself",
-     "Someone explaining it and clearing my doubts"
+     "Yes, if it teaches useful skills",
+     "Yes, if it offers suitable career opportunities",
+     "Maybe, after learning more about it",
+     "I prefer courses I already know."
     ]
    },
    {
-    "t": "A job tomorrow… which of these would you like to have in it?",
+    "t": "What kind of work would you enjoy learning to do?",
     "o": [
-     "Finding solutions to problems",
-     "Creating new ideas",
-     "Connecting with and helping people",
-     "Planning and managing work"
+     "Creating designs, stories or visual content",
+     "Working with technology, tools or equipment",
+     "Managing business activities or finances",
+     "Investigating questions and analysing information"
     ]
    },
    {
-    "t": "Your “Yes” to a course… what does it depend on first?",
+    "t": "If your preferred course is unavailable, what would you consider?",
     "o": [
-     "It must match my interest",
-     "Good job opportunities",
-     "Fees within our budget",
-     "College location convenient for us"
+     "A related course in the same field",
+     "The same course at another college",
+     "A different field that interests me",
+     "I would need help deciding."
     ]
    },
    {
-    "t": "Which study plan suits you now?",
+    "t": "What would help you make your final course choice?",
     "o": [
-     "Ready to study full-time for a few years",
-     "Finish a short-term course and get a job",
-     "Work and study together",
-     "First find out what options exist"
+     "Knowing what subjects I will study",
+     "Understanding the practical skills I will learn",
+     "Knowing which careers the course can lead to",
+     "Understanding the fees and admission requirements"
     ]
    }
   ],
@@ -1377,62 +1292,8 @@
    "business": "You are interested in planning, managing, and understanding and running money and trade. Organising things is your strength.",
    "people": "You are interested in science, health, helping others and teaching. A field where you work together with people will suit you."
   },
-  "learn": [
-   [
-    "Reading learner",
-    "Books, notes and PDFs will help you a lot. Write short notes and revise often."
-   ],
-   [
-    "Visual learner",
-    "Use videos, pictures and mind-maps. Colour-coded notes help you remember."
-   ],
-   [
-    "Hands-on learner",
-    "Learn through practice, projects and practicals. After reading a topic, do a small project on it."
-   ],
-   [
-    "Discussion learner",
-    "Study groups, mentors and doubt-clearing classes suit you. Explain what you learn to others."
-   ]
-  ],
-  "plan": [
-   [
-    "Full-time Degree",
-    "A 3 to 4 year full-time degree will suit you. It builds a strong foundation."
-   ],
-   [
-    "Short-term Course, then Job",
-    "A 6 month to 1 year skill course or diploma. A quick way to get ready for work."
-   ],
-   [
-    "Work + Study",
-    "Take a part-time job and add distance education, an open university, an evening college or an online course."
-   ],
-   [
-    "Explore options first",
-    "See your options through career counselling, college open days and free introductory classes. Then decide."
-   ]
-  ],
-  "ready": [
-   "Your course and college are fixed. Check admission dates and required documents, and get started.",
-   "Your course is fixed. Compare fees, location and placements, and choose your college.",
-   "You have some options. Compare them with your interest result above and shortlist 2 or 3.",
-   "This result is a good starting point. Pick 2 or 3 of the courses below to look into."
-  ],
-  "ready_title": [
-   "Course and college both fixed",
-   "Course fixed, college pending",
-   "You have some options",
-   "Looking for a starting point"
-  ],
-  "factor": [
-   "It must match your interest",
-   "It must have good job opportunities",
-   "The fees must fit your budget",
-   "The college location must suit you"
-  ],
   "set_intro": {
-   "school": "10 questions. Find out your interest, learning style and study plan.",
+   "school": "10 questions. Find out your interest, your course choice and the guidance you need.",
    "college": "10 questions. Find out your goal, skills and the help you need.",
    "course": "10 questions. Find out your first step after the course, the training you need and the help you need.",
    "jobseeker": "10 questions. Find out about your job search, the skills you need and the help you need.",
@@ -1460,22 +1321,28 @@
     "Help you need first"
    ],
    "jobseeker": [
-    "How long you have been looking",
-    "Your biggest obstacle",
-    "Skill you want to improve",
-    "Help you need first"
+    "Where you are now",
+    "Where you are in your job search",
+    "Field you are aiming for",
+    "Support you need for placement"
    ],
    "working": [
-    "Your goal for the next 1 to 2 years",
-    "Skill you want to add",
-    "Learning style that suits you",
-    "Help you need first"
+    "Your next goal",
+    "New skill you want to learn",
+    "Learning method that suits you",
+    "Help you need first (Career Boost Pack)"
    ],
    "exam": [
-    "Exam you are preparing for",
-    "Your biggest challenge",
-    "Backup plan",
-    "Help you need first"
+    "Your main goal",
+    "What you find most difficult",
+    "Time you can give each day",
+    "Help you need first (Exam Success Pack)"
+   ],
+   "school": [
+    "Your plan after Class 12",
+    "Where you are in choosing a course",
+    "What influences your course choice most",
+    "What would help your final choice"
    ]
   },
   "tatti": {
@@ -1681,285 +1548,287 @@
    ],
    "jobseeker": [
     {
-     "t": "How long has it been since you started looking for a job?",
+     "t": "When did you graduate?",
      "o": [
-      "Less than 1 month",
-      "1 to 3 months",
-      "3 to 6 months",
-      "More than 6 months"
+      "Within the last 6 months",
+      "6 months to less than 1 year ago",
+      "1 to less than 3 years ago",
+      "3 or more years ago"
      ]
     },
     {
-     "t": "What kind of job are you looking for?",
+     "t": "Right now, in your career journey, which option fits you best?",
      "o": [
-      "Technical / IT / Operations",
-      "Office / Admin / Accounts",
-      "Sales / Marketing / Customer Service",
-      "I need guidance to explore which job suits me"
+      "I’m a fresher.",
+      "I have work experience. Now I am looking for my next job",
+      "After a career break, I’m ready to return to work"
      ]
     },
     {
-     "t": "What is the biggest obstacle in your job search right now?",
+     "t": "Where are you in your job search right now?",
      "o": [
-      "I don't know where the openings are",
-      "I don't get interview calls",
-      "I can't answer well in interviews",
-      "I lack the required skills or experience"
+      "Exploring roles before I start applying",
+      "Actively applying for jobs",
+      "I will take a little time and then start my job search",
+      "I’m building my skills first, then I’ll start applying"
      ]
     },
     {
-     "t": "What state is your resume in?",
+     "t": "Which field are you aiming for?",
      "o": [
-      "Ready and up to date",
-      "I have one but it needs improvement",
-      "I haven't made one yet",
-      "As a fresher, I don't know what to write"
+      "IT / Software / Data",
+      "Engineering / Manufacturing",
+      "Sales / Marketing",
+      "Finance / Accounts",
+      "HR / Admin",
+      "Operations / Customer Support",
+      "Other"
      ]
     },
     {
-     "t": "Where do you mostly look for job openings?",
+     "t": "To get a little more ready to apply for jobs, what help do you need?",
      "o": [
-      "Job portals (Naukri, LinkedIn, etc.)",
-      "Friends / relatives / referrals",
-      "Walk-in drives / campus drives",
-      "I haven't properly started looking"
+      "Learn to use the AI tools used in my field with confidence",
+      "Catch up on the latest software and tools in my field",
+      "Develop the skills employers ask for",
+      "Get hands-on experience through a practical course or internship",
+      "I already feel ready to apply"
      ]
     },
     {
-     "t": "What worries you most when you go for an interview?",
+     "t": "When it comes to soft skills, where would you like more practice?",
      "o": [
-      "Spoken English",
-      "Technical questions",
-      "Introducing myself (self introduction)",
-      "HR questions and salary discussion"
+      "Speaking English with confidence",
+      "Explaining my ideas clearly",
+      "Staying calm when I feel nervous in an interview",
+      "Handling pressure and feedback at work",
+      "I’m comfortable with these skills"
      ]
     },
     {
-     "t": "If you are rejected for lack of experience, what will you do?",
+     "t": "To prepare for placement, what support would be helpful?",
      "o": [
-      "Join an internship / training",
-      "Learn a new skill",
-      "Take any entry-level job",
-      "I don't know what to do"
+      "Help with creating or updating my resume",
+      "Mock interviews with feedback",
+      "All of the above",
+      "I’m comfortable preparing on my own"
      ]
     },
     {
-     "t": "Which skill would you like to upgrade to get a job?",
+     "t": "How easy is it to get job updates for the roles you are looking for?",
      "o": [
-      "Computer / digital tools",
-      "AI tools",
-      "Spoken English / communication",
-      "Technical skill in my field",
-      "I need guidance on which skill is needed"
+      "Easy. I regularly find relevant openings on time",
+      "I get openings, but only a few match what I’m looking for",
+      "I sometimes hear about suitable openings only late",
+      "I’d like guidance on where to look for reliable job updates"
      ]
     },
     {
-     "t": "What matters most to you when you choose a job?",
+     "t": "Are you open to exploring jobs in a different field?",
      "o": [
-      "A good salary",
-      "Job security",
-      "Opportunities to learn and grow",
-      "It must be close to home"
+      "Yes, I already have another field in mind",
+      "Yes, I would like to know which fields suit my skills",
+      "Maybe, if I know what skills I’d need to make the switch",
+      "For now, I’d like to focus on the field I’ve chosen"
      ]
     },
     {
-     "t": "What support do you need first to find a job?",
+     "t": "Which skills feel like your strong suit?",
      "o": [
-      "To prepare my resume / portfolio",
-      "To find job openings / referrals",
-      "Mock interview practice",
-      "Skill training",
-      "Career counselling"
+      "Using AI tools confidently for tasks like research, writing or planning",
+      "Coding / Data analysis",
+      "Design / Content creation",
+      "Sales / Customer handling",
+      "Technical skills in my field",
+      "Other"
      ]
     }
    ],
    "working": [
     {
-     "t": "How long have you been in your current job?",
+     "t": "What do you want to achieve next in your career?",
      "o": [
-      "Less than 6 months",
-      "6 months to 1 year",
-      "1 to 3 years",
-      "More than 3 years"
+      "Move up to a better position in my current company",
+      "Move to a better company",
+      "Start my own business or do freelancing",
+      "Find out which field would suit me"
      ]
     },
     {
-     "t": "How do you feel about your current job?",
+     "t": "You see a job opening you like. Before applying, what do you feel you need to be ready in?",
      "o": [
-      "Happy, and growing",
-      "It's okay, but there is no growth",
-      "I want to move to a different role",
-      "I want to move to a different field"
+      "Building the technical skills the job needs",
+      "Improving my communication and confidence",
+      "Preparing my resume and practising for the interview",
+      "First finding out whether the job suits me"
      ]
     },
     {
-     "t": "What is your goal for the next 1 to 2 years?",
+     "t": "You want more work experience. What would you choose?",
      "o": [
-      "A promotion",
-      "Switch to a job with a higher salary",
-      "Start my own business",
-      "Learn a new field"
+      "Taking up new responsibilities and projects in my current company",
+      "Doing projects based on real workplace situations",
+      "Doing freelancing or additional work",
+      "Getting guidance to find the right way to gain experience"
      ]
     },
     {
-     "t": "How much time can you find for learning while working?",
+     "t": "If you had a chance to learn one more skill alongside the skills your current job needs, which would you choose?",
      "o": [
-      "Weekday evenings",
-      "Weekends only",
-      "Early morning or night",
-      "Almost no time"
+      "AI Tools, Coding or Data Analytics",
+      "Leadership, Communication or Project Management",
+      "Digital Marketing, Business or Finance",
+      "An additional skill needed in my own field of work"
      ]
     },
     {
-     "t": "Which skill would you like to add?",
+     "t": "In an important interview or office meeting, you are asked about yourself and your work experience. Where do you feel you need more practice speaking?",
      "o": [
-      "An advanced technical skill in my field",
-      "Computer, Excel and digital tools",
-      "AI tools to speed up my work",
-      "Leadership / team handling",
-      "I need guidance on what fits"
+      "Speaking clearly in English without hesitation",
+      "Presenting my skills and work experience well",
+      "Answering difficult questions without getting nervous",
+      "I already speak confidently; I am ready to speak even better"
      ]
     },
     {
-     "t": "In which way is learning convenient for you?",
+     "t": "You are looking for better job opportunities than your current job. Which help would you need most?",
      "o": [
-      "Weekend classes",
-      "Short evening sessions",
-      "Online, at my own pace",
-      "A mix of weekend workshops and online"
+      "Finding job openings that suit my experience",
+      "Knowing about promotion and career growth opportunities",
+      "Improving my LinkedIn profile and building new professional contacts",
+      "Identifying genuine job openings and choosing the right one"
      ]
     },
     {
-     "t": "Would you like to do higher studies or a certification along with your job?",
+     "t": "Do you think you should take a new certification or competitive exam for your career growth?",
      "o": [
-      "Yes, a degree",
-      "Yes, a professional certificate",
-      "Only short skill courses",
-      "Not right now"
+      "Yes - I am already preparing for it",
+      "Yes - I do not know how to start; I need guidance",
+      "Not decided yet; I would like to know the opportunities that suit me",
+      "No - for now I am focusing on my job and promotion"
      ]
     },
     {
-     "t": "Which soft skill would you like to improve at work?",
+     "t": "Which skill do you think will help you perform better at work and work well with others?",
      "o": [
-      "Spoken English",
-      "Leading a team",
-      "Presentations / writing reports",
-      "Time management",
-      "Speaking confidently in meetings"
+      "Teamwork - working together with others",
+      "Leadership and Communication - leading and speaking to a team",
+      "Time Management - using time well",
+      "Problem-Solving - understanding problems properly and finding solutions"
      ]
     },
     {
-     "t": "If you want to change your career, what worries you?",
+     "t": "With work, family responsibilities and so much else going on, which way of learning new skills would suit you?",
      "o": [
-      "Losing my income",
-      "Not having the skills needed",
-      "Not knowing which field",
-      "Not having time to prepare"
+      "Learning a little every day on weekdays",
+      "Attending classes or workshops on weekends",
+      "Learning online whenever I get time",
+      "Joining regular training classes with proper planning"
      ]
     },
     {
-     "t": "What support do you need first?",
+     "t": "If a CAREER BOOST PACK is prepared for you, which training would you choose first?",
      "o": [
-      "Career guidance",
-      "A skill upgrade course",
-      "Help choosing the right certification",
-      "Support to switch jobs: resume / interview"
+      "Career Advancement - Resume preparation, interview practice and mock interviews",
+      "Skill Development - Learning new skills and doing practical projects",
+      "Leadership Development - Communication, team management and decision-making training",
+      "Career Change Support - New job search, career guidance and placement assistance"
      ]
     }
    ],
    "exam": [
     {
-     "t": "Which type of exam are you preparing for?",
+     "t": "What is your main goal right now?",
      "o": [
-      "Government job exams (TNPSC, SSC, Banking, Railways)",
-      "Engineering / Science entrance exams",
-      "Medical / Allied health entrance (NEET, etc.)",
-      "Another entrance exam, or not decided yet"
+      "I want to succeed in government job exams",
+      "I want to write an entrance exam for higher studies",
+      "I want to pass exams like Banking, SSC and Railway",
+      "I first need to know which exam is right for me"
      ]
     },
     {
-     "t": "How long have you been preparing?",
+     "t": "You have decided to prepare for an exam, but you do not know how to start. What help would you need?",
      "o": [
-      "I have just started",
-      "Less than 6 months",
-      "6 to 12 months",
-      "More than 1 year"
+      "Choosing the right exam for me",
+      "Understanding the syllabus and exam pattern",
+      "Preparing a proper study plan",
+      "Knowing which subject needs more importance"
      ]
     },
     {
-     "t": "How are you preparing?",
+     "t": "What do you find most difficult while studying for the exam?",
      "o": [
-      "Self-study",
-      "Coaching centre",
-      "Online classes / apps",
-      "A mix of these"
+      "Solving Maths and Quantitative Aptitude problems",
+      "Answering Reasoning and Logical questions",
+      "Studying English and General Knowledge",
+      "Understanding what I read and remembering it"
      ]
     },
     {
-     "t": "How many hours do you study every day?",
+     "t": "Between your daily work or studies, how much time can you set aside for exam preparation?",
      "o": [
-      "Less than 2 hours",
-      "2 to 4 hours",
-      "4 to 6 hours",
-      "More than 6 hours"
+      "1–2 hours",
+      "3–4 hours",
+      "5–6 hours",
+      "I am ready to study full time"
      ]
     },
     {
-     "t": "What is your biggest challenge in preparing?",
+     "t": "What usually happens when you attempt a mock test?",
      "o": [
-      "The syllabus is huge",
-      "Time management",
-      "Staying motivated",
-      "Practice tests and revision",
-      "I don't know the right study materials"
+      "I know the answers but cannot finish within the time",
+      "I sometimes give wrong answers even to questions I know",
+      "I find it hard to even understand some questions",
+      "I write well, but I still need more practice"
      ]
     },
     {
-     "t": "How many mock tests do you write?",
+     "t": "Which way of studying for the exam helps you understand best?",
      "o": [
-      "Regularly",
-      "Sometimes",
-      "Very rarely",
-      "None so far"
+      "Going to a coaching centre in person",
+      "Studying through online classes from home",
+      "Studying on my own with study materials",
+      "Having a personal mentor to guide me"
      ]
     },
     {
-     "t": "If you don't succeed in the exam, what is your backup plan?",
+     "t": "Which skill do you think you still need to improve to score well in the exam?",
      "o": [
-      "Write another exam",
-      "Join a degree or course",
-      "Go to work",
-      "I don't have a backup plan yet"
+      "Speed & Accuracy - answering quickly and correctly",
+      "Time Management - finishing the exam within the given time",
+      "Memory & Concentration - remembering what I study and studying with focus",
+      "Problem-Solving - understanding difficult questions and finding the answer"
      ]
     },
     {
-     "t": "Which extra skill would you like to learn alongside your exam preparation?",
+     "t": "What kind of help would be useful while you prepare for the exam?",
      "o": [
-      "Computer / digital skills",
-      "Spoken English",
-      "A short job-oriented course",
-      "None, I want to focus only on the exam"
+      "A study timetable showing what to study each day",
+      "Coaching that explains difficult topics clearly",
+      "Frequent mock tests to check my scores",
+      "Continuous guidance and tracking of my progress"
      ]
     },
     {
-     "t": "If the result is not what you expected, what will you do?",
+     "t": "At what stage is your exam preparation right now?",
      "o": [
-      "Try again next year",
-      "Switch to another exam",
-      "Join a degree / course",
-      "I need guidance on what to do"
+      "I have not started studying yet; I am ready to start",
+      "I have just started preparing",
+      "I am already studying; I still need more practice",
+      "I have already written the exam; I want a better score this time"
      ]
     },
     {
-     "t": "What support do you need first?",
+     "t": "If an EXAM SUCCESS PACK is prepared for you, what would you choose first?",
      "o": [
-      "Guidance on choosing the right exam",
-      "Study plan / timetable",
-      "Mock tests / clearing doubts",
-      "A skill course as a backup"
+      "Exam Guidance - help to choose the right exam for me",
+      "Complete Preparation - coaching, study materials and full training",
+      "Mock Test & Assessment - model exams and score evaluation",
+      "Personal Study Plan - my own study timetable, mentorship and progress tracking"
      ]
     }
    ]
   }
- }
+ },
+ "school_name": "After 12th"
 }

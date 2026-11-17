@@ -105,7 +105,7 @@
   </div>
   <div class="recs">
     <div class="rechead">
-      <span>Name</span><span>Doing now</span><span>Interest</span><span>Learning</span><span>Study plan</span><span>Picks by</span><span>Submitted</span>
+      <span>Name</span><span>Doing now</span><span>Quiz</span><span>Interest</span><span>Main answer</span><span>Help needed first</span><span>Submitted</span>
     </div>
     {% for r in rows %}
     <div class="recrow">
@@ -114,15 +114,15 @@
       <summary class="recsum">
         <span class="strong" data-l="Name">{{ r.name }}{% if r.status != "new" %} <em class="badge st-{{ r.status }}">{{ r.status_label }}</em>{% endif %}</span>
         <span class="muted" data-l="Doing now">{{ r.doing }}</span>
+        <span data-l="Quiz">{{ r.qset_name }}</span>
         <span data-l="Interest"><i class="dot" style="--c: var({{ r.top_color }})"></i>{{ r.top_label }}</span>
-        <span data-l="Learning">{{ r.learn }}</span>
-        <span data-l="Study plan">{{ r.plan }}</span>
-        <span data-l="Picks by">{{ r.factor }}</span>
+        <span data-l="Main answer">{{ r.main }}</span>
+        <span data-l="Help needed first">{{ r.help }}</span>
         <span class="muted" data-l="Submitted">{{ r.when }}</span>
       </summary>
       <div class="recbody">
         <div class="dhead">
-          <p class="muted">Quiz: {{ r.qset_name }} · Phone: {{ r.phone or "not given" }}{% if r.qset == "school" %} · Where they are now: {{ r.ready }}{% endif %}</p>
+          <p class="muted">Quiz: {{ r.qset_name }} · Phone: {{ r.phone or "not given" }}</p>
           <a class="btn-sm" href="/admin/print/{{ r.id }}" target="_blank" rel="noopener">Print / PDF</a>
           <details class="del">
             <summary class="btn-sm btn-danger">Delete</summary>
