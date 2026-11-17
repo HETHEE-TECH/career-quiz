@@ -91,7 +91,7 @@
     brand.appendChild(logo);
     brand.appendChild(el("p", "eyebrow", "Tamil Nadu Advanced Technical Training Institute · Chennai"));
     left.appendChild(brand);
-    var h = el("h1", null, tr("12-ஆம் வகுப்புக்குப் பிறகு உங்கள் பாதை என்ன?"));
+    var h = el("h1", null, tr("தற்போது உங்கள் பாதை என்ன?"));
     left.appendChild(h);
     var sub = el("p", "sub", introFor("school"));
     left.appendChild(sub);
@@ -119,7 +119,7 @@
     function syncIntro() { sub.textContent = introFor(setFor(gr.value)); }
     gr.addEventListener("change", syncIntro);
     syncIntro();
-    field("f-doing", tr("12-ஆம் வகுப்பு முடித்த பிறகு தற்போது என்ன செய்கிறீர்கள்? (What are you doing now after 12th?)"), gr);
+    field("f-doing", tr("தற்போது என்ன செய்கிறீர்கள்? (What are you doing now?)"), gr);
     var err = el("p", "err"); err.id = "f-err"; err.setAttribute("role", "alert");
     form.appendChild(err);
     var b = el("button", "go", tr("தொடங்கலாம் (Start) →"));
