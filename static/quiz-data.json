@@ -1160,11 +1160,11 @@
  "en": {
   "ui": {
    "வினாடி வினா ஏற்றப்படவில்லை. பக்கத்தைப் புதுப்பிக்கவும் (Refresh).": "The quiz could not be loaded. Please refresh the page.",
-   "12-ஆம் வகுப்புக்குப் பிறகு உங்கள் பாதை என்ன?": "What is your path after 12th?",
+   "தற்போது உங்கள் பாதை என்ன?": "What is your path now?",
    "உங்கள் பெயர் (Your Name)": "Your Name",
    "தொலைபேசி எண் (Phone Number), விருப்பம். நிர்வாகம் தொடர்புகொள்வதற்கு மட்டும் பயன்படும்.": "Phone Number (optional). Used only by the administration to contact you.",
    "தேர்ந்தெடுக்கவும் (Select)": "Select",
-   "12-ஆம் வகுப்பு முடித்த பிறகு தற்போது என்ன செய்கிறீர்கள்? (What are you doing now after 12th?)": "What are you doing now after 12th?",
+   "தற்போது என்ன செய்கிறீர்கள்? (What are you doing now?)": "What are you doing now?",
    "தொடங்கலாம் (Start) →": "Start →",
    "பெயரை உள்ளிடவும் (Please enter your name).": "Please enter your name.",
    "தொலைபேசி எண்ணில் இலக்கங்கள் மட்டும் உள்ளிடவும்.": "Please enter digits only in the phone number.",
